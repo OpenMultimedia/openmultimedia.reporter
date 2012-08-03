@@ -1,0 +1,131 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="openmultimedia.reporter">
+
+<metal:styleslot fill-slot="style_slot" >
+
+        <link rel="stylesheet" type="text/css" media="screen" href=""
+              tal:attributes="href string:${context/absolute_url}/++resource++openmultimedia.reporter/styles.css" />
+</metal:styleslot>
+
+<metal:javascriptslot fill-slot="javascript_head_slot" >
+
+        <script type="text/javascript" src="++resource++openmultimedia.reporter/javascript.js">
+        </script>
+
+</metal:javascriptslot>
+
+<body>
+
+<metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main">
+    <div id="content-reports">
+      <div class="add-report-button">
+      <a href="#" tal:attributes="href string:${context/absolute_url}/listado-report"
+                              tal:condition="view/can_edit"
+                              class="report-link edit-report"
+                              i18n:translate="">Non Published Reports</a>
+      </div>
+    <div class="ireport-banner">
+        <img src="++resource++openmultimedia.reporter/soy_reportero.jpg" />
+    </div>
+        <div class="published-reports-list" tal:define="video_api nocall:context/@@video_api;report_main view/main_report_new" >
+          <tal:reportmain tal:condition="report_main">
+            <div class="main-report"
+            tal:define="new_report report_main/getObject;
+                        file_url new_report/get_file_url">
+              <div id="main-report-media">
+                <div class="padding">
+                <tal:video condition="python:file_url and not new_report.is_image()">
+                  <script type="text/javascript" src=""
+                      tal:define="video_url python:video_api.get_video_widget_url('', 400, {'archivo_url':file_url})"
+                      tal:attributes="src string:${video_url};"
+                      tal:content="nothing">
+                      Item Title
+                  </script>
+                  </tal:video>
+                  <tal:image condition="python:file_url and new_report.is_image()">
+                  <img tal:attributes="src file_url"/>
+                  </tal:image>
+                  </div>
+              </div>
+              <div id="main-report-data">
+                <a id="main-report-title" tal:content="python:report_main.Title" tal:attributes="href new_report/absolute_url"></a>
+                <div id="main-report-description" tal:content="python:report_main.Description"></div>
+              </div>
+              <div style="clear: both"></div>
+              <tal:below define="report_main view/main_report_new;
+                              report_main_new report_main/getObject">
+              <div tal:condition="report_main" id="ireport-user-data">
+                <span tal:content="python:report_main_new.name"></span>-<span tal:content="python:report_main_new.country"></span>
+              </div>
+              <div id="main-report-comments"  tal:condition="report_main">
+                <tal:comments>
+              <a tal:attributes="href report_main_new/absolute_url"><img src="++resource++openmultimedia.reporter/btn_comentarios.jpg" /></a>
+              </tal:comments>
+              </div>
+              </tal:below>
+            </div>
+            </tal:reportmain>
+            <div id="report-items-carousel">
+              <div class="padding">
+              <div id="report-arrow-left" tal:attributes="class python:view.actual != 0 and 'show'"><a tal:attributes="href python:context.absolute_url() + '?action=prev&amp;actual='+ str(view.actual)"></a></div>
+              <div id="report-reports">
+              <tal:reports repeat="brain view/publics">
+              <div class="report-item" tal:define="report brain/getObject">
+                  <div class="report-item-thumb"><img tal:attributes="src report/get_thumb_image"/></div>
+                  <div class="user-data">
+                  <a href="#" tal:define="report brain/getObject"
+                              tal:attributes="href report/absolute_url"
+                              tal:content="report/name"
+                              class="view-report"/>
+                  </div>
+                  <div class="user-data">
+                  <a href="#" tal:define="report brain/getObject"
+                              tal:attributes="href report/absolute_url"
+                              tal:content="report/country"
+                              class="view-report"/>
+                  </div>
+              </div>
+              </tal:reports>
+              <div style="clear:both"></div>
+              </div>
+              <div id="report-arrow-right" tal:attributes="class python:view.actual != view.total and 'show'"><a tal:attributes="href python:context.absolute_url() + '?action=next&amp;actual='+str(view.actual)"></a></div>
+              <div style="clear:both"></div>
+              </div>
+            </div>
+        </div>
+        </div>
+        <div class="new-report">
+          <div class="new-report-left requisitos">
+            <div>
+          <img src="++resource++openmultimedia.reporter/logo_soy.jpg"/>
+          </div>
+          </div>
+          <div class="add-report-button">
+          <a href="#" tal:attributes="href string:${context/absolute_url}/++add++openmultimedia.reporter.anonreport"
+                      tal:condition="view/can_add_reports"
+                      class="report-link edit-report"
+                      i18n:translate="">Add new report</a>
+          </div>
+          <p></p>
+          <div class="new-report-right requisitos">
+          <img src="++resource++openmultimedia.reporter/imagen_contrasena3.jpg"/>
+          <p></p>
+          </div>
+          <div style="clear:both;"></div>
+          <div class="nuevo" align="center" style="margin-top:15px; margin-bottom:15px;">
+          <a target="_blank"  href="http://reportero.telesurtv.net/condiciones_uso.php">
+          <img width="142" height="31" border="0" src="++resource++openmultimedia.reporter/btn_condiciones_uso.jpg"/>
+          </a>
+          </div>
+        </div>
+    </tal:main-macro>
+</metal:main>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+    i18n_domain="openmultimedia.reporter">
+
+    <permission
+        id="openmultimedia.reporter.anonreportAddable"
+        title="openmultimedia.reporter: Can add an Anonymous Report"
+        />
+
+</configure>

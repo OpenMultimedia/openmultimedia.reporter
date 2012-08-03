@@ -1,0 +1,62 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="openmultimedia.reporter">
+
+<metal:styleslot fill-slot="style_slot" >
+
+        <link rel="stylesheet" type="text/css" media="screen" href=""
+              tal:attributes="href string:${context/absolute_url}/++resource++openmultimedia.reporter/styles.css" />
+
+</metal:styleslot>
+
+<metal:javascriptslot fill-slot="javascript_head_slot" >
+
+        <script type="text/javascript" src="++resource++openmultimedia.reporter/javascript.js">
+        </script>
+
+</metal:javascriptslot>
+
+<body>
+
+<metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main">
+      <div class="soy-reporter-list-view">
+        <div class="ireport-banner">
+            <img src="++resource++openmultimedia.reporter/soy_reportero.jpg" />
+        </div>
+
+        <div class="reports-list">
+            <table>
+            <tal:reports repeat="brain view/publics">
+            <tr class="report-item-list" tal:define="report brain/getObject">
+              <td class="report-item-list-title">
+                <a href="#" tal:attributes="href report/absolute_url"
+                            tal:content="report/Title"
+                            class="view-report"/>
+              </td>
+              <td tal:content="report/get_status"></td>
+            </tr>
+            </tal:reports>
+            </table>
+            <div class="arrows-list">
+              <span id="report-arrow-left-list"
+                    tal:attributes="class python:view.actual != 0 and 'show'">
+                <a tal:attributes="href python:context.absolute_url() + '/listado-report' + '?action=prev&amp;actual='+ str(view.actual)" />
+              </span>
+              <span id="report-arrow-right-list"
+                    tal:attributes="class python:view.actual != view.total and 'show'">
+                <a tal:attributes="href python:context.absolute_url() + '/listado-report' + '?action=next&amp;actual='+str(view.actual)" />
+              </span>
+              <div style="clear:both"></div>
+            </div>
+        </div>
+        </div>
+    </tal:main-macro>
+</metal:main>
+
+</body>
+</html>
