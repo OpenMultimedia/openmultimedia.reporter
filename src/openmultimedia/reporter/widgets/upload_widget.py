@@ -1,15 +1,23 @@
-import zope.component
-import zope.interface
-import zope.schema.interfaces
 
-from z3c.form import interfaces
+from zope.component import adapter
+from zope.component import getUtility
+
+from zope.interface import implementer
+
+from zope.schema.interfaces import IField
+
+from z3c.form.interfaces import DISPLAY_MODE
+from z3c.form.interfaces import IFormLayer
+from z3c.form.interfaces import IFieldWidget
+
 from z3c.form.widget import FieldWidget
 from z3c.form.browser.text import TextWidget
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
+from openmultimedia.reporter.interfaces import IUpload
+
 from openmultimedia.reporter import _
-from openmultimedia.reporter.multimedia_connect import MultimediaConnect
 
 
 class UploadWidget(TextWidget):
@@ -68,8 +76,8 @@ class UploadWidget(TextWidget):
     """
 
     def js_input(self):
-        multimedia_connect = MultimediaConnect()
-        url = multimedia_connect.upload_url()
+        upload_utility = getUtility(IUpload)
+        url = upload_utility.upload_url()
         upload_error = _(u"Error uploading file, please try again or use a diferent file")
         upload_success = _(u"File uploaded correctly")
         return self.js_template_input % dict(id=self.id, 
@@ -77,22 +85,22 @@ class UploadWidget(TextWidget):
             upload_error=upload_error, upload_success=upload_success)
     
     def js_display(self):
-        multimedia_connect = MultimediaConnect()
-        url = multimedia_connect.upload_url()
+        upload_utility = getUtility(IUpload)
+        url = upload_utility.upload_url()
         return self.js_template_display % dict(upload_url=url)
     
     def uploader_id(self):
         return self.id + "-uploader"
     
     def render(self):
-        if self.mode == interfaces.DISPLAY_MODE:
+        if self.mode == DISPLAY_MODE:
             return self.display_template(self)
         else:
             return self.input_template(self)
     
 
-@zope.component.adapter(zope.schema.interfaces.IField, interfaces.IFormLayer)
-@zope.interface.implementer(interfaces.IFieldWidget)
+@adapter(IField, IFormLayer)
+@implementer(IFieldWidget)
 def UploadFieldWidget(field, request):
     """IFieldWidget factory for UploadWidget."""
     return FieldWidget(field, UploadWidget(request))
