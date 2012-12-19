@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import logging
+import os
+import sys
+import urllib2
+
 from zope import schema
 from zope.interface import implements
 from zope.app.container.interfaces import IObjectAddedEvent
@@ -19,18 +24,35 @@ from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.dexterity.content import Item
 from plone.dexterity.events import EditFinishedEvent
 from plone.directives import dexterity, form
-from plone.namedfile.field import NamedBlobFile
+
+from plone import namedfile
+
+from plone.namedfile.interfaces import HAVE_BLOBS
+
+if HAVE_BLOBS: # pragma: no cover
+    from plone.namedfile.field import NamedBlobImage
+else: # pragma: no cover
+    from plone.namedfile.field import NamedImage
+
+from Products.CMFCore.interfaces import IActionSucceededEvent
 
 from Products.CMFCore.utils import getToolByName
+
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 
 from collective.prettydate.interfaces import IPrettyDate
 
-from openmultimedia.reporter import _
-from openmultimedia.reporter.widgets.upload_widget import UploadFieldWidget
-from openmultimedia.reporter.multimedia_connect import MultimediaConnect
+from openmultimedia.api.interfaces import IVideoAPI
 
+from openmultimedia.reporter.config import PROJECTNAME
+
+from openmultimedia.reporter.interfaces import IUpload
+from openmultimedia.reporter.widgets.upload_widget import UploadFieldWidget
+
+from openmultimedia.reporter import _
+
+logger = logging.getLogger(PROJECTNAME)
 
 
 class IAnonReport(form.Schema):
@@ -41,29 +63,24 @@ class IAnonReport(form.Schema):
     form.omitted(IEditForm, 'name')
     name = schema.TextLine(title=_(u'Name'),
             description=_(u'help_name',default=u'Enter your name.'),
-            default=u'via',
+            default=u'',
             required=True)
     
     form.omitted(IEditForm, 'country')
     country = schema.TextLine(title=_(u'Country'),
             description=_(u'help_country',default=u'Enter your country.'),
-            default=u'web',
+            default=u'',
             required=True)
-    
-    status = schema.Bool(
-            title=_(u'Status'),
-            description=_(u'help_status',
-                          default=u'Select status.'),
-        )
-    
+
+    dexterity.write_permission(file_id='openmultimedia.reporter.anonreportAddable')
     form.widget(file_id=UploadFieldWidget)
-    form.omitted(IEditForm, 'file_id')
     file_id = schema.Text(
             title=_(u'File'),
              description=_(u'upload video or image'),
              required=True,
     )
     
+    dexterity.write_permission(file_slug='openmultimedia.reporter.anonreportAddable')
     form.omitted('file_slug')
     file_slug = schema.Text(required=False)
 
@@ -75,22 +92,27 @@ class IAnonReport(form.Schema):
             required=True,
         )
 
-    form.omitted('edited_file_id')
-    form.no_omit(IEditForm, 'edited_file_id')
-    form.widget(edited_file_id=UploadFieldWidget)
-    edited_file_id = schema.Text(
-            title=_(u'Edited File'),
-             description=_(u'upload edited video or image'),
-             required=False,
-    )
-    
-    form.omitted('edited_file_slug')
-    edited_file_slug = schema.Text(required=False)
-    
+    dexterity.write_permission(file_type='openmultimedia.reporter.anonreportAddable')
     form.omitted(IDisplayForm, 'file_type')
     file_type = schema.TextLine(
              required=False
     )
+
+    form.omitted('video_file')
+    video_file = schema.Text(required=False)
+
+    form.omitted('image_file')
+    if HAVE_BLOBS: # pragma: no cover
+        image_file = NamedBlobImage(required=False)
+    else: # pragma: no cover
+        image_file = NamedImage(required=False)
+
+    form.omitted('image_preview')
+    if HAVE_BLOBS: # pragma: no cover
+        image_preview = NamedBlobImage(required=False)
+    else: # pragma: no cover
+        image_preview = NamedImage(required=False)
+
 
 class AnonReport(Item):
     """
@@ -98,39 +120,8 @@ class AnonReport(Item):
     """
     implements(IAnonReport)
     
-    def is_published_resource(self):
-        slug = self.file_slug
-        if self.edited_file_slug:
-            slug = self.edited_file_slug
-        body = {}
-    
     def is_image(self):
         return self.file_type == 'image'
-    
-    def get_slug(self):
-        if self.edited_file_slug:
-            return self.edited_file_slug
-        else:
-            return self.file_slug
-
-    def get_file_url(self):
-        multimedia_connect = MultimediaConnect()
-        response, content = multimedia_connect.get_structure(
-            self.get_slug(), self.file_type)
-        if response['status'] == '200' and content:
-            if not self.is_image() and 'archivo_url' in content:
-                return content['archivo_url']     
-            else:
-                return content['thumbnail_grande']
-        return None
-    
-    def get_thumb_image(self):
-        multimedia_connect = MultimediaConnect()
-        response, content = multimedia_connect.get_structure(
-            self.get_slug(), self.file_type)
-        if response['status'] == '200' and 'thumbnail_pequeno' in content:
-            return content['thumbnail_pequeno']
-        return None
     
     def get_status(self):
         workflowTool = getToolByName(self, "portal_workflow")
@@ -146,55 +137,73 @@ class AnonReport(Item):
     def is_published_ct(self):
         return self.get_status() == "published"
 
-# @form.default_value(field = IExcludeFromNavigation['exclude_from_nav'])
-# def excludeFromNavDefaultValue(data):
-#     return data.request.URL.endswith('++add++openmultimedia.reporter.anonreport')
+    def generate_callback_url(self, container):
+        # Para poder testear que la correcta callback_url se esta 
+        # generando, vamos a tener este metodo en el content type
 
-class Edit(dexterity.EditForm):
-    """ Default edit for Ideas
-    """
-    grok.context(IAnonReport)
+        url = "%s/@@processed_result" % self.__of__(container).absolute_url()
 
-    @button.buttonAndHandler(_(u'Save'))
-    def handleSaveAndSend(self, action):
-        slug = None
-        data, errors = self.extractData()
-        if errors:
-            self.status = self.formErrorsMessage
-            return
-        if 'edited_file_id' in data.keys() and \
-            self.context.edited_file_id != data['edited_file_id']:
-            body = {}
-            if 'file_type' in data.keys():
-                file_type = data['file_type']
+        return url
+
+    def update_local_file(self):
+        logger.info("About to update local data for %s" % self.absolute_url())
+        upload_utility = getUtility(IUpload)
+        response, content = upload_utility.get_structure(
+            self.file_slug, self.file_type)
+        if response['status'] == '200' and content:
+            # We got a valid response, let's store local info for the report
+            if not self.is_image() and 'archivo_url' in content:
+                # This is a video
+                self.video_file = content['archivo_url']
+                logger.info("Saved %s as video file" % self.video_file)
             else:
-                raise ActionExecutionError(Invalid(
-                    _(u"Error creating the report, please try again")))
-            if 'IBasic.title' in data.keys():
-                body['titulo'] = data['IBasic.title']
-            if 'IBasic.description' in data.keys():
-                body['descripcion'] = data['IBasic.description']
-            body['archivo'] = data['edited_file_id']
-            body['tipo'] = 'soy-reportero'
+                # This is an image
+                self.store_remote_image_locally(content['thumbnail_grande'], 'image_file')
+                logger.info("Saved %s as image file" % self.image_file)
 
-            multimedia_connect = MultimediaConnect()
-            response, content = multimedia_connect.create_structure(body, file_type)
-            slug = None
-            if "slug" in content:
-                slug = content['slug']
-            if 'status' not in response.keys() or response['status'] != '200'\
-                or not slug:
-                raise ActionExecutionError(Invalid(_(u"Error creating the \
-                    report, please try again")))
-            data['edited_file_slug'] = slug
-            if slug:
-                self.context.edited_file_slug = slug
-                self.context.reindexObject()
-        self.applyChanges(data)
-        IStatusMessage(self.request).addStatusMessage(_(u"Changes saved"),
-            "info")
-        self.request.response.redirect(self.nextURL())
-        notify(EditFinishedEvent(self.context))
+            # Finally, let's store the preview image, for both image and videos
+            self.store_remote_image_locally(content['thumbnail_pequeno'], 'image_preview')
+            logger.info("Saved %s as preview image file" % self.image_file)
+
+    def store_remote_image_locally(self, url, field):
+        """ Convenience method to get a remote image and store
+        it in some local field
+        """        
+        try:
+            logger.info("Getting: %s" % url)
+            data = urllib2.urlopen(url)
+        except urllib2.HTTPError as e:
+            logger.info("There was an error when contacting the remote server: %s" % e.msg)
+            data = None
+
+        if data:
+            filename = os.path.basename(url)
+            if HAVE_BLOBS: # pragma: no cover
+                setattr(self, field, namedfile.NamedBlobImage(data.read(), filename=filename))
+            else: # pragma: no cover
+                setattr(self, field, namedfile.NamedImage(data.read(), filename=filename))
+        
+        else:
+            setattr(self, field, data)
+
+    def has_media(self):
+        has_media = False
+
+        if self.is_image():
+            has_media = self.image_file is not None
+        else:
+            has_media = self.video_file is not None
+
+        return has_media
+
+    def get_video_widget_url(self):
+        video_api = getUtility(IVideoAPI)
+        logger.info("Trying to get the video widget for %s" % self.video_file)
+        url = video_api.get_video_widget_url('', 
+                                             400, 
+                                             {'archivo_url' : self.video_file})
+        logger.info("Got %s" % url)
+        return url
 
 
 class Add(dexterity.AddForm):
@@ -204,65 +213,74 @@ class Add(dexterity.AddForm):
     grok.context(IAnonReport)
 
     @button.buttonAndHandler(_('Save'), name='save')
-    def handleAdd(self, action):
+    def handleSave(self, action):
         data, errors = self.extractData()
         if errors:
             self.status = self.formErrorsMessage
             return
+
+        obj = self.createAndAdd(data)
+        if obj is None:
+            raise ActionExecutionError(Invalid(
+                _(u"Error creating the report, please try again")))
+
         body = {}
-        if 'file_type' in data.keys():
+        if 'file_type' in data and data['file_type']:
             file_type = data['file_type']
         else:
-            raise ActionExecutionError(Invalid(
-                _(u"Error creating the report,please try again")))
-        if 'IBasic.title' in data.keys():
+            self.context.manage_delObjects(obj.id)
+            raise ActionExecutionError(Invalid(_(u"Error creating the "
+                                            "report, please try again")))
+
+        if 'IBasic.title' in data:
             body['titulo'] = data['IBasic.title'].encode("utf-8", "ignore")
-        if 'file_id' in data.keys():
+
+        if 'file_id' in data and data['file_id']:
             body['archivo'] = data['file_id']
+
         body['tipo'] = 'soy-reportero'
-        
-        multimedia_connect = MultimediaConnect()
-        response, content = multimedia_connect.create_structure(body, file_type)
+
+        callback_url = obj.generate_callback_url(self.context)
+        body['callback'] = callback_url
+
+        upload_utility = getUtility(IUpload)
+        response, content = upload_utility.create_structure(body, file_type)
 
         if 'status' not in response.keys() or response['status'] != '200':
-            raise ActionExecutionError(Invalid(_(u"Error creating the report,\
-                please try again")))
-        slug = None
-        if "slug" in content:
+            logger.info("Invalid response from server: %s" % response)
+            self.context.manage_delObjects(obj.id)
+            raise ActionExecutionError(Invalid(_(u"Error creating the "
+                                            "report, please try again")))
+
+        if content and "slug" in content:
             slug = content['slug']
         else:
-            raise ActionExecutionError(Invalid(_(u"Error creating the report,\
-                please try again")))
+            logger.info("No slug provided: %s" % content)
+            self.context.manage_delObjects(obj.id)
+            raise ActionExecutionError(Invalid(_(u"Error creating the "
+                                            "report, please try again")))
 
-        data['file_slug'] = slug
-        obj = self.createAndAdd(data)
-        if obj is not None:
-            # mark only as finished if we get the new object
-            obj.file_slug = slug
-            obj.reindexObject()
-            self._finishedAdd = True
-            IStatusMessage(self.request).addStatusMessage(_(u"Item created"),
-                "info")
+        obj.file_slug = slug
+        obj.reindexObject()
+        self._finishedAdd = True
+        IStatusMessage(self.request).addStatusMessage(_(u"Item created"),
+            "info")
 
+        self.request.RESPONSE.redirect(self.context.absolute_url())
+        
         return obj
 
-@grok.subscribe(IAnonReport, IObjectAddedEvent)
-def redirect_after_add(obj, event):
-    """
-    se redirige al padre en lugar de permanecer en el reporte recien
-    cargado.
-    """
-    parent = obj.aq_inner.aq_parent
-    obj.REQUEST.RESPONSE.redirect(parent.absolute_url())
 
 class View(dexterity.DisplayForm):
     grok.context(IAnonReport)
     grok.require('zope2.View')
-    
-    def can_edit(self):
-        permission = 'cmf.ModifyPortalContent'
-        return checkPermission(permission, self.context)
 
     def render(self):
         pt = ViewPageTemplateFile('ianonreport_templates/ianonreport_view.pt')
         return pt(self)
+
+
+@grok.subscribe(IAnonReport, IActionSucceededEvent)
+def fetch_content_on_submit(report, event):
+    if event.action == "submit":
+        report.update_local_file()
