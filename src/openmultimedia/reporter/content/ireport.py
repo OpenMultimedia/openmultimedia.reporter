@@ -4,13 +4,17 @@ import math
 
 from five import grok
 
-from plone.directives import dexterity, form
+from zope.component import getUtility
 
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.security import checkPermission
+
+from plone.directives import dexterity, form
 
 from Products.CMFCore.utils import getToolByName
 
-from zope.security import checkPermission
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+
+from openmultimedia.api.interfaces import IVideoAPI
 
 
 class IIReport(form.Schema):
@@ -18,28 +22,30 @@ class IIReport(form.Schema):
     A section that contains reports
     """
 
-BATCH_SIZE = 5.0
+
 class View(dexterity.DisplayForm):
     grok.context(IIReport)
     grok.require('zope2.View')
-    
+
+    batch_size = 5
+
     def update(self):
         self.actual = 0
         self.total = 0
         publics = self.get_published_reports()
-        self.total = int(math.ceil(len(publics)/BATCH_SIZE)) - 1
+        self.total = int(math.ceil(len(publics)/self.batch_size)) - 1
         if 'action' in self.request.keys():
             action = self.request['action']
             if action == 'next':
                 self.actual = int(self.request['actual'])
-                if len(publics[(self.actual+1)*int(BATCH_SIZE): (self.actual+2)*int(BATCH_SIZE)]) > 0:
+                if len(publics[(self.actual+1)*int(self.batch_size): (self.actual+2)*int(self.batch_size)]) > 0:
                     self.actual += 1
             elif action == 'prev':
                 self.actual = int(self.request['actual'])
                 if self.actual > 0:
                     self.actual -= 1
-        
-        self.publics = publics[self.actual*int(BATCH_SIZE):(self.actual+1)*int(BATCH_SIZE)]
+
+        self.publics = publics[self.actual*int(self.batch_size):(self.actual+1)*int(self.batch_size)]
         self.main_report_new = None
         if self.publics:
             self.main_report_new = self.publics[0]
@@ -60,30 +66,53 @@ class View(dexterity.DisplayForm):
 
         ct = "openmultimedia.reporter.anonreport"
         path='/'.join(self.context.getPhysicalPath())
-        sort_on='Date'
+        sort_on='effective'
         sort_order='reverse'
-        if state:
-            results = pc.unrestrictedSearchResults(portal_type=ct,
-                                               review_state=state,
-                                               sort_on=sort_on,
-                                               sort_order=sort_order,
-                                               path=path)
-        else:
-            results = pc.unrestrictedSearchResults(portal_type=ct,
-                                               sort_on=sort_on,
-                                               sort_order=sort_order,
-                                               path=path)
+
+        query = {'portal_type': ct,
+                 'sort_on': sort_on,
+                 'sort_order': sort_order,
+                 'path': path}
             
+        if state:
+            query['review_state'] = state
+
+        results = pc(**query)
 
         return results
 
-    def get_all_reports(self):
-        reports = self._get_catalog_results()
-        return reports
-        
     def get_published_reports(self):
         reports = self._get_catalog_results('published')
         return reports
+
+
+class ListadoReportView(View):
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('listado-report')
+
+    batch_size = 20
+
+    def update(self):
+        self.actual = 0
+        self.total = 0
+        publics = self.get_non_published_reports()
+        self.total = int(math.ceil(len(publics)/self.batch_size))-1
+
+        if 'action' in self.request.keys():
+            action = self.request['action']
+            if action == 'next':
+                self.actual = int(self.request['actual'])
+                if len(publics[(self.actual+1)*int(self.batch_size): (self.actual+2)*int(self.batch_size)]) > 0:
+                    self.actual += 1
+            elif action == 'prev':
+                self.actual = int(self.request['actual'])
+                if self.actual > 0:
+                    self.actual -= 1
+        self.publics = publics[self.actual*int(self.batch_size):(self.actual+1)*int(self.batch_size)]
+    
+    def render(self):
+        pt = ViewPageTemplateFile('ireport_templates/listadoreport_view.pt')
+        return pt(self)
 
     def get_non_published_reports(self):
         pc = getToolByName(self.context, 'portal_catalog')
@@ -91,36 +120,9 @@ class View(dexterity.DisplayForm):
         path='/'.join(self.context.getPhysicalPath())
         sort_on='Date'
         sort_order='reverse'
-        states = ['private','revised', 'rejected', 'edited',  'organized']
+        states = ['pending', 'private', 'rejected']
         filters = {'review_state':{'operator': 'or', 'query': states},
                     'portal_type': ct, 'path':path, 'sort_on':sort_on,
                     'sort_order':sort_order}
         reports = pc.searchResults(filters)
         return reports
-
-
-BACH_SIZE = 20.0
-class ListadoReportView(View):
-    grok.require('cmf.ModifyPortalContent')
-    grok.name('listado-report')
-    
-    def update(self):
-        self.actual = 0
-        self.total = 0
-        publics = self.get_non_published_reports()
-        self.total = int(math.ceil(len(publics)/BACH_SIZE))-1
-        if 'action' in self.request.keys():
-            action = self.request['action']
-            if action == 'next':
-                self.actual = int(self.request['actual'])
-                if len(publics[(self.actual+1)*int(BACH_SIZE): (self.actual+2)*int(BACH_SIZE)]) > 0:
-                    self.actual += 1
-            elif action == 'prev':
-                self.actual = int(self.request['actual'])
-                if self.actual > 0:
-                    self.actual -= 1
-        self.publics = publics[self.actual*int(BACH_SIZE):(self.actual+1)*int(BACH_SIZE)]
-    
-    def render(self):
-        pt = ViewPageTemplateFile('ireport_templates/listadoreport_view.pt')
-        return pt(self)
