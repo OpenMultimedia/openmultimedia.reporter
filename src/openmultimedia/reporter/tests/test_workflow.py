@@ -58,7 +58,7 @@ class WorkflowTest(unittest.TestCase):
                                   'test-anon-report')
         self.assertTrue('test-anon-report' in self.folder)
 
-    def test_question_not_visible_by_anonymous_if_it_is_not_published(self):
+    def test_report_not_visible_by_anonymous_if_it_is_not_published(self):
         checkPermission = self.checkPermission
         logout()
         self.folder.invokeFactory('openmultimedia.reporter.anonreport',
@@ -72,19 +72,19 @@ class WorkflowTest(unittest.TestCase):
 
         self._loginAsManager()
 
-        self.wt.doActionFor(report, 'set_revised')
+        self.wt.doActionFor(report, 'submit')
 
         logout()
         self.assertNotEqual(checkPermission('View', report), 1)
         self._loginAsManager()
 
-        self.wt.doActionFor(report, 'set_edited')
+        self.wt.doActionFor(report, 'reject')
 
         logout()
         self.assertNotEqual(checkPermission('View', report), 1)
         self._loginAsManager()
 
-        self.wt.doActionFor(report, 'set_organized')
+        self.wt.doActionFor(report, 'submit')
 
         logout()
         self.assertNotEqual(checkPermission('View', report), 1)

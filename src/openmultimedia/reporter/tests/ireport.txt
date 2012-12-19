@@ -1,0 +1,116 @@
+Functional test que va a testear el batching en la vista de soy reportero:
+
+    >>> import os
+
+    >>> app = layer['app']
+    >>> portal = layer['portal']
+    >>> request = layer['request']
+
+    >>> from DateTime import DateTime
+
+    >>> import hashlib
+
+    >>> from plone.testing.z2 import Browser
+    >>> browser = Browser(app)
+    >>> portalURL = portal.absolute_url()
+
+    >>> from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+Vamos al home y agregamos una seccion "I report", para poder agregar reportes
+
+    >>> browser.getLink('Home').click()
+    >>> browser.getLink('I report section').click()
+    >>> browser.getControl('Title').value = 'Soy reportero'
+    >>> browser.getControl('Save').click()
+    >>> section_url = portalURL + '/soy-reportero'
+    >>> browser.getLink('Publish').click()
+
+Agregamos 10 reportes
+
+    >>> browser.open(portalURL + '/logout')
+    >>> browser.open(section_url)
+
+    >>> for index in range(10):
+    ...     browser.getLink('Add new report').click()
+    ...     browser.getControl('Title').value = "title-%s"%index
+    ...     browser.getControl('Name').value = "Frapell"
+    ...     browser.getControl('Country').value = "Argentina"
+    ...     browser.getControl(name="form.widgets.file_id").value = "ireport-valid-id"
+    ...     browser.getControl(name="form.widgets.file_type").value = "image"
+    ...     browser.getControl(name="form.widgets.date-day").value = "1"
+    ...     browser.getControl(name="form.widgets.date-month").value = ['1']
+    ...     browser.getControl(name="form.widgets.date-year").value = "2012"
+    ...     browser.getControl("Save").click()
+
+Generamos los callback url y los llamamos:
+
+    >>> for index in range(10):
+    ...     m = hashlib.md5()
+    ...     secret = "security_key"
+    ...     id = "title-%s"%index
+    ...     m.update(secret+id)
+    ...     digest = m.hexdigest()
+    ...     callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
+    ...     browser.open(callback_url)
+
+Volvemos a ingresar al sitio para mover a publicado cada reporte:
+
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+    >>> for index in range(10):
+    ...     id = "title-%s"%index
+    ...     browser.open("%s/%s/" % (section_url, id))
+    ...     browser.getLink('Publish').click()
+
+Salimos nuevamente, y vamos a la vista general. Solo deberiamos ver los 5 reportes
+mas recientes.
+XXX: Los indices de tipo DateIndex, tienen una resolucion de 1 minuto, y al publicarse
+los objetos tan velozmente, el orden es ignorado, asi que no podemos testear que los mas
+recientes vengan primero, pero vamos a asumir que la busqueda al catalogo con effective
+y 'reverse', funciona como debe...:
+
+    >>> browser.open(portalURL + '/logout')
+    >>> browser.open(section_url)
+
+    >>> reports = ['title-%s' % index in browser.contents for index in range(10)]
+
+    >>> reports.count(True)
+    5
+    >>> reports.count(False)
+    5
+    
+Hacemos click en 'next' y deberiamos ver los siguientes 5 items:
+
+    >>> browser.getLink(id='report-arrow-next-link').click()
+
+    >>> reports = ['title-%s' % index in browser.contents for index in range(10)]
+
+    >>> reports.count(True)
+    5
+    >>> reports.count(False)
+    5
+    
+Hacemos click en 'prev' y deberiamos ver los siguientes 5 items:
+
+    >>> browser.getLink(id='report-arrow-prev-link').click()
+
+    >>> reports = ['title-%s' % index in browser.contents for index in range(10)]
+
+    >>> reports.count(True)
+    5
+    >>> reports.count(False)
+    5
+    

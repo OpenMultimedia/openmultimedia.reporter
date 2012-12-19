@@ -1,0 +1,101 @@
+Functional test que simula variados casos de error:
+
+    >>> import os
+    >>> import hashlib
+    >>> import logging
+    >>> import StringIO
+
+    >>> from openmultimedia.reporter.testing import LoggingMsgHandler
+
+    >>> sh = LoggingMsgHandler()
+    >>> sh.setLevel(logging.INFO)
+    >>> formatter = logging.Formatter('%(message)s')
+    >>> sh.setFormatter(formatter)
+
+    >>> logger = logging.getLogger('openmultimedia.reporter')
+    >>> logger.setLevel(logging.INFO)
+    >>> logger.addHandler(sh)
+
+    >>> app = layer['app']
+    >>> portal = layer['portal']
+    >>> request = layer['request']
+
+    >>> from DateTime import DateTime as now
+
+    >>> from plone.testing.z2 import Browser
+    >>> browser = Browser(app)
+    >>> portalURL = portal.absolute_url()
+
+    >>> from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+Vamos al home y agregamos una seccion "I report", para poder agregar reportes
+
+    >>> browser.getLink('Home').click()
+    >>> browser.getLink('I report section').click()
+    >>> browser.getControl('Title').value = 'Soy reportero'
+    >>> browser.getControl('Save').click()
+    >>> section_url = portalURL + '/soy-reportero'
+    >>> browser.getLink('Publish').click()
+
+Ahora salimos, y vamos a cargar un reporte anonimo, que va a intentar obtener
+una imagen remota inexistente
+
+    >>> browser.open(portalURL + '/logout')
+    >>> browser.open(section_url)
+    >>> "Anonymous report" in browser.contents
+    True
+
+    >>> browser.getLink('Add new report').click()
+    >>> browser.getControl('Title').value = "My Valid Report"
+    >>> browser.getControl('Name').value = "Frapell"
+    >>> browser.getControl('Country').value = "Argentina"
+    >>> browser.getControl(name="form.widgets.file_id").value = "error-handling-non-existing-image"
+    >>> browser.getControl(name="form.widgets.file_type").value = "image"
+    >>> browser.getControl(name="form.widgets.date-day").value = "1"
+    >>> browser.getControl(name="form.widgets.date-month").value = ['1']
+    >>> browser.getControl(name="form.widgets.date-year").value = "2012"
+    >>> browser.getControl("Save").click()
+
+    >>> "Item created" in browser.contents
+    True
+
+    >>> browser.url == section_url
+    True
+
+llamamos primero al callback url, para eso los generamos
+
+    >>> sh.clearMsgs()
+
+    >>> m = hashlib.md5()
+    >>> secret = "security_key"
+    >>> id = "my-valid-report"
+    >>> m.update(secret+id)
+    >>> digest = m.hexdigest()
+    >>> callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
+    >>> browser.open(callback_url)
+
+    >>> 'There was an error when contacting the remote server: Not Found' in sh.msgs
+    True
+
+Vemos que el reporte existe, pero que no tiene una imagen cargada:
+
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+    >>> browser.open(section_url)
+
+    >>> browser.getLink('Contents').click()
+    >>> browser.getLink('My Valid Report').click()
+

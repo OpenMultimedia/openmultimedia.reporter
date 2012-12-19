@@ -1,0 +1,216 @@
+<registry>
+  <record field="audio_only" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.audio_only">
+    <field type="plone.registry.field.TextLine">
+      <default>solo_audio=true</default>
+      <description>Only get audio</description>
+      <title>Audio only</title>
+    </field>
+    <value>solo_audio=true</value>
+  </record>
+  <record field="audio_regex_string" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.audio_regex_string">
+    <field type="plone.registry.field.TextLine">
+      <default>^http:\/\/.+\/(?P&lt;url&gt;clips\/.+\.mp3?)$</default>
+      <description>Regex to match with the audio API.</description>
+      <title>Audio Regex string</title>
+    </field>
+    <value>^http:\/\/.+\/(?P&lt;url&gt;clips\/.+\.mp3?)$</value>
+  </record>
+  <record field="details" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.details">
+    <field type="plone.registry.field.TextLine">
+      <default>detalle</default>
+      <description>Specify the level of info to retrieve</description>
+      <title>Details</title>
+    </field>
+    <value>detalle</value>
+  </record>
+  <record field="latest_from_section_widget" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.latest_from_section_widget">
+    <field type="plone.registry.field.TextLine">
+      <default>http://multimedia.telesurtv.net/media/video/cmswidgets/videos.html?widget=ultimos_seccion</default>
+      <description>A widget that will show the latest video from a given section</description>
+      <title>Latest video widget from section</title>
+    </field>
+    <value>http://multimedia.telesurtv.net/media/video/cmswidgets/videos.html?widget=ultimos_seccion</value>
+  </record>
+  <record field="limit" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.limit">
+    <field type="plone.registry.field.TextLine">
+      <default>limit</default>
+      <description>Specify the number of items to retrieve</description>
+      <title>Limit</title>
+    </field>
+    <value>limit</value>
+  </record>
+  <record field="most_seen_widget" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.most_seen_widget">
+    <field type="plone.registry.field.TextLine">
+      <default>http://multimedia.telesurtv.net/media/video/cmswidgets/videos.html?widget=mas_vistos</default>
+      <description>A widget for the videos most seen</description>
+      <title>Most seen video widget</title>
+    </field>
+    <value>http://multimedia.telesurtv.net/media/video/cmswidgets/videos.html?widget=mas_vistos</value>
+  </record>
+  <record field="offset" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.offset">
+    <field type="plone.registry.field.TextLine">
+      <default>offset</default>
+      <description>Specify the offset for pagination</description>
+      <title>Offset</title>
+    </field>
+    <value>offset</value>
+  </record>
+  <record field="time_filter_day" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.time_filter_day">
+    <field type="plone.registry.field.TextLine">
+      <default>tiempo=dia</default>
+      <title>Filter results by day</title>
+    </field>
+    <value>tiempo=dia</value>
+  </record>
+  <record field="time_filter_month" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.time_filter_month">
+    <field type="plone.registry.field.TextLine">
+      <default>tiempo=mes</default>
+      <title>Filter results by month</title>
+    </field>
+    <value>tiempo=mes</value>
+  </record>
+  <record field="time_filter_week" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.time_filter_week">
+    <field type="plone.registry.field.TextLine">
+      <default>tiempo=semana</default>
+      <title>Filter results by week</title>
+    </field>
+    <value>tiempo=semana</value>
+  </record>
+  <record field="time_filter_year" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.time_filter_year">
+    <field type="plone.registry.field.TextLine">
+      <default>tiempo=ano</default>
+      <title>Filter results by year</title>
+    </field>
+    <value>tiempo=ano</value>
+  </record>
+  <record field="url_base" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.url_base">
+    <field type="plone.registry.field.TextLine">
+      <default>http://localhost:15555</default>
+      <description>Base URL for the API.</description>
+      <title>URL Base</title>
+    </field>
+    <value>http://localhost:15555</value>
+  </record>
+  <record field="video_api" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.video_api">
+    <field type="plone.registry.field.TextLine">
+      <default>clip/?</default>
+      <description>API to interact with the video.</description>
+      <title>Video API</title>
+    </field>
+    <value>clip/?</value>
+  </record>
+  <record field="video_api_regex_string" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.video_api_regex_string">
+    <field type="plone.registry.field.TextLine">
+      <default>^http:\/\/.+\/api\/(?P&lt;url&gt;clip\/.+?)$</default>
+      <description>Regex to match with the video API.</description>
+      <title>Video API Regex string</title>
+    </field>
+    <value>^http:\/\/.+\/api\/(?P&lt;url&gt;clip\/.+?)$</value>
+  </record>
+  <record field="video_category" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.video_category">
+    <field type="plone.registry.field.TextLine">
+      <default>category</default>
+      <description>Specify the category of the video</description>
+      <title>Video category</title>
+    </field>
+    <value>category</value>
+  </record>
+  <record field="video_order" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.video_order">
+    <field type="plone.registry.field.TextLine">
+      <default>order</default>
+      <description>Specify the order of the returned videos</description>
+      <title>Order videos</title>
+    </field>
+    <value>order</value>
+  </record>
+  <record field="video_regex_string" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.video_regex_string">
+    <field type="plone.registry.field.TextLine">
+      <default>^http:\/\/.+\/(?P&lt;url&gt;clips\/.+\.mp4?)$</default>
+      <description>Regex to match with videos from the API.</description>
+      <title>Video Regex string</title>
+    </field>
+    <value>^http:\/\/.+\/(?P&lt;url&gt;clips\/.+\.mp4?)$</value>
+  </record>
+  <record field="video_region" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.video_region">
+    <field type="plone.registry.field.TextLine">
+      <default>region</default>
+      <description>Specify the region of the video</description>
+      <title>Video region</title>
+    </field>
+    <value>region</value>
+  </record>
+  <record field="video_thumbnail_large" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.video_thumbnail_large">
+    <field type="plone.registry.field.TextLine">
+      <default>thumbnail_grande</default>
+      <description>Get the large thumbnail from the returned JSON</description>
+      <title>Large thumbnail</title>
+    </field>
+    <value>thumbnail_grande</value>
+  </record>
+  <record field="video_thumbnail_medium" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.video_thumbnail_medium">
+    <field type="plone.registry.field.TextLine">
+      <default>thumbnail_mediano</default>
+      <description>Get the medium thumbnail from the returned JSON</description>
+      <title>Medium thumbnail</title>
+    </field>
+    <value>thumbnail_mediano</value>
+  </record>
+  <record field="video_thumbnail_small" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.video_thumbnail_small">
+    <field type="plone.registry.field.TextLine">
+      <default>thumbnail_pequeno</default>
+      <description>Get the small thumbnail from the returned JSON</description>
+      <title>Small thumbnail</title>
+    </field>
+    <value>thumbnail_pequeno</value>
+  </record>
+  <record field="video_type" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.video_type">
+    <field type="plone.registry.field.TextLine">
+      <default>tipo</default>
+      <description>Specify the type of the video</description>
+      <title>Video type</title>
+    </field>
+    <value>tipo</value>
+  </record>
+  <record field="video_widget_url_base" interface="openmultimedia.api.interfaces.IAPISettings" name="openmultimedia.api.interfaces.IAPISettings.video_widget_url_base">
+    <field type="plone.registry.field.TextLine">
+      <default>http://multimedia.telesurtv.net/player/insertar.js?archivo=</default>
+      <title>Video widget URL base</title>
+    </field>
+    <value>http://multimedia.telesurtv.net/player/insertar.js?archivo=</value>
+  </record>
+  <record field="image_notify" interface="openmultimedia.reporter.interfaces.IReporterSettings" name="openmultimedia.reporter.interfaces.IReporterSettings.image_notify">
+    <field type="plone.registry.field.TextLine">
+      <default>imagen</default>
+      <title>Image notify</title>
+    </field>
+    <value>imagen</value>
+  </record>
+  <record field="key" interface="openmultimedia.reporter.interfaces.IReporterSettings" name="openmultimedia.reporter.interfaces.IReporterSettings.key">
+    <field type="plone.registry.field.TextLine">
+      <default>telesursoyreporteroploneweb</default>
+      <title>Upload key</title>
+    </field>
+    <value>telesursoyreporteroploneweb</value>
+  </record>
+  <record field="security_key" interface="openmultimedia.reporter.interfaces.IReporterSettings" name="openmultimedia.reporter.interfaces.IReporterSettings.security_key">
+    <field type="plone.registry.field.TextLine">
+      <default>security_key</default>
+      <title>Security key</title>
+    </field>
+    <value>security_key</value>
+  </record>
+  <record field="upload_location" interface="openmultimedia.reporter.interfaces.IReporterSettings" name="openmultimedia.reporter.interfaces.IReporterSettings.upload_location">
+    <field type="plone.registry.field.TextLine">
+      <default>upload</default>
+      <title>Upload url</title>
+    </field>
+    <value>upload</value>
+  </record>
+  <record field="video_notify" interface="openmultimedia.reporter.interfaces.IReporterSettings" name="openmultimedia.reporter.interfaces.IReporterSettings.video_notify">
+    <field type="plone.registry.field.TextLine">
+      <default>clip</default>
+      <title>Video notify</title>
+    </field>
+    <value>clip</value>
+  </record>
+</registry>

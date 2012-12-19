@@ -1,0 +1,199 @@
+Functional test que simula que el proceso completo de la carga de un reporte
+anonimo, con un video:
+
+    >>> import os
+    >>> import hashlib
+
+    >>> app = layer['app']
+    >>> portal = layer['portal']
+    >>> request = layer['request']
+
+    >>> from DateTime import DateTime as now
+
+    >>> from plone.testing.z2 import Browser
+    >>> browser = Browser(app)
+    >>> portalURL = portal.absolute_url()
+
+    >>> from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+Vamos al home y agregamos una seccion "I report", para poder agregar reportes
+
+    >>> browser.getLink('Home').click()
+    >>> browser.getLink('I report section').click()
+    >>> browser.getControl('Title').value = 'Soy reportero'
+    >>> browser.getControl('Save').click()
+    >>> section_url = portalURL + '/soy-reportero'
+    >>> browser.getLink('Publish').click()
+
+Ahora salimos, y vamos a cargar un reporte anonimo, con algun valor faltante
+para que falle 
+
+    >>> browser.open(portalURL + '/logout')
+    >>> browser.open(section_url)
+    >>> "Anonymous report" in browser.contents
+    True
+
+    >>> browser.getLink('Add new report').click()
+    >>> browser.getControl('Title').value = "My Valid Report"
+    >>> browser.getControl('Name').value = "Frapell"
+    >>> browser.getControl('Country').value = "Argentina"
+    >>> browser.getControl(name="form.widgets.file_type").value = "video"
+    >>> browser.getControl(name="form.widgets.date-day").value = "1"
+    >>> browser.getControl(name="form.widgets.date-month").value = ['1']
+    >>> browser.getControl(name="form.widgets.date-year").value = "2012"
+    >>> browser.getControl("Save").click()
+
+    >>> "There were some errors" in browser.contents
+    True
+
+El tipo de archivo fue populado correctamente, pero al pedir que se cree la
+estructura remota, el servidor devuelve una respuesta erronea    
+
+
+    >>> browser.getControl(name="form.widgets.file_id").value = "videoreport-invalid-id"
+    >>> browser.getControl("Save").click()
+
+    >>> "Error creating the report, please try again" in browser.contents
+    True
+
+Ahora, recibimos una respuesta positiva de la creacion de la estructura, pero
+no obtenemos un slug valido
+
+    >>> browser.getControl(name="form.widgets.file_id").value = "videoreport-valid-id-no-slug"
+    >>> browser.getControl("Save").click()
+
+    >>> "Error creating the report, please try again" in browser.contents
+    True
+
+Por ultimo, enviamos todo correctamente, y recibimos todo como deberiamos.
+El reporte se crea satisfactoriamente y somos redirigidos al contenedor de reportes
+
+    >>> browser.getControl(name="form.widgets.file_id").value = "videoreport-valid-id"
+    >>> browser.getControl("Save").click()
+
+    >>> "Item created" in browser.contents
+    True
+
+    >>> browser.url == section_url
+    True
+
+Vemos que el reporte no queda visible
+
+    >>> "My Valid Report" in browser.contents
+    False
+
+Y tampoco es visible para un administrador, hasta que no se obtenga respuesta del
+sistema remoto
+
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+    >>> browser.open(section_url)
+
+    >>> browser.getLink('Contents').click()
+
+    >>> "My Valid Report" in browser.contents
+    False
+
+    >>> browser.open(portalURL + '/logout')
+
+Para que los reportes sean visibles para administradores, necesitamos primero llamar
+a los callback url, para eso los generamos
+
+    >>> m = hashlib.md5()
+    >>> secret = "security_key"
+    >>> id = "my-valid-report"
+    >>> m.update(secret+id)
+    >>> digest = m.hexdigest()
+    >>> callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
+    >>> browser.open(callback_url)
+
+Volvemos a ingresar al sitio para editar el reporte:
+
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+    >>> browser.open(section_url)
+
+    >>> browser.getLink('Contents').click()
+    >>> browser.getLink('My Valid Report').click()
+    >>> browser.getLink('Edit').click()
+
+Vemos que ninguno de los campos relacionados al archivo estan visibles
+
+    >>> 'Name' in browser.contents
+    False
+    >>> 'Country' in browser.contents
+    False
+    >>> 'file_id' in browser.contents
+    False
+    >>> 'file_slug' in browser.contents
+    False
+    >>> 'file_type' in browser.contents
+    False
+
+Pero si podemos editar el titulo, la descripcion y la fecha
+
+    >>> 'title' in browser.contents
+    True
+    >>> 'description' in browser.contents
+    True
+    >>> 'date' in browser.contents
+    True
+
+Vamos a cambiar los valores y guardar para ver los cambios reflejados
+
+    >>> browser.getControl('Title').value = "My edited report"
+    >>> browser.getControl('Description').value = "Una nota de periodismo ciudadano"
+    >>> browser.getControl(name="form.widgets.date-day").value = "12"
+    >>> browser.getControl(name="form.widgets.date-month").value = ['10']
+    >>> browser.getControl(name="form.widgets.date-year").value = "2012"
+    >>> browser.getControl("Save").click()
+
+    >>> "My Valid Report" in browser.contents
+    False
+    >>> "My edited report" in browser.contents
+    True
+    >>> "Una nota de periodismo ciudadano" in browser.contents
+    True
+
+Todo esta bien, entonces, publicamos el reporte, y deberia quedar visible en
+la seccion principal, tanto para el administrador como para anonimos, y 
+deberiamos tambien como anonimos, poder acceder al reporte
+
+    >>> browser.getLink("Publish").click()
+    >>> browser.open(section_url)
+    >>> "My edited report" in browser.contents
+    True
+
+    >>> browser.open(portalURL + '/logout')    
+    >>> browser.open(section_url)
+    
+    >>> "My edited report" in browser.contents
+    True
+    >>> browser.getLink('My edited report').click()
+
+Por ultimo, vemos que se muestra el snip de codigo Javascript en la pagina
+para mostrar el player de video
+
+    >>> ("<script type=\"text/javascript\" src=\"http://multimedia."
+    ... "telesurtv.net/player/insertar.js?archivo=clips/video.mp4&"
+    ... "amp;amp;width=400\"></script>") in browser.contents
+    True
