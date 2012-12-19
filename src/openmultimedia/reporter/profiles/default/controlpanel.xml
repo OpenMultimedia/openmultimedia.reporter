@@ -3,12 +3,12 @@
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
     i18n:domain="openmultimedia.reporter"
     purge="False">
-    <configlet title="soy reportero Settings"
-        action_id="reportero"
+    <configlet title="I Report Settings"
+        action_id="reporter"
         appId="openmultimedia.reporter"
         category="Products"
         condition_expr=""
-        url_expr="string:${portal_url}/@@soy-reportero-settings"
+        url_expr="string:${portal_url}/@@i-report-settings"
         visible="True"
         i18n:attributes="title">
         <permission>Manage portal</permission>

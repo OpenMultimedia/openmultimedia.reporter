@@ -24,8 +24,20 @@
       description="Installs the openmultimedia.reporter package"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
+
+  <genericsetup:registerProfile
+      name="test_fixture"
+      title="openmultimedia.reporter (Test Fixture)"
+      directory="profiles/test_fixture"
+      description="Installs the openmultimedia.reporter package"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
   <!-- -*- extra stuff goes here -*- -->
   
+  <utility
+    provides=".interfaces.IUpload"
+    factory=".utility.Upload" />
+
   <include package="plone.z3cform" />
   <class class=".widgets.upload_widget.UploadWidget">
       <require
@@ -35,9 +47,9 @@
   </class>
   
   <browser:page
-      name="soy-reportero-settings"
+      name="i-report-settings"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      class=".controlpanel.ReporteroSettingsControlPanel"
+      class=".controlpanel.ReporterSettingsControlPanel"
       permission="cmf.ManagePortal"
       />
 
