@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import cgi
-import httplib2
 import json
 import logging
 import os
@@ -18,13 +17,11 @@ from plone.app.testing import IntegrationTesting
 from plone.app.testing import FunctionalTesting
 
 
-class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cover
+class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):  # pragma: no cover
 
     def do_GET(self):
         try:
-            path, rest = self.path.split('?')        
-            param_list = rest.split('&')
-            params = dict([i.split('=') for i in param_list])
+            path, rest = self.path.split('?')
 
         except ValueError:
             path = self.path
@@ -49,7 +46,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
         elif path == '/imagen/anonreport-valid-slug':
             self.send_response(200)
             self.send_header('Content-Type', 'application/octet-stream')
-            response = {"slug": "valid-slug", 
+            response = {"slug": "valid-slug",
                         "publicado": True,
                         "archivo_url": "http://localhost:15555/clips/video.mp4",
                         "thumbnail_grande": "http://localhost:15555/imagen.png",
@@ -63,7 +60,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
         elif path == '/imagen/callback-test-valid-slug':
             self.send_response(200)
             self.send_header('Content-Type', 'application/octet-stream')
-            response = {"slug": "callback-test-valid-slug", 
+            response = {"slug": "callback-test-valid-slug",
                         "publicado": True,
                         "archivo_url": "http://localhost:15555/clips/video.mp4",
                         "thumbnail_grande": "http://localhost:15555/imagen.png",
@@ -77,7 +74,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
         elif path == '/imagen/remote-process-success-valid-slug':
             self.send_response(200)
             self.send_header('Content-Type', 'application/octet-stream')
-            response = {"slug": "remote-process-success-valid-slug", 
+            response = {"slug": "remote-process-success-valid-slug",
                         "publicado": True,
                         "archivo_url": "http://localhost:15555/clips/video.mp4",
                         "thumbnail_grande": "http://localhost:15555/imagen.png",
@@ -91,7 +88,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
         elif path == '/imagen/workflow-valid-slug':
             self.send_response(200)
             self.send_header('Content-Type', 'application/octet-stream')
-            response = {"slug": "workflow-valid-slug", 
+            response = {"slug": "workflow-valid-slug",
                         "publicado": True,
                         "archivo_url": "http://localhost:15555/clips/video.mp4",
                         "thumbnail_grande": "http://localhost:15555/imagen.png",
@@ -105,7 +102,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
         elif path == '/clip/None':
             self.send_response(200)
             self.send_header('Content-Type', 'application/octet-stream')
-            response = {"slug": "clip-none-valid-slug", 
+            response = {"slug": "clip-none-valid-slug",
                         "publicado": True,
                         "archivo_url": "http://localhost:15555/clips/video.mp4",
                         "thumbnail_grande": "http://localhost:15555/imagen.png",
@@ -119,7 +116,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
         elif path == '/imagen/test-valid-slug':
             self.send_response(200)
             self.send_header('Content-Type', 'application/octet-stream')
-            response = {"slug": "valid-slug", 
+            response = {"slug": "valid-slug",
                         "publicado": True}
 
             self.end_headers()
@@ -130,7 +127,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
         elif path == '/imagen/test-unpublished-valid-slug':
             self.send_response(200)
             self.send_header('Content-Type', 'application/octet-stream')
-            response = {"slug": "valid-slug", 
+            response = {"slug": "valid-slug",
                         "publicado": False}
 
             self.end_headers()
@@ -153,7 +150,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
         elif path == '/clip/test-valid-slug':
             self.send_response(200)
             self.send_header('Content-Type', 'application/octet-stream')
-            response = {"slug": "valid-slug", 
+            response = {"slug": "valid-slug",
                         "publicado": True}
 
             self.end_headers()
@@ -164,7 +161,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
         elif path == '/clip/test-unpublished-valid-slug':
             self.send_response(200)
             self.send_header('Content-Type', 'application/octet-stream')
-            response = {"slug": "valid-slug", 
+            response = {"slug": "valid-slug",
                         "publicado": False}
 
             self.end_headers()
@@ -187,7 +184,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
         elif path == '/clip/videoreport-valid-slug':
             self.send_response(200)
             self.send_header('Content-Type', 'application/octet-stream')
-            response = {"slug": "clip-videoreport-valid-slug", 
+            response = {"slug": "clip-videoreport-valid-slug",
                         "publicado": True,
                         "archivo_url": "http://localhost:15555/clips/video.mp4",
                         "thumbnail_grande": "http://localhost:15555/imagen.png",
@@ -201,7 +198,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
         elif path == '/imagen/ireport-valid-slug':
             self.send_response(200)
             self.send_header('Content-Type', 'application/octet-stream')
-            response = {"slug": "ireport-valid-slug", 
+            response = {"slug": "ireport-valid-slug",
                         "publicado": True,
                         "archivo_url": "http://localhost:15555/clips/video.mp4",
                         "thumbnail_grande": "http://localhost:15555/imagen.png",
@@ -227,7 +224,8 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
             self.wfile.close()
 
         else:
-            import pdb;pdb.set_trace()
+            # import pdb;pdb.set_trace()
+            pass
 
         return
 
@@ -245,8 +243,8 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
 
         content = cgi.FieldStorage(fp=self.rfile,
                                    headers=self.headers,
-                                   environ={'REQUEST_METHOD':'POST',
-                                            'CONTENT_TYPE':content_type,})
+                                   environ={'REQUEST_METHOD': 'POST',
+                                            'CONTENT_TYPE': content_type, })
 
         if self.path == '/upload':
             if content.value == 'invalid':
@@ -265,7 +263,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
                     self.send_response(200)
                 elif content['archivo'].value == 'anonreport-valid-id':
                     self.send_response(200)
-                    
+
                     self.send_header('Content-Type', 'application/octet-stream')
                     self.end_headers()
 
@@ -278,7 +276,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
                     self.send_response(200)
                 elif content['archivo'].value == 'valid-id':
                     self.send_response(200)
-                    
+
                     self.send_header('Content-Type', 'application/octet-stream')
                     self.end_headers()
 
@@ -287,7 +285,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
 
                 elif content['archivo'].value == 'callback-test-valid-id':
                     self.send_response(200)
-                    
+
                     self.send_header('Content-Type', 'application/octet-stream')
                     self.end_headers()
 
@@ -296,7 +294,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
 
                 elif content['archivo'].value == 'remote-process-fail-valid-id':
                     self.send_response(200)
-                    
+
                     self.send_header('Content-Type', 'application/octet-stream')
                     self.end_headers()
 
@@ -305,7 +303,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
 
                 elif content['archivo'].value == 'remote-process-success-valid-id':
                     self.send_response(200)
-                    
+
                     self.send_header('Content-Type', 'application/octet-stream')
                     self.end_headers()
 
@@ -314,7 +312,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
 
                 elif content['archivo'].value == 'workflow-valid-id':
                     self.send_response(200)
-                    
+
                     self.send_header('Content-Type', 'application/octet-stream')
                     self.end_headers()
 
@@ -323,7 +321,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
 
                 elif content['archivo'].value == 'error-handling-non-existing-image':
                     self.send_response(200)
-                    
+
                     self.send_header('Content-Type', 'application/octet-stream')
                     self.end_headers()
 
@@ -332,7 +330,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
 
                 elif content['archivo'].value == 'ireport-valid-id':
                     self.send_response(200)
-                    
+
                     self.send_header('Content-Type', 'application/octet-stream')
                     self.end_headers()
 
@@ -342,15 +340,14 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
             else:
                 if content['titulo'].value == 'error':
                     self.send_response(400)
-                else:   
+                else:
                     self.send_response(200)
-                        
+
                     self.send_header('Content-Type', 'application/octet-stream')
                     self.end_headers()
 
                     self.wfile.write('{"slug": "valid-slug"}')
                     self.wfile.close()
-
 
         elif self.path == '/clip':
             if 'archivo' in content:
@@ -360,7 +357,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
                     self.send_response(200)
                 elif content['archivo'].value == 'videoreport-valid-id':
                     self.send_response(200)
-                    
+
                     self.send_header('Content-Type', 'application/octet-stream')
                     self.end_headers()
 
@@ -370,9 +367,9 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): # pragma: no cov
             else:
                 if content['titulo'].value == 'error':
                     self.send_response(400)
-                else:   
+                else:
                     self.send_response(200)
-                        
+
                     self.send_header('Content-Type', 'application/octet-stream')
                     self.end_headers()
 
@@ -419,7 +416,7 @@ class Fixture(PloneSandboxLayer):
 
     defaultBases = (PLONE_FIXTURE,)
 
-    def startSimpleHTTPServer(self): # pragma: no cover
+    def startSimpleHTTPServer(self):  # pragma: no cover
         PORT = 15555
 
         try:
@@ -455,8 +452,8 @@ FIXTURE = Fixture()
 INTEGRATION_TESTING = IntegrationTesting(
     bases=(FIXTURE,),
     name='openmultimedia.reporter:Integration',
-    )
+)
 FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(FIXTURE,),
     name='openmultimedia.reporter:Functional',
-    )
+)

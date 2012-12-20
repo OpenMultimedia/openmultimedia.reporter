@@ -35,7 +35,7 @@ class ProcessedResultView(grok.View):
 
             m = hashlib.md5()
 
-            m.update(security_key+id)
+            m.update(security_key + id)
             digest = m.hexdigest()
 
             logger.info("Digest: %s " % digest)
@@ -50,12 +50,11 @@ class ProcessedResultView(grok.View):
                     workflow = getToolByName(self.context, 'portal_workflow')
                     workflow.doActionFor(self.context, 'submit')
                     logger.info("Object %s has been successfuly moved to 'pending revision' state." % self.context.absolute_url())
-                else:                    
+                else:
                     logger.info("No message type specified. Leaving.")
 
             else:
                 logger.info("They do not match. This was a bad request.")
-    
 
         else:
             logger.info("Got no key. Bad request.")

@@ -4,8 +4,6 @@ import math
 
 from five import grok
 
-from zope.component import getUtility
-
 from zope.security import checkPermission
 
 from plone.directives import dexterity, form
@@ -13,8 +11,6 @@ from plone.directives import dexterity, form
 from Products.CMFCore.utils import getToolByName
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
-from openmultimedia.api.interfaces import IVideoAPI
 
 
 class IIReport(form.Schema):
@@ -33,23 +29,23 @@ class View(dexterity.DisplayForm):
         self.actual = 0
         self.total = 0
         publics = self.get_published_reports()
-        self.total = int(math.ceil(len(publics)/self.batch_size)) - 1
+        self.total = int(math.ceil(len(publics) / self.batch_size)) - 1
         if 'action' in self.request.keys():
             action = self.request['action']
             if action == 'next':
                 self.actual = int(self.request['actual'])
-                if len(publics[(self.actual+1)*int(self.batch_size): (self.actual+2)*int(self.batch_size)]) > 0:
+                if len(publics[(self.actual + 1) * int(self.batch_size):(self.actual + 2) * int(self.batch_size)]) > 0:
                     self.actual += 1
             elif action == 'prev':
                 self.actual = int(self.request['actual'])
                 if self.actual > 0:
                     self.actual -= 1
 
-        self.publics = publics[self.actual*int(self.batch_size):(self.actual+1)*int(self.batch_size)]
+        self.publics = publics[self.actual * int(self.batch_size):(self.actual + 1) * int(self.batch_size)]
         self.main_report_new = None
         if self.publics:
             self.main_report_new = self.publics[0]
-        
+
     def render(self):
         pt = ViewPageTemplateFile('ireport_templates/ireport_view.pt')
         return pt(self)
@@ -65,15 +61,15 @@ class View(dexterity.DisplayForm):
         pc = getToolByName(self.context, 'portal_catalog')
 
         ct = "openmultimedia.reporter.anonreport"
-        path='/'.join(self.context.getPhysicalPath())
-        sort_on='effective'
-        sort_order='reverse'
+        path = '/'.join(self.context.getPhysicalPath())
+        sort_on = 'effective'
+        sort_order = 'reverse'
 
         query = {'portal_type': ct,
                  'sort_on': sort_on,
                  'sort_order': sort_order,
                  'path': path}
-            
+
         if state:
             query['review_state'] = state
 
@@ -96,20 +92,20 @@ class ListadoReportView(View):
         self.actual = 0
         self.total = 0
         publics = self.get_non_published_reports()
-        self.total = int(math.ceil(len(publics)/self.batch_size))-1
+        self.total = int(math.ceil(len(publics) / self.batch_size)) - 1
 
         if 'action' in self.request.keys():
             action = self.request['action']
             if action == 'next':
                 self.actual = int(self.request['actual'])
-                if len(publics[(self.actual+1)*int(self.batch_size): (self.actual+2)*int(self.batch_size)]) > 0:
+                if len(publics[(self.actual + 1) * int(self.batch_size):(self.actual + 2) * int(self.batch_size)]) > 0:
                     self.actual += 1
             elif action == 'prev':
                 self.actual = int(self.request['actual'])
                 if self.actual > 0:
                     self.actual -= 1
-        self.publics = publics[self.actual*int(self.batch_size):(self.actual+1)*int(self.batch_size)]
-    
+        self.publics = publics[self.actual * int(self.batch_size):(self.actual + 1) * int(self.batch_size)]
+
     def render(self):
         pt = ViewPageTemplateFile('ireport_templates/listadoreport_view.pt')
         return pt(self)
@@ -117,12 +113,14 @@ class ListadoReportView(View):
     def get_non_published_reports(self):
         pc = getToolByName(self.context, 'portal_catalog')
         ct = "openmultimedia.reporter.anonreport"
-        path='/'.join(self.context.getPhysicalPath())
-        sort_on='Date'
-        sort_order='reverse'
+        path = '/'.join(self.context.getPhysicalPath())
+        sort_on = 'Date'
+        sort_order = 'reverse'
         states = ['pending', 'private', 'rejected']
-        filters = {'review_state':{'operator': 'or', 'query': states},
-                    'portal_type': ct, 'path':path, 'sort_on':sort_on,
-                    'sort_order':sort_order}
+        filters = {'review_state': {'operator': 'or', 'query': states},
+                   'portal_type': ct,
+                   'path': path,
+                   'sort_on': sort_on,
+                   'sort_order': sort_order}
         reports = pc.searchResults(filters)
         return reports

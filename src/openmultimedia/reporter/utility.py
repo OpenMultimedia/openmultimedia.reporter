@@ -37,7 +37,7 @@ class Upload(object):
         for name in sorted(params_dict.iterkeys()):
             cadena += u'%s%s' % (name, params_dict[name])
         return hashlib.md5(cadena).hexdigest()
-    
+
     def upload_url(self):
 
         video_api = getUtility(IVideoAPI)
@@ -48,7 +48,7 @@ class Upload(object):
         upload_location = settings.upload_location
 
         return "%s/%s" % (multimedia_url, upload_location)
-    
+
     def normalize_data(self, data):
         DATA_KEYS = ['titulo', 'descripcion']
         result = {}
@@ -58,7 +58,7 @@ class Upload(object):
             else:
                 result[key] = data[key]
         return result
-    
+
     def get_security_key(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(IReporterSettings)
@@ -91,10 +91,10 @@ class Upload(object):
         http = httplib2.Http()
         content_json = None
         try:
-            logger.info("Making a request to: %s with headers: %s and body: %s" 
+            logger.info("Making a request to: %s with headers: %s and body: %s"
                         % (url, headers, body))
-            response, content = http.request(url, 'POST', headers=headers, 
-                body=urlencode(body))
+            response, content = http.request(url, 'POST', headers=headers,
+                                             body=urlencode(body))
         except:
             logger.info("There was an error when contacting the remote server: %s" % sys.exc_info()[0])
             response = {'status': '400'}
@@ -103,7 +103,7 @@ class Upload(object):
         if content:
             content_json = json.loads(content)
         return response, content_json
-    
+
     def publish_structure(self, slug, file_type):
 
         video_api = getUtility(IVideoAPI)
@@ -123,21 +123,21 @@ class Upload(object):
 
         headers = {'Accept': 'application/json'}
 
-        body={'publicado':'true'}
+        body = {'publicado': 'true'}
         sign_key = self.sign_request(body, key, security_key)
         body['signature'] = sign_key
         http = httplib2.Http()
         try:
-            logger.info("Making a request to: %s with headers: %s and body: %s" 
+            logger.info("Making a request to: %s with headers: %s and body: %s"
                         % (url, headers, body))
-            response, content = http.request(url, 'PUT', headers=headers, 
-                body=urlencode(body))
+            response, content = http.request(url, 'PUT', headers=headers,
+                                             body=urlencode(body))
         except:
             logger.info("There was an error when contacting the remote server: %s" % sys.exc_info()[0])
-            response = {'status':'400'}
+            response = {'status': '400'}
             content = ""
         return response, content
-    
+
     def get_structure(self, slug, file_type):
 
         video_api = getUtility(IVideoAPI)
@@ -164,10 +164,10 @@ class Upload(object):
         body_url = urlencode(body)
         url = url + '?' + body_url
         try:
-            logger.info("Making a request to: %s with headers: %s and body: %s" 
+            logger.info("Making a request to: %s with headers: %s and body: %s"
                         % (url, headers, body))
-            response, content = http.request(url, 'GET', headers=headers, 
-                body=urlencode(body))
+            response, content = http.request(url, 'GET', headers=headers,
+                                             body=urlencode(body))
         except:
             logger.info("There was an error when contacting the remote server: %s" % sys.exc_info()[0])
             response = {'status': '400'}

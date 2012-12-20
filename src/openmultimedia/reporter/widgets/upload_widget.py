@@ -24,16 +24,16 @@ class UploadWidget(TextWidget):
     """Input type upload widget implementation."""
     input_template = ViewPageTemplateFile('upload_input.pt')
     display_template = ViewPageTemplateFile('upload_display.pt')
-    
+
     klass = u'upload-widget'
-    
+
     # JavaScript template
     js_template_input = """\
     (function($) {
         function endsWith(str, suffix) {
             return str.indexOf(suffix, str.length - suffix.length) !== -1;
         }
-        
+
         $().ready(function() {
         $("#formfield-form-widgets-file_type").css("display", "none");
         $('#%(id)s').css('display','none');
@@ -80,24 +80,26 @@ class UploadWidget(TextWidget):
         url = upload_utility.upload_url()
         upload_error = _(u"Error uploading file, please try again or use a diferent file")
         upload_success = _(u"File uploaded correctly")
-        return self.js_template_input % dict(id=self.id, 
-            id_uploader=self.uploader_id(), upload_url=url,
-            upload_error=upload_error, upload_success=upload_success)
-    
+        return self.js_template_input % dict(id=self.id,
+                                             id_uploader=self.uploader_id(),
+                                             upload_url=url,
+                                             upload_error=upload_error,
+                                             upload_success=upload_success)
+
     def js_display(self):
         upload_utility = getUtility(IUpload)
         url = upload_utility.upload_url()
         return self.js_template_display % dict(upload_url=url)
-    
+
     def uploader_id(self):
         return self.id + "-uploader"
-    
+
     def render(self):
         if self.mode == DISPLAY_MODE:
             return self.display_template(self)
         else:
             return self.input_template(self)
-    
+
 
 @adapter(IField, IFormLayer)
 @implementer(IFieldWidget)

@@ -8,8 +8,6 @@ from plone.registry.interfaces import IRegistry
 
 from openmultimedia.api.interfaces import IAPISettings
 
-from openmultimedia.reporter.config import PROJECTNAME
-
 from openmultimedia.reporter.interfaces import IUpload
 
 from openmultimedia.reporter.testing import INTEGRATION_TESTING
@@ -47,7 +45,7 @@ class InstallTest(unittest.TestCase):
                 'descripcion': 'å∫çDescripción'}
 
         normalized_dict = self.utility.normalize_data(data)
-        normalized_dict_should_be = {'descripcion': 'ay-a-assdescripcia3n', 
+        normalized_dict_should_be = {'descripcion': 'ay-a-assdescripcia3n',
                                      'titulo': 'mi-tatulo-de-prueba'}
 
         self.assertEqual(normalized_dict, normalized_dict_should_be)
@@ -82,7 +80,7 @@ class InstallTest(unittest.TestCase):
 
             self.assertEqual(response['status'], '400')
             self.assertIsNone(content)
-            
+
             # Vamos a cambiar la url_base temporalmente para simular un timeout
             records.url_base = u"http://localhost:15556"
             response, content = self.utility.create_structure(data, file_type)
@@ -107,14 +105,14 @@ class InstallTest(unittest.TestCase):
             self.assertEqual(response['status'], '200')
             self.assertEqual(content, '')
 
-            # Vamos a simular que en el servidor remoto se produjo un error        
+            # Vamos a simular que en el servidor remoto se produjo un error
             slug = "error-slug"
 
             response, content = self.utility.publish_structure(slug, file_type)
 
             self.assertEqual(response['status'], '400')
             self.assertEqual(content, '')
-            
+
             # Vamos a cambiar la url_base temporalmente para simular un timeout
             records.url_base = u"http://localhost:15556"
             response, content = self.utility.publish_structure(slug, file_type)
@@ -145,14 +143,14 @@ class InstallTest(unittest.TestCase):
             self.assertEqual(response['status'], '200')
             self.assertEqual(content, {u'publicado': False, u'slug': u'valid-slug'})
 
-            # Vamos a simular que en el servidor remoto se produjo un error        
+            # Vamos a simular que en el servidor remoto se produjo un error
             slug = "test-error-slug"
 
             response, content = self.utility.get_structure(slug, file_type)
 
             self.assertEqual(response['status'], '400')
             self.assertEqual(content, None)
-            
+
             # Vamos a cambiar la url_base temporalmente para simular un timeout
             records.url_base = u"http://localhost:15556"
             response, content = self.utility.get_structure(slug, file_type)

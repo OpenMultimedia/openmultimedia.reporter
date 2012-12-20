@@ -2,15 +2,11 @@
 
 import logging
 import os
-import sys
 import urllib2
 
 from zope import schema
 from zope.interface import implements
-from zope.app.container.interfaces import IObjectAddedEvent
-from zope.security import checkPermission
 from zope.interface import Invalid
-from zope.event import notify
 from zope.component import getUtility
 
 from z3c.form import button
@@ -20,18 +16,16 @@ from five import grok
 
 from z3c.form.interfaces import IEditForm, IDisplayForm
 
-from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.dexterity.content import Item
-from plone.dexterity.events import EditFinishedEvent
 from plone.directives import dexterity, form
 
 from plone import namedfile
 
 from plone.namedfile.interfaces import HAVE_BLOBS
 
-if HAVE_BLOBS: # pragma: no cover
+if HAVE_BLOBS:  # pragma: no cover
     from plone.namedfile.field import NamedBlobImage
-else: # pragma: no cover
+else:  # pragma: no cover
     from plone.namedfile.field import NamedImage
 
 from Products.CMFCore.interfaces import IActionSucceededEvent
@@ -61,56 +55,58 @@ class IAnonReport(form.Schema):
     """
 
     form.omitted(IEditForm, 'name')
-    name = schema.TextLine(title=_(u'Name'),
-            description=_(u'help_name',default=u'Enter your name.'),
-            default=u'',
-            required=True)
-    
+    name = schema.TextLine(
+        title=_(u'Name'),
+        description=_(u'help_name', default=u'Enter your name.'),
+        default=u'',
+        required=True
+    )
+
     form.omitted(IEditForm, 'country')
-    country = schema.TextLine(title=_(u'Country'),
-            description=_(u'help_country',default=u'Enter your country.'),
-            default=u'',
-            required=True)
+    country = schema.TextLine(
+        title=_(u'Country'),
+        description=_(u'help_country', default=u'Enter your country.'),
+        default=u'',
+        required=True
+    )
 
     dexterity.write_permission(file_id='openmultimedia.reporter.anonreportAddable')
     form.widget(file_id=UploadFieldWidget)
     file_id = schema.Text(
-            title=_(u'File'),
-             description=_(u'upload video or image'),
-             required=True,
+        title=_(u'File'),
+        description=_(u'upload video or image'),
+        required=True,
     )
-    
+
     dexterity.write_permission(file_slug='openmultimedia.reporter.anonreportAddable')
     form.omitted('file_slug')
     file_slug = schema.Text(required=False)
 
     date = schema.Datetime(
-            title=_(u'Date'),
-            description=_(u'help_date',
-                          default=(u'Enter here the date in which this photo '
-                                    'or video was taken.')),
-            required=True,
-        )
+        title=_(u'Date'),
+        description=_(u'help_date',
+                      default=(u'Enter here the date in which this photo '
+                               'or video was taken.')),
+        required=True,
+    )
 
     dexterity.write_permission(file_type='openmultimedia.reporter.anonreportAddable')
     form.omitted(IDisplayForm, 'file_type')
-    file_type = schema.TextLine(
-             required=False
-    )
+    file_type = schema.TextLine(required=False)
 
     form.omitted('video_file')
     video_file = schema.Text(required=False)
 
     form.omitted('image_file')
-    if HAVE_BLOBS: # pragma: no cover
+    if HAVE_BLOBS:  # pragma: no cover
         image_file = NamedBlobImage(required=False)
-    else: # pragma: no cover
+    else:  # pragma: no cover
         image_file = NamedImage(required=False)
 
     form.omitted('image_preview')
-    if HAVE_BLOBS: # pragma: no cover
+    if HAVE_BLOBS:  # pragma: no cover
         image_preview = NamedBlobImage(required=False)
-    else: # pragma: no cover
+    else:  # pragma: no cover
         image_preview = NamedImage(required=False)
 
 
@@ -119,26 +115,26 @@ class AnonReport(Item):
 
     """
     implements(IAnonReport)
-    
+
     def is_image(self):
         return self.file_type == 'image'
-    
+
     def get_status(self):
         workflowTool = getToolByName(self, "portal_workflow")
         chain = workflowTool.getChainForPortalType(self.portal_type)
         status = workflowTool.getStatusOf(chain[0], self)
         state = status["review_state"]
         return state
-    
+
     def get_date(self):
         date_utility = getUtility(IPrettyDate)
         return date_utility.date(self.date)
-    
+
     def is_published_ct(self):
         return self.get_status() == "published"
 
     def generate_callback_url(self, container):
-        # Para poder testear que la correcta callback_url se esta 
+        # Para poder testear que la correcta callback_url se esta
         # generando, vamos a tener este metodo en el content type
 
         url = "%s/@@processed_result" % self.__of__(container).absolute_url()
@@ -168,7 +164,7 @@ class AnonReport(Item):
     def store_remote_image_locally(self, url, field):
         """ Convenience method to get a remote image and store
         it in some local field
-        """        
+        """
         try:
             logger.info("Getting: %s" % url)
             data = urllib2.urlopen(url)
@@ -178,11 +174,11 @@ class AnonReport(Item):
 
         if data:
             filename = os.path.basename(url)
-            if HAVE_BLOBS: # pragma: no cover
+            if HAVE_BLOBS:  # pragma: no cover
                 setattr(self, field, namedfile.NamedBlobImage(data.read(), filename=filename))
-            else: # pragma: no cover
+            else:  # pragma: no cover
                 setattr(self, field, namedfile.NamedImage(data.read(), filename=filename))
-        
+
         else:
             setattr(self, field, data)
 
@@ -199,9 +195,9 @@ class AnonReport(Item):
     def get_video_widget_url(self):
         video_api = getUtility(IVideoAPI)
         logger.info("Trying to get the video widget for %s" % self.video_file)
-        url = video_api.get_video_widget_url('', 
-                                             400, 
-                                             {'archivo_url' : self.video_file})
+        url = video_api.get_video_widget_url('',
+                                             400,
+                                             {'archivo_url': self.video_file})
         logger.info("Got %s" % url)
         return url
 
@@ -230,7 +226,7 @@ class Add(dexterity.AddForm):
         else:
             self.context.manage_delObjects(obj.id)
             raise ActionExecutionError(Invalid(_(u"Error creating the "
-                                            "report, please try again")))
+                                                 "report, please try again")))
 
         if 'IBasic.title' in data:
             body['titulo'] = data['IBasic.title'].encode("utf-8", "ignore")
@@ -250,7 +246,7 @@ class Add(dexterity.AddForm):
             logger.info("Invalid response from server: %s" % response)
             self.context.manage_delObjects(obj.id)
             raise ActionExecutionError(Invalid(_(u"Error creating the "
-                                            "report, please try again")))
+                                                 "report, please try again")))
 
         if content and "slug" in content:
             slug = content['slug']
@@ -258,16 +254,16 @@ class Add(dexterity.AddForm):
             logger.info("No slug provided: %s" % content)
             self.context.manage_delObjects(obj.id)
             raise ActionExecutionError(Invalid(_(u"Error creating the "
-                                            "report, please try again")))
+                                                 "report, please try again")))
 
         obj.file_slug = slug
         obj.reindexObject()
         self._finishedAdd = True
         IStatusMessage(self.request).addStatusMessage(_(u"Item created"),
-            "info")
+                                                      "info")
 
         self.request.RESPONSE.redirect(self.context.absolute_url())
-        
+
         return obj
 
 
