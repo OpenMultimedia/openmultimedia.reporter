@@ -76,7 +76,8 @@ llamamos primero al callback url, para eso los generamos
     >>> m = hashlib.md5()
     >>> secret = "security_key"
     >>> id = "my-valid-report"
-    >>> m.update(secret+id)
+    >>> file_id = "error-handling-non-existing-image"
+    >>> m.update(secret+file_id)
     >>> digest = m.hexdigest()
     >>> callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
     >>> browser.open(callback_url)

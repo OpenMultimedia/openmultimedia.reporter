@@ -81,7 +81,8 @@ no va a volver a procesarse
     >>> m = hashlib.md5()
     >>> secret = "security_key"
     >>> id = "my-valid-report"
-    >>> m.update(secret+id)
+    >>> file_id = "remote-process-fail-valid-id"
+    >>> m.update(secret+file_id)
     >>> digest = m.hexdigest()
     >>> callback_url = "%s/%s/@@processed_result?key=%s&type=error" % (section_url, id, digest)
     >>> browser.open(callback_url)

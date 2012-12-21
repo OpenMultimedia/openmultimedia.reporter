@@ -31,7 +31,7 @@ class ProcessedResultView(grok.View):
             logger.info("Got: %s as key" % key)
             utility = getUtility(IUpload)
             security_key = utility.get_security_key()
-            id = self.context.id
+            id = self.context.file_id
 
             m = hashlib.md5()
 

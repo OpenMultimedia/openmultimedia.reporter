@@ -112,21 +112,24 @@ Generamos los callback url y los llamamos:
     >>> m = hashlib.md5()
     >>> secret = "security_key"
     >>> id = "reporte-pendiente"
-    >>> m.update(secret+id)
+    >>> file_id = "workflow-valid-id"
+    >>> m.update(secret+file_id)
     >>> digest = m.hexdigest()
     >>> callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
     >>> browser.open(callback_url)
 
     >>> m = hashlib.md5()
     >>> id = "reporte-rechazado"
-    >>> m.update(secret+id)
+    >>> file_id = "workflow-valid-id"
+    >>> m.update(secret+file_id)
     >>> digest = m.hexdigest()
     >>> callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
     >>> browser.open(callback_url)
 
     >>> m = hashlib.md5()
     >>> id = "reporte-publicado"
-    >>> m.update(secret+id)
+    >>> file_id = "workflow-valid-id"
+    >>> m.update(secret+file_id)
     >>> digest = m.hexdigest()
     >>> callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
     >>> browser.open(callback_url)

@@ -146,7 +146,8 @@ Ahora, vamos a intentar con un key valido y sin type
     >>> import hashlib
     >>> m = hashlib.md5()
     >>> secret = "security_key"
-    >>> m.update(secret+id)
+    >>> file_id = "callback-test-valid-id"
+    >>> m.update(secret+file_id)
     >>> digest = m.hexdigest()
     >>> callback_url = "%s/%s/@@processed_result?key=%s" % (section_url, id, digest)
     >>> browser.open(callback_url)
@@ -173,7 +174,8 @@ Ahora, vamos a intentar con un key valido y con type erroneo
 
     >>> m = hashlib.md5()
     >>> secret = "security_key"
-    >>> m.update(secret+id)
+    >>> file_id = "callback-test-valid-id"
+    >>> m.update(secret+file_id)
     >>> digest = m.hexdigest()
     >>> callback_url = "%s/%s/@@processed_result?key=%s&type=invalid" % (section_url, id, digest)
     >>> browser.open(callback_url)
@@ -200,7 +202,8 @@ Por ultimo, lo hacemos con el key valido y con el type correcto:
 
     >>> m = hashlib.md5()
     >>> secret = "security_key"
-    >>> m.update(secret+id)
+    >>> file_id = "callback-test-valid-id"
+    >>> m.update(secret+file_id)
     >>> digest = m.hexdigest()
     >>> callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
     >>> browser.open(callback_url)

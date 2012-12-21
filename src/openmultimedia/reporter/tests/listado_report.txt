@@ -55,7 +55,8 @@ Generamos los callback url y los llamamos:
     ...     m = hashlib.md5()
     ...     secret = "security_key"
     ...     id = "title-%s"%index
-    ...     m.update(secret+id)
+    ...     file_id = "ireport-valid-id"
+    ...     m.update(secret+file_id)
     ...     digest = m.hexdigest()
     ...     callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
     ...     browser.open(callback_url)
