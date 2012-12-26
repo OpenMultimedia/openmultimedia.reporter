@@ -40,6 +40,7 @@ setup(name='openmultimedia.reporter',
       install_requires=[
         'setuptools',
         'httplib2',
+        'Pillow',
         'Plone>=4.2',
         'borg.localrole',
         'plone.app.dexterity>=1.2.1',
