@@ -1,0 +1,215 @@
+Functional test que va a testear el workflow y permisos:
+
+    >>> import os
+
+    >>> app = layer['app']
+    >>> portal = layer['portal']
+    >>> request = layer['request']
+
+    >>> from DateTime import DateTime as now
+
+    >>> import hashlib
+
+    >>> from plone.testing.z2 import Browser
+    >>> browser = Browser(app)
+    >>> portalURL = portal.absolute_url()
+
+    >>> from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+Vamos al home y agregamos una seccion "I report", para poder agregar reportes
+
+    >>> browser.getLink('Home').click()
+    >>> browser.getLink('I report section').click()
+    >>> browser.getControl('Title').value = 'Soy reportero'
+    >>> browser.getControl('Save').click()
+    >>> section_url = portalURL + '/soy-reportero'
+    >>> browser.getLink('Publish').click()
+
+Agregamos 4 reportes, como anónimo. La idea es que cada
+reporte se encuentre en un estado de workflow distinto, para probar lo que
+se ve, y lo permitido acceder por los permisos
+
+    >>> browser.open(portalURL + '/logout')
+    >>> browser.open(section_url)
+
+    >>> titles = ['Reporte privado', 'Reporte pendiente', 'Reporte rechazado',
+    ...       'Reporte publicado']
+
+    >>> for title in titles:
+    ...     browser.getLink('Add new report').click()
+    ...     browser.getControl('Title').value = title
+    ...     browser.getControl('Name').value = "Frapell"
+    ...     browser.getControl('Country').value = "Argentina"
+    ...     browser.getControl(name="form.widgets.file_id").value = "workflow-valid-id"
+    ...     browser.getControl(name="form.widgets.file_type").value = "image"
+    ...     browser.getControl(name="form.widgets.date-day").value = "1"
+    ...     browser.getControl(name="form.widgets.date-month").value = ['1']
+    ...     browser.getControl(name="form.widgets.date-year").value = "2012"
+    ...     browser.getControl("Save").click()
+
+En este momento, como anonimos, no deberíamos estar viendo ninguna de las
+preguntas, ya que se encuentran privadas
+
+    >>> 'Reporte privado' in browser.contents
+    False
+    >>> 'Reporte pendiente' in browser.contents
+    False
+    >>> 'Reporte rechazado' in browser.contents
+    False
+    >>> 'Reporte publicado' in browser.contents
+    False
+
+
+Mas aún, chequeamos que no tenemos permisos de acceder a los reportes
+
+    >>> browser.open(section_url+'/reporte-privado')
+    >>> "Reporte privado" in browser.contents
+    False
+    >>> browser.open(section_url+'/reporte-pendiente')
+    >>> "Reporte pendiente" in browser.contents
+    False
+    >>> browser.open(section_url+'/reporte-rechazado')
+    >>> "Reporte rechazado" in browser.contents
+    False
+    >>> browser.open(section_url+'/reporte-publicado')
+    >>> "Reporte publicado" in browser.contents
+    False
+
+Ingresamos, y volvemos a ver que ningun reporte es visible, hasta que hagamos
+las llamadas a los callback url correctos, excepto en el reporte privado
+
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+    >>> browser.open(section_url)
+    
+    >>> browser.getLink('Contents').click()
+    >>> 'Reporte privado' in browser.contents
+    False
+    >>> 'Reporte pendiente' in browser.contents
+    False
+    >>> 'Reporte rechazado' in browser.contents
+    False
+    >>> 'Reporte publicado' in browser.contents
+    False
+
+Generamos los callback url y los llamamos:
+
+    >>> browser.open(portalURL + '/logout')
+
+    >>> m = hashlib.md5()
+    >>> secret = "security_key"
+    >>> id = "reporte-pendiente"
+    >>> file_id = "workflow-valid-id"
+    >>> m.update(secret+file_id)
+    >>> digest = m.hexdigest()
+    >>> callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
+    >>> browser.open(callback_url)
+
+    >>> m = hashlib.md5()
+    >>> id = "reporte-rechazado"
+    >>> file_id = "workflow-valid-id"
+    >>> m.update(secret+file_id)
+    >>> digest = m.hexdigest()
+    >>> callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
+    >>> browser.open(callback_url)
+
+    >>> m = hashlib.md5()
+    >>> id = "reporte-publicado"
+    >>> file_id = "workflow-valid-id"
+    >>> m.update(secret+file_id)
+    >>> digest = m.hexdigest()
+    >>> callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
+    >>> browser.open(callback_url)
+
+Volvemos a ingresar al sitio para mover a los estados a cada reporte:
+
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+    >>> browser.open(section_url)
+
+    >>> browser.getLink('Contents').click()
+
+Todos los reportes, excepto el privado, son visibles:
+
+    >>> 'Reporte privado' in browser.contents
+    False
+    >>> 'Reporte pendiente' in browser.contents
+    True
+    >>> 'Reporte rechazado' in browser.contents
+    True
+    >>> 'Reporte publicado' in browser.contents
+    True
+
+Vamos a mover de estados los que quedan:
+
+    >>> browser.getLink("Reporte rechazado").click()
+    >>> browser.getLink('Reject').click()
+    >>> browser.open(section_url)
+    >>> browser.getLink('Contents').click()
+
+    >>> browser.getLink("Reporte publicado").click()
+    >>> browser.getLink('Publish').click()
+
+Volvemos a la seccion y chequeamos que todos los reportes sigan siendo visibles
+excepto el reporte privado
+
+    >>> browser.open(section_url)
+    >>> browser.getLink('Contents').click()
+
+    >>> 'Reporte privado' in browser.contents
+    False
+    >>> 'Reporte pendiente' in browser.contents
+    True
+    >>> 'Reporte rechazado' in browser.contents
+    True
+    >>> 'Reporte publicado' in browser.contents
+    True
+
+Salimos nuevamente, y chequeamos que solo vemos el reporte publicado:
+
+    >>> browser.open(portalURL + '/logout')
+    >>> browser.open(section_url)
+
+    >>> 'reporte-privado' in browser.contents
+    False
+    >>> 'reporte-pendiente' in browser.contents
+    False
+    >>> 'reporte-rechazado' in browser.contents
+    False
+    >>> 'reporte-publicado' in browser.contents
+    True
+
+Mas aún, chequeamos que no tenemos permisos de acceder a los reportes,
+excepto el publicado
+
+    >>> browser.open(section_url+'/reporte-privado')
+    >>> "Reporte privado" in browser.contents
+    False
+    >>> browser.open(section_url+'/reporte-pendiente')
+    >>> "Reporte pendiente" in browser.contents
+    False
+    >>> browser.open(section_url+'/reporte-rechazado')
+    >>> "Reporte rechazado" in browser.contents
+    False
+    >>> browser.open(section_url+'/reporte-publicado')
+    >>> "Reporte publicado" in browser.contents
+    True
