@@ -19,7 +19,7 @@ from plone.app.testing import FunctionalTesting
 
 class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):  # pragma: no cover
 
-    def do_GET(self):
+    def do_GET(self):  # flake8: noqa
         try:
             path, rest = self.path.split('?')
 
@@ -238,7 +238,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):  # pragma: no co
 
         return
 
-    def do_POST(self):
+    def do_POST(self):  # flake8: noqa
         content_type = self.headers.get('Content-Type', None)
 
         content = cgi.FieldStorage(fp=self.rfile,
