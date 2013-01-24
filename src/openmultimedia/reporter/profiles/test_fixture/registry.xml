@@ -201,10 +201,10 @@
   </record>
   <record field="upload_location" interface="openmultimedia.reporter.interfaces.IReporterSettings" name="openmultimedia.reporter.interfaces.IReporterSettings.upload_location">
     <field type="plone.registry.field.TextLine">
-      <default>upload</default>
+      <default>http://localhost:15555/upload</default>
       <title>Upload url</title>
     </field>
-    <value>upload</value>
+    <value>http://localhost:15555/upload</value>
   </record>
   <record field="video_notify" interface="openmultimedia.reporter.interfaces.IReporterSettings" name="openmultimedia.reporter.interfaces.IReporterSettings.video_notify">
     <field type="plone.registry.field.TextLine">
