@@ -39,15 +39,9 @@ class Upload(object):
         return hashlib.md5(cadena).hexdigest()
 
     def upload_url(self):
-
-        video_api = getUtility(IVideoAPI)
         registry = getUtility(IRegistry)
         settings = registry.forInterface(IReporterSettings)
-
-        multimedia_url = video_api.get_multimedia_url()
-        upload_location = settings.upload_location
-
-        return "%s/%s" % (multimedia_url, upload_location)
+        return settings.upload_location
 
     def normalize_data(self, data):
         DATA_KEYS = ['titulo', 'descripcion']
