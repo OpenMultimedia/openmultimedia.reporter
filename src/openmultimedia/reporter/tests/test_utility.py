@@ -73,6 +73,14 @@ class InstallTest(unittest.TestCase):
             self.assertEqual(response['content-type'], 'application/octet-stream')
             self.assertEqual(content, {u'slug': u'valid-slug'})
 
+            # Vamos a simular que en el servidor remoto devuelve contenido no Jsonable
+            data['titulo'] = 'no-jsonable'
+
+            response, content = self.utility.create_structure(data, file_type)
+
+            self.assertEqual(response['status'], '200')
+            self.assertIsNone(content)
+            
             # Vamos a simular que en el servidor remoto se produjo un error
             data['titulo'] = 'error'
 

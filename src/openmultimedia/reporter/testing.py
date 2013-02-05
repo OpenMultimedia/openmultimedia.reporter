@@ -340,6 +340,16 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):  # pragma: no co
             else:
                 if content['titulo'].value == 'error':
                     self.send_response(400)
+
+                elif content['titulo'].value == 'no-jsonable':
+                    self.send_response(200)
+
+                    self.send_header('Content-Type', 'application/octet-stream')
+                    self.end_headers()
+
+                    self.wfile.write('Blah')
+                    self.wfile.close()
+
                 else:
                     self.send_response(200)
 
@@ -367,6 +377,16 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):  # pragma: no co
             else:
                 if content['titulo'].value == 'error':
                     self.send_response(400)
+
+                elif content['titulo'].value == 'no-jsonable':
+                    self.send_response(200)
+
+                    self.send_header('Content-Type', 'application/octet-stream')
+                    self.end_headers()
+
+                    self.wfile.write('Blah')
+                    self.wfile.close()
+
                 else:
                     self.send_response(200)
 
