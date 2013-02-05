@@ -89,13 +89,20 @@ class Upload(object):
                         % (url, headers, body))
             response, content = http.request(url, 'POST', headers=headers,
                                              body=urlencode(body))
+            if 'status' in response and response['status'] != '200':
+                logger.info("Response: %s" % response)
+                logger.info("Content: %s" % content)
         except:
             logger.info("There was an error when contacting the remote server: %s" % sys.exc_info()[0])
             response = {'status': '400'}
             content = None
 
         if content:
-            content_json = json.loads(content)
+            try:
+                content_json = json.loads(content)
+            except:
+                content_json = None
+
         return response, content_json
 
     def publish_structure(self, slug, file_type):
