@@ -80,7 +80,7 @@ class InstallTest(unittest.TestCase):
 
             self.assertEqual(response['status'], '200')
             self.assertIsNone(content)
-            
+
             # Vamos a simular que en el servidor remoto se produjo un error
             data['titulo'] = 'error'
 

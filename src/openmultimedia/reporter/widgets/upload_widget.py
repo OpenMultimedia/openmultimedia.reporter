@@ -59,7 +59,7 @@ class UploadWidget(TextWidget):
                }
              }
          });
-         
+
         if ($('#form-widgets-file_id').val() != ""){
             $("#formfield-%(id)s .formHelp").text("%(already_uploaded)s" );
         }
