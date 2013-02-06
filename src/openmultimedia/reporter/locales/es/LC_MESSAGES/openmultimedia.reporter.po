@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openmultimedia.reporter\n"
-"POT-Creation-Date: 2012-08-03 15:11+0000\n"
+"POT-Creation-Date: 2013-02-06 00:33+0000\n"
 "PO-Revision-Date: 2012-07-04 17:08-0300\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "A container for reports"
 msgstr "Contenedor de Reportes"
 
-#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:110
+#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:130
 msgid "Add new report"
 msgstr "Agregar un reporte nuevo"
 
@@ -33,71 +33,52 @@ msgstr "Reporte informativo agregable por cuaquiera"
 msgid "Anonymous report"
 msgstr "Reporte Anonimo"
 
-#: openmultimedia/reporter/content/anonreport.py:194
-msgid "Changes saved"
-msgstr "Cambios Guardados"
-
-#: openmultimedia/reporter/content/anonreport.py:48
+#: openmultimedia/reporter/content/anonreport.py:67
 msgid "Country"
 msgstr "País"
 
-#: openmultimedia/reporter/content/anonreport.py:71
+#: openmultimedia/reporter/content/anonreport.py:86
 msgid "Date"
 msgstr "Fecha"
 
-#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:59
-msgid "Download original file"
-msgstr "Descargar archivo original"
-
-#: openmultimedia/reporter/content/anonreport.py:82
-msgid "Edited File"
-msgstr "Archivo Editado"
-
-#: openmultimedia/reporter/content/anonreport.py:187
-msgid "Error creating the                     report, please try again"
-msgstr "Error creando el reporte, por favor pruebe de nuevo"
-
-#: openmultimedia/reporter/content/anonreport.py:228
-msgid "Error creating the report,                please try again"
-msgstr "\"Error creando el reporte, por favor pruebe de nuevo"
-
-#: openmultimedia/reporter/content/anonreport.py:172
+#: openmultimedia/reporter/content/anonreport.py:221
 msgid "Error creating the report, please try again"
 msgstr "Error creando el reporte, porfavor pruebe de nuevo"
 
-#: openmultimedia/reporter/content/anonreport.py:217
-msgid "Error creating the report,please try again"
-msgstr "Error creando el reporte, porfavor pruebe de nuevo"
-
-#: openmultimedia/reporter/widgets/upload_widget.py:73
+#: openmultimedia/reporter/widgets/upload_widget.py:85
 msgid "Error uploading file, please try again or use a diferent file"
 msgstr "\"Error cargando el archivo, por favor pruebe de nuevo o use un archivo diferente"
 
-#: openmultimedia/reporter/content/anonreport.py:62
+#: openmultimedia/reporter/content/anonreport.py:76
 msgid "File"
 msgstr "Archivo"
 
-#: openmultimedia/reporter/widgets/upload_widget.py:74
+#: openmultimedia/reporter/widgets/upload_widget.py:86
 msgid "File uploaded correctly"
 msgstr "Archivo cargado correctamente"
 
-#: openmultimedia/reporter/controlpanel.py:38
+#: openmultimedia/reporter/controlpanel.py:12
 msgid "Here you can modify the settings for openmultimedia.reporter."
-msgstr ""
+msgstr "Aqui puede modificar las configuraciones para openmultimedia.reporter."
+
+#: openmultimedia/reporter/controlpanel.py:11
+#: openmultimedia/reporter/profiles/default/controlpanel.xml
+msgid "I Report Settings"
+msgstr "Configuraciones de Soy Reportero"
 
 #: openmultimedia/reporter/profiles/default/types/openmultimedia.reporter.ireport.xml
 msgid "I report section"
 msgstr "Sección Soy Reportero"
 
-#: openmultimedia/reporter/content/anonreport.py:244
+#: openmultimedia/reporter/interfaces.py:20
+msgid "Image notify"
+msgstr ""
+
+#: openmultimedia/reporter/content/anonreport.py:262
 msgid "Item created"
 msgstr "Reporte Creado"
 
-#: openmultimedia/reporter/controlpanel.py:21
-msgid "Multimedia url"
-msgstr "URL multimedia"
-
-#: openmultimedia/reporter/content/anonreport.py:42
+#: openmultimedia/reporter/content/anonreport.py:59
 msgid "Name"
 msgstr "Nombre"
 
@@ -105,67 +86,54 @@ msgstr "Nombre"
 msgid "Non Published Reports"
 msgstr "Reportes no publicados"
 
-#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:106
+#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:105
 msgid "Please enable JavaScript to view the ${disqus-link}"
 msgstr "Por favor active Javascript para ver ${disqus-link}"
 
-#: openmultimedia/reporter/content/anonreport.py:158
+#: openmultimedia/reporter/content/anonreport.py:211
 msgid "Save"
 msgstr "Guardar"
 
-#: openmultimedia/reporter/controlpanel.py:26
+#: openmultimedia/reporter/interfaces.py:30
 msgid "Security key"
 msgstr "Llave de seguridad"
 
-#: openmultimedia/reporter/controlpanel.py:37
-msgid "Soy Reportero Settings"
-msgstr "Configuración de Soy Reportero"
-
-#: openmultimedia/reporter/content/anonreport.py:54
-msgid "Status"
-msgstr "Estado"
-
-#: openmultimedia/reporter/controlpanel.py:31
+#: openmultimedia/reporter/interfaces.py:35
 msgid "Upload key"
 msgstr "LLave para la subida de archivos"
 
-#: openmultimedia/reporter/controlpanel.py:16
+#: openmultimedia/reporter/interfaces.py:15
 msgid "Upload url"
 msgstr "Url para la subida de archivos"
+
+#: openmultimedia/reporter/interfaces.py:25
+msgid "Video notify"
+msgstr "Notificar video"
+
+#: openmultimedia/reporter/widgets/upload_widget.py:87
+msgid "Your file was already uploaded, no need to do it again."
+msgstr "Su archivo ya fue cargado, no necesita hacerlo de nuevo."
 
 #: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:112
 msgid "blog comments powered by ${disqus}"
 msgstr "comentarios de blog provistos por ${disqus}"
 
 #. Default: "Enter your country."
-#: openmultimedia/reporter/content/anonreport.py:49
+#: openmultimedia/reporter/content/anonreport.py:68
 msgid "help_country"
 msgstr "Ingrese su país."
 
 #. Default: "Enter here the date in which this photo or video was taken."
-#: openmultimedia/reporter/content/anonreport.py:72
+#: openmultimedia/reporter/content/anonreport.py:87
 msgid "help_date"
 msgstr "Ingrese aquí la fecha en la que fue tomado este video o foto."
 
 #. Default: "Enter your name."
-#: openmultimedia/reporter/content/anonreport.py:43
+#: openmultimedia/reporter/content/anonreport.py:60
 msgid "help_name"
 msgstr "Ingrese su nombre."
 
-#. Default: "Select status."
-#: openmultimedia/reporter/content/anonreport.py:55
-msgid "help_status"
-msgstr "Seleccione el estado."
-
-#: openmultimedia/reporter/profiles/default/controlpanel.xml
-msgid "soy reportero Settings"
-msgstr "Configuración de Soy Reportero"
-
-#: openmultimedia/reporter/content/anonreport.py:83
-msgid "upload edited video or image"
-msgstr "Cargar archivo editado"
-
-#: openmultimedia/reporter/content/anonreport.py:63
+#: openmultimedia/reporter/content/anonreport.py:77
 msgid "upload video or image"
 msgstr "Cargar imagen o video"
 
