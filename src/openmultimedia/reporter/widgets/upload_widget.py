@@ -59,6 +59,10 @@ class UploadWidget(TextWidget):
                }
              }
          });
+         
+        if ($('#form-widgets-file_id').val() != ""){
+            $("#formfield-%(id)s .formHelp").text("%(already_uploaded)s" );
+        }
 
         });
     })(jQuery);
@@ -80,11 +84,13 @@ class UploadWidget(TextWidget):
         url = upload_utility.upload_url()
         upload_error = _(u"Error uploading file, please try again or use a diferent file")
         upload_success = _(u"File uploaded correctly")
+        already_uploaded = _(u"Your file was already uploaded, no need to do it again.")
         return self.js_template_input % dict(id=self.id,
                                              id_uploader=self.uploader_id(),
                                              upload_url=url,
                                              upload_error=upload_error,
-                                             upload_success=upload_success)
+                                             upload_success=upload_success,
+                                             already_uploaded=already_uploaded)
 
     def js_display(self):
         upload_utility = getUtility(IUpload)
