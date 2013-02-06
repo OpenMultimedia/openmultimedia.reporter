@@ -52,5 +52,11 @@
       class=".controlpanel.ReporterSettingsControlPanel"
       permission="cmf.ManagePortal"
       />
-
+  
+  <!-- For some reason, grok doesn't seem to find the static resource dir -->
+  <browser:resourceDirectory
+      name="openmultimedia.reporter"
+      directory="static"
+      />
+                
 </configure>
