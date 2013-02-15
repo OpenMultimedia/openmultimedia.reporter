@@ -61,21 +61,26 @@ class Upload(object):
         return security_key
 
     def create_structure(self, data, file_type):
+        logger.info("create_structure")
 
         video_api = getUtility(IVideoAPI)
         registry = getUtility(IRegistry)
         settings = registry.forInterface(IReporterSettings)
 
         multimedia_url = video_api.get_multimedia_url()
+
+        if not multimedia_url.endswith("/"):
+            multimedia_url += "/"
+
         image_notify = settings.image_notify
         video_notify = settings.video_notify
         security_key = settings.security_key
         key = settings.key
 
         if file_type == "image":
-            url = "%s/%s" % (multimedia_url, image_notify)
+            url = "%s%s" % (multimedia_url, image_notify)
         else:
-            url = "%s/%s" % (multimedia_url, video_notify)
+            url = "%s%s" % (multimedia_url, video_notify)
 
         body = self.normalize_data(data)
         headers = {'Accept': 'application/json'}
@@ -89,9 +94,11 @@ class Upload(object):
                         % (url, headers, body))
             response, content = http.request(url, 'POST', headers=headers,
                                              body=urlencode(body))
-            if 'status' in response and response['status'] != '200':
-                logger.info("Response: %s" % response)
-                logger.info("Content: %s" % content)
+
+            #XXX: Esto va a causar mucho log, remover una vez que sepamos que
+            #     anda todo bien
+            logger.info("Response: %s" % response)
+            logger.info("Content: %s" % content)
         except:
             logger.info("There was an error when contacting the remote server: %s" % sys.exc_info()[0])
             response = {'status': '400'}
@@ -100,27 +107,41 @@ class Upload(object):
         if content:
             try:
                 content_json = json.loads(content)
+                logger.info("JSON: %s" % content_json)
             except:
                 content_json = None
 
         return response, content_json
 
     def publish_structure(self, slug, file_type):
+        logger.info("publish_structure")
 
         video_api = getUtility(IVideoAPI)
         registry = getUtility(IRegistry)
         settings = registry.forInterface(IReporterSettings)
 
         multimedia_url = video_api.get_multimedia_url()
+
+        if not multimedia_url.endswith("/"):
+            multimedia_url += "/"
+
         image_notify = settings.image_notify
+
+        if not image_notify.endswith("/"):
+            image_notify += "/"
+
         video_notify = settings.video_notify
+
+        if not video_notify.endswith("/"):
+            video_notify += "/"
+
         security_key = settings.security_key
         key = settings.key
 
         if file_type == "image":
-            url = "%s/%s/%s" % (multimedia_url, image_notify, slug)
+            url = "%s%s%s" % (multimedia_url, image_notify, slug)
         else:
-            url = "%s/%s/%s" % (multimedia_url, video_notify, slug)
+            url = "%s%s%s" % (multimedia_url, video_notify, slug)
 
         headers = {'Accept': 'application/json'}
 
@@ -133,28 +154,47 @@ class Upload(object):
                         % (url, headers, body))
             response, content = http.request(url, 'PUT', headers=headers,
                                              body=urlencode(body))
+
+            #XXX: Esto va a causar mucho log, remover una vez que sepamos que
+            #     anda todo bien
+            logger.info("Response: %s" % response)
+            logger.info("Content: %s" % content)
         except:
             logger.info("There was an error when contacting the remote server: %s" % sys.exc_info()[0])
             response = {'status': '400'}
             content = ""
+
         return response, content
 
     def get_structure(self, slug, file_type):
+        logger.info("publish_structure")
 
         video_api = getUtility(IVideoAPI)
         registry = getUtility(IRegistry)
         settings = registry.forInterface(IReporterSettings)
 
         multimedia_url = video_api.get_multimedia_url()
+
+        if not multimedia_url.endswith("/"):
+            multimedia_url += "/"
+
         image_notify = settings.image_notify
+
+        if not image_notify.endswith("/"):
+            image_notify += "/"
+
         video_notify = settings.video_notify
+
+        if not video_notify.endswith("/"):
+            video_notify += "/"
+
         security_key = settings.security_key
         key = settings.key
 
         if file_type == "image":
-            url = "%s/%s/%s" % (multimedia_url, image_notify, slug)
+            url = "%s%s%s" % (multimedia_url, image_notify, slug)
         else:
-            url = "%s/%s/%s" % (multimedia_url, video_notify, slug)
+            url = "%s%s%s" % (multimedia_url, video_notify, slug)
 
         http = httplib2.Http()
         body = {}
@@ -169,6 +209,11 @@ class Upload(object):
                         % (url, headers, body))
             response, content = http.request(url, 'GET', headers=headers,
                                              body=urlencode(body))
+
+            #XXX: Esto va a causar mucho log, remover una vez que sepamos que
+            #     anda todo bien
+            logger.info("Response: %s" % response)
+            logger.info("Content: %s" % content)
         except:
             logger.info("There was an error when contacting the remote server: %s" % sys.exc_info()[0])
             response = {'status': '400'}
@@ -177,12 +222,14 @@ class Upload(object):
         if response['status'] == '200':
             try:
                 content_json = json.loads(content)
+                logger.info("JSON: %s" % content_json)
             except ValueError:
                 logger.info("Invalid response content: %s" % content)
                 content_json = {}
 
             if 'publicado' in content_json and not content_json['publicado']:
                 self.publish_structure(slug, file_type)
+                logger.info("Content is published in remote server.")
             else:
                 logger.info("Content is not yet published in remote server.")
 
