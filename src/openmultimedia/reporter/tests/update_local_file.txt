@@ -1,0 +1,110 @@
+Functional test que prueba el correcto funcionamiento de la vista update-local-file:
+
+    >>> import os
+    >>> import hashlib
+
+    >>> app = layer['app']
+    >>> portal = layer['portal']
+    >>> request = layer['request']
+
+    >>> from DateTime import DateTime as now
+
+    >>> from plone.testing.z2 import Browser
+    >>> browser = Browser(app)
+    >>> portalURL = portal.absolute_url()
+
+    >>> from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+Vamos al home y agregamos una seccion "I report", para poder agregar reportes
+
+    >>> browser.getLink('Home').click()
+    
+    >>> "Update local file" in browser.contents
+    False
+    
+    >>> browser.getLink('I report section').click()
+    >>> browser.getControl('Title').value = 'Soy reportero'
+    >>> browser.getControl('Save').click()
+    >>> section_url = portalURL + '/soy-reportero'
+    >>> browser.getLink('Publish').click()
+    
+    >>> "Update local file" in browser.contents
+    False
+
+Ahora salimos, y vamos a cargar un reporte anonimo
+
+    >>> browser.open(portalURL + '/logout')
+    >>> browser.open(section_url)
+    >>> "Anonymous report" in browser.contents
+    True
+
+    >>> browser.getLink('Add new report').click()
+    >>> browser.getControl('Title').value = "My Valid Report"
+    >>> browser.getControl('Name').value = "Frapell"
+    >>> browser.getControl('Country').value = "Argentina"
+    >>> browser.getControl(name="form.widgets.file_type").value = "image"
+    >>> browser.getControl(name="form.widgets.date-day").value = "1"
+    >>> browser.getControl(name="form.widgets.date-month").value = ['1']
+    >>> browser.getControl(name="form.widgets.date-year").value = "2012"
+    >>> browser.getControl("Save").click()
+    >>> browser.getControl(name="form.widgets.file_type").value = "image"
+    >>> browser.getControl(name="form.widgets.file_id").value = "anonreport-valid-id"
+    >>> browser.getControl("Save").click()
+
+    >>> browser.open(portalURL + '/logout')
+
+Para que los reportes sean visibles para administradores, necesitamos primero llamar
+a los callback url, para eso los generamos
+
+    >>> m = hashlib.md5()
+    >>> secret = "security_key"
+    >>> id = "my-valid-report"
+    >>> file_id = "anonreport-valid-id"
+    >>> m.update(secret+file_id)
+    >>> digest = m.hexdigest()
+    >>> callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
+    >>> browser.open(callback_url)
+
+Volvemos a ingresar al sitio
+
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> anon_report = portal['soy-reportero']['my-valid-report']
+    
+Vemos que en este punto tenemos guardada una imagen, la borramos y llamamos a la vista.
+Deberiamos nuevamente tener una imagen
+
+    >>> anon_report.image_preview
+    <plone.namedfile.file.NamedBlobImage object at 0x...>
+    
+    >>> anon_report.image_preview = None
+    >>> anon_report.image_preview
+
+    >>> browser.open("%s/@@update-local-file" % anon_report.absolute_url())
+    
+    >>> anon_report.image_preview
+    <plone.namedfile.file.NamedBlobImage object at 0x...>
+
+Y en el reporte si vemos la accion para llamar a la vista
+
+    >>> browser.open(anon_report.absolute_url())
+    >>> "Update local file" in browser.contents
+    True
+
+Pero no la vemos como anonimo
+
+    >>> browser.open(portalURL + '/logout')
+
+    >>> browser.open(anon_report.absolute_url())
+    >>> "Update local file" in browser.contents
+    False
