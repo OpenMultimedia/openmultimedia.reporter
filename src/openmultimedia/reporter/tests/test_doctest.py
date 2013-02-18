@@ -60,5 +60,5 @@ def test_suite():
                                      package='openmultimedia.reporter',
                                      optionflags=doctest.ELLIPSIS),
                 layer=FUNCTIONAL_TESTING),
-    ])    
+    ])
     return suite
