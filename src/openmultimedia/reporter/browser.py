@@ -12,6 +12,7 @@ from zope.interface import Interface
 from Products.CMFCore.utils import getToolByName
 
 from openmultimedia.reporter.config import PROJECTNAME
+from openmultimedia.reporter.content.anonreport import IAnonReport
 from openmultimedia.reporter.interfaces import IUpload
 
 
@@ -60,3 +61,13 @@ class ProcessedResultView(grok.View):
             logger.info("Got no key. Bad request.")
 
         return ""
+
+
+class UpdateLocalFile(grok.View):
+    grok.context(IAnonReport)
+    grok.name("update-local-file")
+    grok.require('zope2.AccessContentsInformation')
+
+    def render(self):
+        self.context.update_local_file()
+        return self.request.RESPONSE.redirect(self.context.absolute_url())
