@@ -37,8 +37,6 @@ para que falle
 
     >>> browser.open(portalURL + '/logout')
     >>> browser.open(section_url)
-    >>> "Anonymous report" in browser.contents
-    True
 
     >>> browser.getLink('Add new report').click()
     >>> browser.getControl('Title').value = "My Valid Report"
@@ -145,6 +143,14 @@ Volvemos a ingresar al sitio para editar el reporte:
 
     >>> browser.getLink('Contents').click()
     >>> browser.getLink('My Valid Report').click()
+    
+Un usuario autenticado debe poder ver la barra verde
+
+    >>> 'View' in browser.contents
+    True
+    
+Seguimos
+
     >>> browser.getLink('Edit').click()
 
 Vemos que ninguno de los campos relacionados al archivo estan visibles
@@ -191,7 +197,8 @@ deberiamos tambien como anonimos, poder acceder al reporte
 
     >>> browser.getLink("Publish").click()
     >>> browser.open(section_url)
-    >>> "My edited report" in browser.contents
+    >>> browser.getLink('My edited report').click()
+    >>> 'View' in browser.contents
     True
 
     >>> browser.open(portalURL + '/logout')    
@@ -199,4 +206,14 @@ deberiamos tambien como anonimos, poder acceder al reporte
     
     >>> "My edited report" in browser.contents
     True
+
+Un usuario anonimo no debe poder ver la barra verde en esta seccion
+
+    >>> 'View' in browser.contents
+    False
+
+Y dentro de un reporte tampoco
+
     >>> browser.getLink('My edited report').click()
+    >>> 'View' in browser.contents
+    False

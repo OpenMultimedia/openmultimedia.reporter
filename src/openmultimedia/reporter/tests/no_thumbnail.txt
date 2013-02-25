@@ -37,8 +37,6 @@ Now let's logout, and create an anonymous report, we'll assign a file id, and we
 
     >>> browser.open(portalURL + '/logout')
     >>> browser.open(section_url)
-    >>> "Anonymous report" in browser.contents
-    True
 
     >>> browser.getLink('Add new report').click()
     >>> browser.getControl('Title').value = "My Valid Report"

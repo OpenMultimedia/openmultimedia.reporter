@@ -49,8 +49,6 @@ una imagen remota inexistente
 
     >>> browser.open(portalURL + '/logout')
     >>> browser.open(section_url)
-    >>> "Anonymous report" in browser.contents
-    True
 
     >>> browser.getLink('Add new report').click()
     >>> browser.getControl('Title').value = "My Valid Report"
