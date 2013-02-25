@@ -8,6 +8,7 @@ from zope import schema
 from zope.interface import implements
 from zope.interface import Invalid
 from zope.component import getUtility
+from zope.component import getMultiAdapter
 
 from z3c.form import button
 from z3c.form.interfaces import ActionExecutionError
@@ -200,6 +201,16 @@ class AnonReport(Item):
                                              {'archivo_url': self.video_file})
         logger.info("Got %s" % url)
         return url
+
+    def render_preview_image(self):
+        if not self.image_preview:
+            scales = getMultiAdapter((self.aq_parent, self.REQUEST), name="images")
+            tag = scales.tag('default_preview', scale="preview")
+        else:
+            scales = getMultiAdapter((self, self.REQUEST), name="images")
+            tag = scales.tag('image_preview', scale="preview")
+            
+        return tag
 
 
 class Add(dexterity.AddForm):

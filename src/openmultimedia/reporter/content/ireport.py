@@ -8,9 +8,18 @@ from zope.security import checkPermission
 
 from plone.directives import dexterity, form
 
+from plone.namedfile.interfaces import HAVE_BLOBS
+
+if HAVE_BLOBS:  # pragma: no cover
+    from plone.namedfile.field import NamedBlobImage
+else:  # pragma: no cover
+    from plone.namedfile.field import NamedImage
+
 from Products.CMFCore.utils import getToolByName
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+
+from openmultimedia.reporter import _
 
 
 class IIReport(form.Schema):
@@ -18,6 +27,14 @@ class IIReport(form.Schema):
     A section that contains reports
     """
 
+    if HAVE_BLOBS:  # pragma: no cover
+        default_preview = NamedBlobImage(title=_(u"Default preview"),
+                                         description=_(u"Use this image if there's no preview."),
+                                         required=False)
+    else:  # pragma: no cover
+        default_preview = NamedImage(title=_(u"Default preview"),
+                                     description=_(u"Use this image if there's no preview."),
+                                     required=False)
 
 class View(dexterity.DisplayForm):
     grok.context(IIReport)

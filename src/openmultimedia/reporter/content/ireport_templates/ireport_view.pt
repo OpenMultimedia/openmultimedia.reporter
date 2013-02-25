@@ -91,9 +91,7 @@
           <div id="report-reports">
             <tal:reports repeat="brain view/publics">
             <div class="report-item" tal:define="report brain/getObject">
-                <div class="report-item-thumb">
-                  <img tal:replace="structure report/@@images/image_preview/tile" />
-                </div>
+                <div class="report-item-thumb" tal:content="structure report/render_preview_image" />
                 <div class="user-data">
                   <a href="#" tal:attributes="href report/absolute_url"
                               tal:content="report/name"
