@@ -71,7 +71,7 @@ class View(dexterity.DisplayForm):
 
         portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
         if portal_state.anonymous():
-            self.request.set('disable_border',1)
+            self.request.set('disable_border', 1)
 
         return pt(self)
 

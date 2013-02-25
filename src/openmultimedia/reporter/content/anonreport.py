@@ -9,7 +9,6 @@ from zope.interface import implements
 from zope.interface import Invalid
 from zope.component import getMultiAdapter
 from zope.component import getUtility
-from zope.component import getMultiAdapter
 
 from z3c.form import button
 from z3c.form.interfaces import ActionExecutionError
@@ -288,7 +287,7 @@ class View(dexterity.DisplayForm):
 
         portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
         if portal_state.anonymous():
-            self.request.set('disable_border',1)
+            self.request.set('disable_border', 1)
 
         return pt(self)
 
