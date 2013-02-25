@@ -209,7 +209,7 @@ class AnonReport(Item):
         else:
             scales = getMultiAdapter((self, self.REQUEST), name="images")
             tag = scales.tag('image_preview', scale="preview")
-            
+
         return tag
 
 

@@ -36,6 +36,7 @@ class IIReport(form.Schema):
                                      description=_(u"Use this image if there's no preview."),
                                      required=False)
 
+
 class View(dexterity.DisplayForm):
     grok.context(IIReport)
     grok.require('zope2.View')
