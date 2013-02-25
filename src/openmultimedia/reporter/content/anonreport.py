@@ -219,7 +219,7 @@ class Add(dexterity.AddForm):
     grok.name('openmultimedia.reporter.anonreport')
     grok.context(IAnonReport)
 
-    @button.buttonAndHandler(_('Save'), name='save')
+    @button.buttonAndHandler(_('Send'), name='send')
     def handleSave(self, action):
         data, errors = self.extractData()
         if errors:
