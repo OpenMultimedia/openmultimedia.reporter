@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openmultimedia.reporter\n"
-"POT-Creation-Date: 2013-02-18 23:30+0000\n"
+"POT-Creation-Date: 2013-02-25 23:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "A container for reports"
 msgstr ""
 
-#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:130
+#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:128
 msgid "Add new report"
 msgstr ""
 
@@ -33,27 +33,31 @@ msgstr ""
 msgid "Anonymous report"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:67
+#: openmultimedia/reporter/content/anonreport.py:68
 msgid "Country"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:86
+#: openmultimedia/reporter/content/anonreport.py:87
 msgid "Date"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:221
+#: openmultimedia/reporter/content/ireport.py:33
+msgid "Default preview"
+msgstr ""
+
+#: openmultimedia/reporter/content/anonreport.py:232
 msgid "Error creating the report, please try again"
 msgstr ""
 
-#: openmultimedia/reporter/widgets/upload_widget.py:85
+#: openmultimedia/reporter/browser.py:134
 msgid "Error uploading file, please try again or use a diferent file"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:76
+#: openmultimedia/reporter/content/anonreport.py:77
 msgid "File"
 msgstr ""
 
-#: openmultimedia/reporter/widgets/upload_widget.py:86
+#: openmultimedia/reporter/browser.py:135
 msgid "File uploaded correctly"
 msgstr ""
 
@@ -74,11 +78,11 @@ msgstr ""
 msgid "Image notify"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:262
+#: openmultimedia/reporter/content/anonreport.py:273
 msgid "Item created"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:59
+#: openmultimedia/reporter/content/anonreport.py:60
 msgid "Name"
 msgstr ""
 
@@ -90,12 +94,12 @@ msgstr ""
 msgid "Please enable JavaScript to view the ${disqus-link}"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:211
-msgid "Save"
-msgstr ""
-
 #: openmultimedia/reporter/interfaces.py:30
 msgid "Security key"
+msgstr ""
+
+#: openmultimedia/reporter/content/anonreport.py:222
+msgid "Send"
 msgstr ""
 
 #: openmultimedia/reporter/interfaces.py:35
@@ -106,11 +110,15 @@ msgstr ""
 msgid "Upload url"
 msgstr ""
 
+#: openmultimedia/reporter/content/ireport.py:34
+msgid "Use this image if there's no preview."
+msgstr ""
+
 #: openmultimedia/reporter/interfaces.py:25
 msgid "Video notify"
 msgstr ""
 
-#: openmultimedia/reporter/widgets/upload_widget.py:87
+#: openmultimedia/reporter/browser.py:136
 msgid "Your file was already uploaded, no need to do it again."
 msgstr ""
 
@@ -119,21 +127,21 @@ msgid "blog comments powered by ${disqus}"
 msgstr ""
 
 #. Default: "Enter your country."
-#: openmultimedia/reporter/content/anonreport.py:68
+#: openmultimedia/reporter/content/anonreport.py:69
 msgid "help_country"
 msgstr ""
 
 #. Default: "Enter here the date in which this photo or video was taken."
-#: openmultimedia/reporter/content/anonreport.py:87
+#: openmultimedia/reporter/content/anonreport.py:88
 msgid "help_date"
 msgstr ""
 
 #. Default: "Enter your name."
-#: openmultimedia/reporter/content/anonreport.py:60
+#: openmultimedia/reporter/content/anonreport.py:61
 msgid "help_name"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:77
+#: openmultimedia/reporter/content/anonreport.py:78
 msgid "upload video or image"
 msgstr ""
 
