@@ -2,8 +2,8 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       tal:omit-tag="">
       <script src="++resource++openmultimedia.reporter/fileuploader.js" type="text/javascript"></script>
-            <script src="++resource++openmultimedia.reporter/jquery.json.js" type="text/javascript"></script>
-      <script type="text/javascript" tal:content="structure view/js_input"></script>
+      <script src="++resource++openmultimedia.reporter/jquery.json.js" type="text/javascript"></script>
+      <script type="text/javascript" tal:attributes="src string:@@render-upload-js.js?widget_id=${view/id}"></script>
       <div id="file-uploader" tal:attributes="id view/uploader_id">
     		<noscript>
     			<p i18n:translate="">Please enable JavaScript to use file uploader.</p>
