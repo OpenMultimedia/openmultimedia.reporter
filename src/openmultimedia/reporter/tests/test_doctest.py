@@ -61,4 +61,10 @@ def test_suite():
                                      optionflags=doctest.ELLIPSIS),
                 layer=FUNCTIONAL_TESTING),
     ])
+    suite.addTests([
+        layered(doctest.DocFileSuite('tests/no_thumbnail.txt',
+                                     package='openmultimedia.reporter',
+                                     optionflags=doctest.ELLIPSIS),
+                layer=FUNCTIONAL_TESTING),
+    ])
     return suite

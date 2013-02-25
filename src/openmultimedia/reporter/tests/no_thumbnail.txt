@@ -1,0 +1,92 @@
+This functional test will test that if the remote system doesn't provide a preview image, we can use the one configured in the "I report" section
+
+    >>> import os
+
+    >>> app = layer['app']
+    >>> portal = layer['portal']
+    >>> request = layer['request']
+
+    >>> from DateTime import DateTime as now
+
+    >>> from plone.testing.z2 import Browser
+    >>> browser = Browser(app)
+    >>> portalURL = portal.absolute_url()
+
+    >>> from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+Go to home and add an "I report" section, with a default preview image set.
+
+    >>> default_preview_filename = os.path.join(os.path.dirname(__file__), 'binaries', 'default_preview.png')
+    >>> def_preview = open(default_preview_filename, 'r')
+    >>> browser.getLink('Home').click()
+    >>> browser.getLink('I report section').click()
+    >>> browser.getControl('Title').value = 'I report'
+    >>> browser.getControl(name="form.widgets.default_preview").value = def_preview
+    >>> browser.getControl('Save').click()
+    >>> section_url = portalURL + '/i-report'
+    >>> browser.getLink('Publish').click()
+
+Now let's logout, and create an anonymous report, we'll assign a file id, and we'll save it so the remote structure gets generated
+
+    >>> browser.open(portalURL + '/logout')
+    >>> browser.open(section_url)
+    >>> "Anonymous report" in browser.contents
+    True
+
+    >>> browser.getLink('Add new report').click()
+    >>> browser.getControl('Title').value = "My Valid Report"
+    >>> browser.getControl('Name').value = "Frapell"
+    >>> browser.getControl('Country').value = "Argentina"
+    >>> browser.getControl(name="form.widgets.file_id").value = "no-thumbnail"
+    >>> browser.getControl(name="form.widgets.file_type").value = "image"
+    >>> browser.getControl(name="form.widgets.date-day").value = "1"
+    >>> browser.getControl(name="form.widgets.date-month").value = ['1']
+    >>> browser.getControl(name="form.widgets.date-year").value = "2012"
+    >>> browser.getControl("Save").click()
+
+    >>> "Item created" in browser.contents
+    True
+    
+    >>> browser.url == section_url
+    True
+
+To see the report, we need to call the callback url with type=success:
+
+    >>> import hashlib
+    >>> m = hashlib.md5()
+    >>> secret = "security_key"
+    >>> id = "my-valid-report"
+    >>> file_id = "no-thumbnail"
+    >>> m.update(secret+file_id)
+    >>> digest = m.hexdigest()
+    >>> callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
+    >>> browser.open(callback_url)
+
+Login again and publish the report:
+
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+    >>> browser.open(section_url)
+    >>> browser.getLink("Non Published Reports").click()
+    >>> browser.getLink("My Valid Report").click()
+    >>> browser.getLink("Publish").click()
+    
+We open the "I report" section and we see that the thumbnail shown is
+the one used when we created the section.
+
+    >>> browser.open(section_url)
+    >>> "plone/i-report/@@images" in browser.contents
+    True

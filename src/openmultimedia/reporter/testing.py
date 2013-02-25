@@ -39,6 +39,23 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):  # pragma: no co
             img.close()
 
             self.wfile.close()
+            
+        elif path == '/not-found.png':
+            self.send_response(404)
+
+        elif path == '/imagen/no-thumbnail':
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/octet-stream')
+            response = {"slug": "remote-process-success-valid-slug",
+                        "publicado": True,
+                        "archivo_url": "http://localhost:15555/clips/video.mp4",
+                        "thumbnail_grande": "http://localhost:15555/not-found.png",
+                        "thumbnail_pequeno": "http://localhost:15555/not-found.png"}
+
+            self.end_headers()
+
+            self.wfile.write(json.dumps(response))
+            self.wfile.close()
 
         elif path == '/non-existing.png':
             self.send_response(404)
@@ -308,6 +325,15 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):  # pragma: no co
                     self.end_headers()
 
                     self.wfile.write('{"slug": "remote-process-success-valid-slug"}')
+                    self.wfile.close()
+
+                elif content['archivo'].value == 'no-thumbnail':
+                    self.send_response(200)
+
+                    self.send_header('Content-Type', 'application/octet-stream')
+                    self.end_headers()
+
+                    self.wfile.write('{"slug": "no-thumbnail"}')
                     self.wfile.close()
 
                 elif content['archivo'].value == 'workflow-valid-id':
