@@ -17,8 +17,6 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from openmultimedia.reporter.interfaces import IUpload
 
-from openmultimedia.reporter import _
-
 
 class UploadWidget(TextWidget):
     """Input type upload widget implementation."""
@@ -37,7 +35,7 @@ class UploadWidget(TextWidget):
         });
     })(jQuery);
     """
-    
+
     def uploader_id(self):
         return self.id + "-uploader"
 

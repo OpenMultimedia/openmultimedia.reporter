@@ -78,8 +78,7 @@ class RenderUploadWidgetJS(grok.View):
     grok.context(Interface)
     grok.name("render-upload-js.js")
     grok.require('zope2.View')
-    
-    
+
     # JavaScript template
     js_template_input = """\
         (function($) {
@@ -118,14 +117,14 @@ class RenderUploadWidgetJS(grok.View):
             }
 
             }
-            
+
             $().ready(loadUploadWidget);
         })(jQuery);
         """
 
     def render(self):
         widget_id = self.request.get('widget_id')
-        
+
         if widget_id:
             setHeader = self.request.response.setHeader
             setHeader('Content-Type', 'text/javascript')
@@ -137,11 +136,8 @@ class RenderUploadWidgetJS(grok.View):
             already_uploaded = _(u"Your file was already uploaded, no need to do it again.")
 
             return self.js_template_input % dict(id=widget_id,
-                                                id_uploader=widget_id+'-uploader',
-                                                upload_url=url,
-                                                upload_error=upload_error,
-                                                upload_success=upload_success,
-                                                already_uploaded=already_uploaded)
-
-        
-        
+                                                 id_uploader=widget_id + '-uploader',
+                                                 upload_url=url,
+                                                 upload_error=upload_error,
+                                                 upload_success=upload_success,
+                                                 already_uploaded=already_uploaded)
