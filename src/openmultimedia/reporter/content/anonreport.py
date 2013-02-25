@@ -7,6 +7,7 @@ import urllib2
 from zope import schema
 from zope.interface import implements
 from zope.interface import Invalid
+from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import getMultiAdapter
 
@@ -284,6 +285,11 @@ class View(dexterity.DisplayForm):
 
     def render(self):
         pt = ViewPageTemplateFile('ianonreport_templates/ianonreport_view.pt')
+
+        portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        if portal_state.anonymous():
+            self.request.set('disable_border',1)
+
         return pt(self)
 
 

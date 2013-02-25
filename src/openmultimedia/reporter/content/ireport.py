@@ -4,6 +4,8 @@ import math
 
 from five import grok
 
+from zope.component import getMultiAdapter
+
 from zope.security import checkPermission
 
 from plone.directives import dexterity, form
@@ -66,6 +68,11 @@ class View(dexterity.DisplayForm):
 
     def render(self):
         pt = ViewPageTemplateFile('ireport_templates/ireport_view.pt')
+
+        portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        if portal_state.anonymous():
+            self.request.set('disable_border',1)
+
         return pt(self)
 
     def can_add_reports(self):
