@@ -47,7 +47,7 @@ Agregamos 10 reportes
     ...     browser.getControl(name="form.widgets.date-day").value = "1"
     ...     browser.getControl(name="form.widgets.date-month").value = ['1']
     ...     browser.getControl(name="form.widgets.date-year").value = "2012"
-    ...     browser.getControl("Save").click()
+    ...     browser.getControl("Send").click()
 
 Generamos los callback url y los llamamos:
 

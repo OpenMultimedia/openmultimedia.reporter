@@ -52,7 +52,7 @@ se ve, y lo permitido acceder por los permisos
     ...     browser.getControl(name="form.widgets.date-day").value = "1"
     ...     browser.getControl(name="form.widgets.date-month").value = ['1']
     ...     browser.getControl(name="form.widgets.date-year").value = "2012"
-    ...     browser.getControl("Save").click()
+    ...     browser.getControl("Send").click()
 
 En este momento, como anonimos, no deberíamos estar viendo ninguna de las
 preguntas, ya que se encuentran privadas

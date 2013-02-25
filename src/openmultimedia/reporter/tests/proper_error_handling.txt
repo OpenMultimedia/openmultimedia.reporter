@@ -59,7 +59,7 @@ una imagen remota inexistente
     >>> browser.getControl(name="form.widgets.date-day").value = "1"
     >>> browser.getControl(name="form.widgets.date-month").value = ['1']
     >>> browser.getControl(name="form.widgets.date-year").value = "2012"
-    >>> browser.getControl("Save").click()
+    >>> browser.getControl("Send").click()
 
     >>> "Item created" in browser.contents
     True

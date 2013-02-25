@@ -51,10 +51,10 @@ Ahora salimos, y vamos a cargar un reporte anonimo
     >>> browser.getControl(name="form.widgets.date-day").value = "1"
     >>> browser.getControl(name="form.widgets.date-month").value = ['1']
     >>> browser.getControl(name="form.widgets.date-year").value = "2012"
-    >>> browser.getControl("Save").click()
+    >>> browser.getControl("Send").click()
     >>> browser.getControl(name="form.widgets.file_type").value = "image"
     >>> browser.getControl(name="form.widgets.file_id").value = "anonreport-valid-id"
-    >>> browser.getControl("Save").click()
+    >>> browser.getControl("Send").click()
 
     >>> browser.open(portalURL + '/logout')
 
