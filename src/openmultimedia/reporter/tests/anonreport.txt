@@ -33,12 +33,16 @@ Vamos al home y agregamos una seccion "I report", para poder agregar reportes
     >>> browser.getLink('Publish').click()
 
 Ahora salimos, y vamos a cargar un reporte anonimo, con algun valor faltante
-para que falle 
+para que falle. La pestaña "Settings" no debe ser visible
 
     >>> browser.open(portalURL + '/logout')
     >>> browser.open(section_url)
 
     >>> browser.getLink('Add new report').click()
+    
+    >>> "Settings" in browser.contents
+    False
+    
     >>> browser.getControl('Title').value = "My Valid Report"
     >>> browser.getControl('Name').value = "Frapell"
     >>> browser.getControl('Country').value = "Argentina"
@@ -149,9 +153,11 @@ Un usuario autenticado debe poder ver la barra verde
     >>> 'View' in browser.contents
     True
     
-Seguimos
+Seguimos, podemos ver la pestaña de configuracion existente
 
-    >>> browser.getLink('Edit').click()
+    >>> browser.getLink('Edit').click()    
+    >>> "Settings" in browser.contents
+    True
 
 Vemos que ninguno de los campos relacionados al archivo estan visibles
 
