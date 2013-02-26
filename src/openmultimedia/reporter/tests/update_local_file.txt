@@ -46,7 +46,7 @@ Ahora salimos, y vamos a cargar un reporte anonimo
     >>> browser.getLink('Add new report').click()
     >>> browser.getControl('Title').value = "My Valid Report"
     >>> browser.getControl('Name').value = "Frapell"
-    >>> browser.getControl('Country').value = "Argentina"
+    >>> browser.getControl('Country').value = ["AR"]
     >>> browser.getControl(name="form.widgets.file_type").value = "image"
     >>> browser.getControl(name="form.widgets.date-day").value = "1"
     >>> browser.getControl(name="form.widgets.date-month").value = ['1']

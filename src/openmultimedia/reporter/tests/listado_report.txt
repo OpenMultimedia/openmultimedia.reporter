@@ -41,7 +41,7 @@ Agregamos 30 reportes
     ...     browser.getLink('Add new report').click()
     ...     browser.getControl('Title').value = "title-%s"%index
     ...     browser.getControl('Name').value = "Frapell"
-    ...     browser.getControl('Country').value = "Argentina"
+    ...     browser.getControl('Country').value = ["AR"]
     ...     browser.getControl(name="form.widgets.file_id").value = "ireport-valid-id"
     ...     browser.getControl(name="form.widgets.file_type").value = "image"
     ...     browser.getControl(name="form.widgets.date-day").value = "1"

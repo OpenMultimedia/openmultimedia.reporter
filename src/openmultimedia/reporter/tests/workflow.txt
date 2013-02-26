@@ -46,7 +46,7 @@ se ve, y lo permitido acceder por los permisos
     ...     browser.getLink('Add new report').click()
     ...     browser.getControl('Title').value = title
     ...     browser.getControl('Name').value = "Frapell"
-    ...     browser.getControl('Country').value = "Argentina"
+    ...     browser.getControl('Country').value = ["AR"]
     ...     browser.getControl(name="form.widgets.file_id").value = "workflow-valid-id"
     ...     browser.getControl(name="form.widgets.file_type").value = "image"
     ...     browser.getControl(name="form.widgets.date-day").value = "1"

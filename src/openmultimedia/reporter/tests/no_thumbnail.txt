@@ -41,7 +41,7 @@ Now let's logout, and create an anonymous report, we'll assign a file id, and we
     >>> browser.getLink('Add new report').click()
     >>> browser.getControl('Title').value = "My Valid Report"
     >>> browser.getControl('Name').value = "Frapell"
-    >>> browser.getControl('Country').value = "Argentina"
+    >>> browser.getControl('Country').value = ["AR"]
     >>> browser.getControl(name="form.widgets.file_id").value = "no-thumbnail"
     >>> browser.getControl(name="form.widgets.file_type").value = "image"
     >>> browser.getControl(name="form.widgets.date-day").value = "1"
