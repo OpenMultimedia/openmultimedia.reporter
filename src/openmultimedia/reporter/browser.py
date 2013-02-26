@@ -85,40 +85,42 @@ class RenderUploadWidgetJS(grok.View):
             function endsWith(str, suffix) {
                 return str.indexOf(suffix, str.length - suffix.length) !== -1;
             }
-
-            function loadUploadWidget() {
-            $("#formfield-form-widgets-file_type").css("display", "none");
-            $('#%(id)s').css('display','none');
-            var uploader = new qq.FileUploader({
+            
+            
+            function renderUploadWidget(){
+                OMUpload.setup({
                 element: $('#%(id_uploader)s')[0],
-                action: '%(upload_url)s',
-                debug: true,
-                onComplete: function(id, filename, result) {
-                if (result['status'] === "success") {
-                    regex = "^[a-zA-Z0-9]+\.[a-zA-Z]{3}$";
-                    var file_id = result['id'];
-                    $('#%(id)s').val(file_id);
-                    $('#%(id_uploader)s').css("display", "none");
-                    $("#formfield-%(id)s .formHelp").text("%(upload_success)s: " + filename);
-                    if(endsWith(filename,"jpg") || endsWith(filename,"gif") ||
-                    endsWith(filename,"png") || endsWith(filename,"jpeg") ||
-                    endsWith(filename,"JPG") || endsWith(filename,"GIF") ||
-                    endsWith(filename,"PNG") || endsWith(filename,"JPEG")) {
-                        $("#form-widgets-file_type").val("image");
-                    } else { $("#form-widgets-file_type").val("video");}
-                } else {
-                    $("#formfield-%(id)s .fieldErrorBox").text("%(upload_error)s");
-                }
+                autoUpload: true,
+                multiple:false,
+                callbacks: {
+                    onComplete: function(id, file, result) {
+                        if (result['status'] === "success") {
+                            regex = "^[a-zA-Z0-9]+\.[a-zA-Z]{3}$";
+                            var file_id = result['id'];
+                            $('#%(id)s').val(file_id);
+                            $('#%(id_uploader)s').css("display", "none");
+                            $("#formfield-%(id)s .formHelp").text("%(upload_success)s: " + filename);
+                            if(endsWith(filename,"jpg") || endsWith(filename,"gif") ||
+                            endsWith(filename,"png") || endsWith(filename,"jpeg") ||
+                            endsWith(filename,"JPG") || endsWith(filename,"GIF") ||
+                            endsWith(filename,"PNG") || endsWith(filename,"JPEG")) {
+                                $("#form-widgets-file_type").val("image");
+                            } else { $("#form-widgets-file_type").val("video");}
+                        } else {
+                            $("#formfield-%(id)s .fieldErrorBox").text("%(upload_error)s");
+                        }
+                    }
                 }
             });
 
+            }
+            
             if ($('#form-widgets-file_id').val() != ""){
                 $("#formfield-%(id)s .formHelp").text("%(already_uploaded)s" );
             }
 
-            }
 
-            $().ready(loadUploadWidget);
+            $().ready(renderUploadWidget);
         })(jQuery);
         """
 

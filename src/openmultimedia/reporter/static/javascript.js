@@ -1,7 +1,4 @@
 
-
-var to_load = "http://localhost:8080/Plone/soy-reportero/++resource++openmultimedia.reporter/";
-
 $(document).ready(function() {
     // $('a.edit-report').prepOverlay({
     //          subtype: 'ajax',
@@ -22,12 +19,10 @@ $(document).ready(function() {
         filter: '#content>*',
         formselector: 'form',
         config: {onLoad: function() {
-            $.getScript(to_load+"fileuploader.js", function(){
-                $.getScript(to_load+"jquery.json.js", function(){
-                    // XXX: Eventually, we might have several widgets
-                    //      for now, we have only one.
-                    $.getScript(to_load+"@@render-upload-js.js?widget_id="+$(".upload-widget")[0].id);
-                });
+            $.getScript(portal_url+"/++resource++openmultimedia.reporter/omupload.js", function(){
+                // XXX: Eventually, we might have several widgets
+                //      for now, we have only one.
+                $.getScript(portal_url+"/@@render-upload-js.js?widget_id="+$(".upload-widget")[0].id);
             });
         }}
         });
