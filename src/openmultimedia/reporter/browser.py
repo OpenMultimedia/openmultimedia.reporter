@@ -86,14 +86,16 @@ class RenderUploadWidgetJS(grok.View):
                 return str.indexOf(suffix, str.length - suffix.length) !== -1;
             }
             
-            
             function renderUploadWidget(){
+            
+                $("#formfield-form-widgets-file_type").css("display", "none");
+
                 OMUpload.setup({
                 element: $('#%(id_uploader)s')[0],
                 autoUpload: true,
                 multiple:false,
                 callbacks: {
-                    onComplete: function(id, file, result) {
+                    onComplete: function(id, filename, result) {
                         if (result['status'] === "success") {
                             regex = "^[a-zA-Z0-9]+\.[a-zA-Z]{3}$";
                             var file_id = result['id'];
