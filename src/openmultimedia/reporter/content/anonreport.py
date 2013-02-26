@@ -64,11 +64,12 @@ class IAnonReport(form.Schema):
     )
 
     form.omitted(IEditForm, 'country')
-    country = schema.TextLine(
+    country = schema.Choice(
         title=_(u'Country'),
-        description=_(u'help_country', default=u'Enter your country.'),
-        default=u'',
-        required=True
+        description=_(u'help_country',
+                        default=u'Choose your country.'),
+        vocabulary=u"openmultimedia.reporter.countries",
+        required=True,
     )
 
     dexterity.write_permission(file_id='openmultimedia.reporter.anonreportAddable')

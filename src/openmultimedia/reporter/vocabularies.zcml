@@ -1,0 +1,12 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    i18n_domain="openmultimedia.reporter">
+
+    <utility factory=".vocabularies.CountriesFromFile" />
+
+    <utility
+        component=".vocabularies.Countries"
+        name="openmultimedia.reporter.countries"
+        />
+
+</configure>
