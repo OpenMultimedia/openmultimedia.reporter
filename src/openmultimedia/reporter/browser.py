@@ -85,9 +85,9 @@ class RenderUploadWidgetJS(grok.View):
             function endsWith(str, suffix) {
                 return str.indexOf(suffix, str.length - suffix.length) !== -1;
             }
-            
+
             function renderUploadWidget(){
-            
+
                 $("#formfield-form-widgets-file_type").css("display", "none");
 
                 OMUpload.setup({
@@ -116,7 +116,7 @@ class RenderUploadWidgetJS(grok.View):
             });
 
             }
-            
+
             if ($('#form-widgets-file_id').val() != ""){
                 $("#formfield-%(id)s .formHelp").text("%(already_uploaded)s" );
             }

@@ -67,7 +67,7 @@ class IAnonReport(form.Schema):
     country = schema.Choice(
         title=_(u'Country'),
         description=_(u'help_country',
-                        default=u'Choose your country.'),
+                      default=u'Choose your country.'),
         vocabulary=u"openmultimedia.reporter.countries",
         required=True,
     )
