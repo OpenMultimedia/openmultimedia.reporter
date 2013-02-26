@@ -219,6 +219,11 @@ class Add(dexterity.AddForm):
     grok.name('openmultimedia.reporter.anonreport')
     grok.context(IAnonReport)
 
+    def updateWidgets(self):
+        super(Add, self).updateWidgets()
+        # Hide all fieldsets that may be here...
+        self.groups = []
+
     @button.buttonAndHandler(_('Send'), name='send')
     def handleSave(self, action):
         data, errors = self.extractData()
