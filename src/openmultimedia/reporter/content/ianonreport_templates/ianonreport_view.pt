@@ -50,7 +50,7 @@
             </div>
             <div id="main-report-data">
               <a id="main-report-title" tal:content="context/title" tal:attributes="href context/absolute_url" />
-              <div id="main-report-description" tal:content="context/description" />
+              <div id="main-report-report" tal:content="context/report" />
             </div>
             <div style="clear: both"></div>
 

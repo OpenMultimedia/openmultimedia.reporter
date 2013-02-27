@@ -54,6 +54,20 @@ class IAnonReport(form.Schema):
     """
     A report that any site visitor can add.
     """
+    title = schema.TextLine(
+        title=_(u'label_title', default=u'Title'),
+        required=True
+    )
+
+    report = schema.Text(
+        title=_(u'label_report', default=u'Report'),
+        description=_(
+            u'help_report',
+            default=u'Enter here your report.'
+        ),
+        required=False,
+        missing_value=u''
+    )
 
     form.omitted(IEditForm, 'name')
     name = schema.TextLine(
@@ -224,6 +238,8 @@ class Add(dexterity.AddForm):
         super(Add, self).updateWidgets()
         # Hide all fieldsets that may be here...
         self.groups = []
+        # Make the report field of size 15
+        self.widgets['report'].rows = 10
 
     @button.buttonAndHandler(_('Send'), name='send')
     def handleSave(self, action):

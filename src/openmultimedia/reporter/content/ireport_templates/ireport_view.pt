@@ -60,8 +60,8 @@
             <a id="main-report-title" 
                tal:content="new_report/pretty_title_or_id" 
                tal:attributes="href new_report/absolute_url"></a>
-            <div id="main-report-description" 
-                 tal:content="new_report/Description"></div>
+            <div id="main-report-report" 
+                 tal:content="new_report/report"></div>
           </div>
           <div style="clear: both"></div>
 
