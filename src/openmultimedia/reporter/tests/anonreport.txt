@@ -177,6 +177,8 @@ Pero si podemos editar el titulo, la descripcion y la fecha
     >>> 'title' in browser.contents
     True
     >>> 'description' in browser.contents
+    False
+    >>> 'report' in browser.contents
     True
     >>> 'date' in browser.contents
     True
@@ -184,7 +186,7 @@ Pero si podemos editar el titulo, la descripcion y la fecha
 Vamos a cambiar los valores y guardar para ver los cambios reflejados
 
     >>> browser.getControl('Title').value = "My edited report"
-    >>> browser.getControl('Description').value = "Una nota de periodismo ciudadano"
+    >>> browser.getControl('Report').value = "Una nota de periodismo ciudadano"
     >>> browser.getControl(name="form.widgets.date-day").value = "12"
     >>> browser.getControl(name="form.widgets.date-month").value = ['10']
     >>> browser.getControl(name="form.widgets.date-year").value = "2012"
@@ -203,13 +205,19 @@ deberiamos tambien como anonimos, poder acceder al reporte
 
     >>> browser.getLink("Publish").click()
     >>> browser.open(section_url)
+    >>> "Una nota de periodismo ciudadano" in browser.contents
+    True
+
     >>> browser.getLink('My edited report').click()
     >>> 'View' in browser.contents
     True
 
     >>> browser.open(portalURL + '/logout')    
     >>> browser.open(section_url)
-    
+
+    >>> "Una nota de periodismo ciudadano" in browser.contents
+    True
+
     >>> "My edited report" in browser.contents
     True
 
