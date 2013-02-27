@@ -63,7 +63,7 @@ msgstr "Error creando el reporte, porfavor pruebe de nuevo"
 
 #: openmultimedia/reporter/browser.py:138
 msgid "Error uploading file, please try again or use a diferent file"
-msgstr "\"Error cargando el archivo, por favor pruebe de nuevo o use un archivo diferente"
+msgstr "Error cargando el archivo, por favor pruebe de nuevo o use un archivo diferente"
 
 #: openmultimedia/reporter/content/anonreport.py:92
 msgid "File"

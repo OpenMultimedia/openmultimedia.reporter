@@ -7,6 +7,8 @@ from five import grok
 
 from zope.component import getUtility
 
+from zope.i18n import translate
+
 from zope.interface import Interface
 
 from Products.CMFCore.utils import getToolByName
@@ -110,18 +112,15 @@ class RenderUploadWidgetJS(grok.View):
                             } else { $("#form-widgets-file_type").val("video");}
                         } else {
                             $("#formfield-%(id)s .fieldErrorBox").text("%(upload_error)s");
+                            }
                         }
                     }
+                });
+
+                if ($('#form-widgets-file_id').val() != ""){
+                    $("#formfield-%(id)s .formHelp").text("%(already_uploaded)s" );
                 }
-            });
-
             }
-
-            if ($('#form-widgets-file_id').val() != ""){
-                $("#formfield-%(id)s .formHelp").text("%(already_uploaded)s" );
-            }
-
-
             $().ready(renderUploadWidget);
         })(jQuery);
         """
@@ -135,9 +134,11 @@ class RenderUploadWidgetJS(grok.View):
 
             upload_utility = getUtility(IUpload)
             url = upload_utility.upload_url()
-            upload_error = _(u"Error uploading file, please try again or use a diferent file")
-            upload_success = _(u"File uploaded correctly")
-            already_uploaded = _(u"Your file was already uploaded, no need to do it again.")
+            # XXX: Workaround for translating the JS strings
+            # XXX: We need to get the lang from the request, instead of like this.
+            upload_error = translate(u"Error uploading file, please try again or use a diferent file", domain='openmultimedia.reporter', target_language='es')
+            upload_success = translate(u"File uploaded correctly", domain='openmultimedia.reporter', target_language='es')
+            already_uploaded = translate(u"Your file was already uploaded, no need to do it again.", domain='openmultimedia.reporter', target_language='es')
 
             return self.js_template_input % dict(id=widget_id,
                                                  id_uploader=widget_id + '-uploader',
