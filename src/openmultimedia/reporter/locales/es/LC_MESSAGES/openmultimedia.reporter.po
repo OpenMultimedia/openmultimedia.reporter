@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openmultimedia.reporter\n"
-"POT-Creation-Date: 2013-02-25 23:26+0000\n"
+"POT-Creation-Date: 2013-02-27 21:55+0000\n"
 "PO-Revision-Date: 2012-07-04 17:08-0300\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -17,9 +17,17 @@ msgstr ""
 "Language: es\n"
 "X-Generator: Lokalize 1.4\n"
 
+#: openmultimedia/reporter/vocabularies.py:43
+msgid "(no value)"
+msgstr "(sin valor)"
+
 #: openmultimedia/reporter/profiles/default/types/openmultimedia.reporter.ireport.xml
 msgid "A container for reports"
 msgstr "Contenedor de Reportes"
+
+#: openmultimedia/reporter/vocabularies.py:18
+msgid "A list of countries"
+msgstr "Una lista de países"
 
 #: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:128
 msgid "Add new report"
@@ -33,11 +41,15 @@ msgstr "Reporte informativo agregable por cuaquiera"
 msgid "Anonymous report"
 msgstr "Reporte Anonimo"
 
-#: openmultimedia/reporter/content/anonreport.py:68
+#: openmultimedia/reporter/vocabularies.py:17
+msgid "Countries"
+msgstr "Países"
+
+#: openmultimedia/reporter/content/anonreport.py:82
 msgid "Country"
 msgstr "País"
 
-#: openmultimedia/reporter/content/anonreport.py:87
+#: openmultimedia/reporter/content/anonreport.py:102
 msgid "Date"
 msgstr "Fecha"
 
@@ -45,19 +57,19 @@ msgstr "Fecha"
 msgid "Default preview"
 msgstr "Imagen previa por defecto"
 
-#: openmultimedia/reporter/content/anonreport.py:232
+#: openmultimedia/reporter/content/anonreport.py:254
 msgid "Error creating the report, please try again"
 msgstr "Error creando el reporte, porfavor pruebe de nuevo"
 
-#: openmultimedia/reporter/browser.py:134
+#: openmultimedia/reporter/browser.py:138
 msgid "Error uploading file, please try again or use a diferent file"
 msgstr "\"Error cargando el archivo, por favor pruebe de nuevo o use un archivo diferente"
 
-#: openmultimedia/reporter/content/anonreport.py:77
+#: openmultimedia/reporter/content/anonreport.py:92
 msgid "File"
 msgstr "Archivo"
 
-#: openmultimedia/reporter/browser.py:135
+#: openmultimedia/reporter/browser.py:139
 msgid "File uploaded correctly"
 msgstr "Archivo cargado correctamente"
 
@@ -78,11 +90,11 @@ msgstr "Sección Soy Reportero"
 msgid "Image notify"
 msgstr "Notificar imagen"
 
-#: openmultimedia/reporter/content/anonreport.py:273
+#: openmultimedia/reporter/content/anonreport.py:295
 msgid "Item created"
 msgstr "Reporte Creado"
 
-#: openmultimedia/reporter/content/anonreport.py:60
+#: openmultimedia/reporter/content/anonreport.py:74
 msgid "Name"
 msgstr "Nombre"
 
@@ -98,7 +110,7 @@ msgstr "Por favor active Javascript para ver ${disqus-link}"
 msgid "Security key"
 msgstr "Llave de seguridad"
 
-#: openmultimedia/reporter/content/anonreport.py:222
+#: openmultimedia/reporter/content/anonreport.py:244
 msgid "Send"
 msgstr "Enviar"
 
@@ -118,7 +130,7 @@ msgstr "Usar esta imagen si no se tiene una imagen previa del reporte."
 msgid "Video notify"
 msgstr "Notificar video"
 
-#: openmultimedia/reporter/browser.py:136
+#: openmultimedia/reporter/browser.py:140
 msgid "Your file was already uploaded, no need to do it again."
 msgstr "Su archivo ya fue cargado, no necesita hacerlo de nuevo."
 
@@ -126,22 +138,38 @@ msgstr "Su archivo ya fue cargado, no necesita hacerlo de nuevo."
 msgid "blog comments powered by ${disqus}"
 msgstr "comentarios de blog provistos por ${disqus}"
 
-#. Default: "Enter your country."
-#: openmultimedia/reporter/content/anonreport.py:69
+#. Default: "Choose your country."
+#: openmultimedia/reporter/content/anonreport.py:83
+#, fuzzy
 msgid "help_country"
 msgstr "Ingrese su país."
 
 #. Default: "Enter here the date in which this photo or video was taken."
-#: openmultimedia/reporter/content/anonreport.py:88
+#: openmultimedia/reporter/content/anonreport.py:103
 msgid "help_date"
 msgstr "Ingrese aquí la fecha en la que fue tomado este video o foto."
 
 #. Default: "Enter your name."
-#: openmultimedia/reporter/content/anonreport.py:61
+#: openmultimedia/reporter/content/anonreport.py:75
 msgid "help_name"
 msgstr "Ingrese su nombre."
 
-#: openmultimedia/reporter/content/anonreport.py:78
+#. Default: "Enter here your report."
+#: openmultimedia/reporter/content/anonreport.py:64
+msgid "help_report"
+msgstr "Ingrese aquí su reporte."
+
+#. Default: "Report"
+#: openmultimedia/reporter/content/anonreport.py:63
+msgid "label_report"
+msgstr "Reporte"
+
+#. Default: "Title"
+#: openmultimedia/reporter/content/anonreport.py:58
+msgid "label_title"
+msgstr "Título"
+
+#: openmultimedia/reporter/content/anonreport.py:93
 msgid "upload video or image"
 msgstr "Cargar imagen o video"
 
