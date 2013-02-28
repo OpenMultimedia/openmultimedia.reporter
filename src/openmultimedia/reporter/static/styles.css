@@ -1,5 +1,5 @@
 .ireport-banner {
-    
+
     width: 852px;
 }
 
@@ -49,13 +49,20 @@ LISTREPORT VIEW
 REPORT VIEW (PUBLIC)
 */
 
-.report-item {
+.report-pair {
     float: left;
+}
+
+.report-item {
     text-align: center;
-    width: 155px;
+    width: 165px;
+    margin-bottom: 10px;
 }
 
 .report-item-thumb {
+    height: 88px;
+    overflow: hidden;
+    width: 164px;
 }
 
 #report-items-carousel {
@@ -83,13 +90,15 @@ REPORT VIEW (PUBLIC)
     width: 810px;
     position: relative;
     left: 10px;
+    height: 300px;
+    overflow: hidden;
 }
 
 #report-arrow-left-list a,
 #report-arrow-left a {
     padding: 15px;
     position: relative;
-    top: 35px;
+    top: 140px;
     background: url("++resource++openmultimedia.reporter/prev.png") no-repeat scroll -98px 0 transparent;
 }
 
@@ -97,7 +106,7 @@ REPORT VIEW (PUBLIC)
 #report-arrow-right a {
     padding: 15px;
     position: relative;
-    top: 35px;
+    top: 140px;
     background: url("++resource++openmultimedia.reporter/next.png") no-repeat scroll -98px 0 transparent;
 }
 
@@ -140,6 +149,7 @@ REPORT VIEW (PUBLIC)
     box-shadow: 5px 5px 5px -1px;
 }
 
+#content a#main-report-title:visited,
 #content a#main-report-title:link {
     color: #990000;
     font-family: Arial,Helvetica,sans-serif;
@@ -170,7 +180,7 @@ REPORT VIEW (PUBLIC)
 }
 
 .anon-file-download {
-    clear:both;   
+    clear:both;
 }
 
 #content .add-report-button a {
@@ -184,11 +194,11 @@ REPORT VIEW (PUBLIC)
 .add-report-button {
     margin-top: 10px;
     margin-bottom: 10px;
+    margin-left: 17px;
 }
 
 #content .add-report-button a:link {
-    border: 1px solid #000000;
-    border-radius: 10px 10px 10px 10px;
+    border-bottom: 0 !important;
 }
 
 
@@ -247,7 +257,7 @@ td.report-item-list-title {
 .new-report-right p {
     padding-left: 10px;
     padding-top: 40px;
-    text-align: left;  
+    text-align: left;
 }
 
 .requisitos {
@@ -255,17 +265,23 @@ td.report-item-list-title {
     font-family: Arial,Helvetica,sans-serif;
     font-size: 14px;
     font-weight: bold;
-    text-align: center;
 }
 
 #ireport-user-data {
+    color: #000000;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
     font-weight: bold;
-    margin-top: 10px;
+    padding-left: 5px;
 }
 
 .user-data {
     font-weight: bold;
     text-align: center;
+}
+
+.user-data.country {
+    font-weight: normal;
 }
 
 #content .user-data a:link {
@@ -275,4 +291,42 @@ td.report-item-list-title {
 
 #content .nuevo a:link {
     border-bottom: 0;
+}
+
+#loading {
+    display: none;
+}
+
+#ireport-date {
+    color: #000000;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 18px;
+    padding: 5px;
+}
+
+#report-item-date {
+    color: #666666;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    padding-left: 5px;
+}
+
+#new-report-name {
+    color: #990000;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#add-new-report {
+    margin-left: 40px;
+}
+
+#form-widgets-file_id-uploader  iframe {
+    border: 0;
+    box-shadow: none;
 }

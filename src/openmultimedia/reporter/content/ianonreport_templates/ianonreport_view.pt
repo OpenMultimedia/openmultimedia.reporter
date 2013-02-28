@@ -29,30 +29,40 @@
           <div class="ireport-banner">
             <img src="++resource++openmultimedia.reporter/soy_reportero.jpg" />
           </div>
+
           <div class="main-report">
-            <div class="anonreport-pic">
-              <div id="main-report-media">
-                <div class="padding">
-                  <tal:video condition="not:context/is_image">
-                    <script type="text/javascript" src=""
-                    tal:define="video_url context/get_video_widget_url"
-                    tal:attributes="src string:${video_url};"
-                    tal:content="nothing">
-                    Item Title
-                    </script>
-                  </tal:video>
-                  <tal:image condition="context/is_image">
-                    <img tal:replace="structure context/@@images/image_file/preview" />
-                  </tal:image>
-                </div>
-              </div>
-              <div class="anonreport-date" tal:content="context/get_date"></div>
-            </div>
-            <div id="main-report-data">
-              <a id="main-report-title" tal:content="context/title" tal:attributes="href context/absolute_url" />
-              <div id="main-report-report" tal:content="context/report" />
-            </div>
-            <div style="clear: both"></div>
+
+            <div id="main-report-media">
+    <div class="padding">
+    <tal:video condition="not:context/is_image">
+      <script type="text/javascript" src=""
+          tal:define="video_url context/get_video_widget_url"
+          tal:condition="video_url"
+          tal:attributes="src string:${video_url};"
+          tal:content="nothing">
+          Item Title
+      </script>
+      </tal:video>
+      <tal:image condition="context/is_image">
+        <img tal:replace="structure context/@@images/image_file/preview" />
+      </tal:image>
+      </div>
+  </div>
+  <div id="main-report-data">
+    <a id="main-report-title"
+       tal:content="context/pretty_title_or_id"
+       tal:attributes="href context/absolute_url"></a>
+    <div id="main-report-description"
+         tal:content="context/report"></div>
+  </div>
+  <div style="clear: both"></div>
+
+  <tal:below>
+    <div id="ireport-date" tal:content="context/get_formated_date"/>
+    <div id="ireport-user-data">
+      <span tal:content="context/name"></span> - <span tal:content="context/country"></span>
+    </div>
+  </tal:below>
 
           <!-- discuss         -->
           <tal:discuss tal:condition="context/is_published_ct">
@@ -71,8 +81,8 @@
             <table width="249" border="0">
               <tr>
                 <td width="34">
-                  <a href="#"  
-                     onclick="NewWindow('++theme++telesur.theme/condiciones.html', 'Condiciones de Publicacion','500','590','yes'); return false;"><img src="++theme++telesur.theme/img/icon_comentarios.jpg"  
+                  <a href="#"
+                     onclick="NewWindow('++theme++telesur.theme/condiciones.html', 'Condiciones de Publicacion','500','590','yes'); return false;"><img src="++theme++telesur.theme/img/icon_comentarios.jpg"
                      width="34"
                      height="34"
                      border="0"
@@ -108,7 +118,7 @@
             </noscript>
             <a href="http://disqus.com"
                class="dsq-brlink"
-               i18n:translate="">blog comments powered by 
+               i18n:translate="">blog comments powered by
               <span class="logo-disqus"
                     i18n:name="disqus">Disqus</span>
             </a>

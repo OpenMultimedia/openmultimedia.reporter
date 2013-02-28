@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import math
+from itertools import izip
 
 from five import grok
 
@@ -39,6 +40,12 @@ class IIReport(form.Schema):
                                      required=False)
 
 
+
+def pairwise(iterable):
+    "s -> (s0,s1), (s2,s3), (s4, s5), ..."
+    a = iter(iterable)
+    return izip(a, a)
+
 class View(dexterity.DisplayForm):
     grok.context(IIReport)
     grok.require('zope2.View')
@@ -61,10 +68,10 @@ class View(dexterity.DisplayForm):
                 if self.actual > 0:
                     self.actual -= 1
 
-        self.publics = publics[self.actual * int(self.batch_size):(self.actual + 1) * int(self.batch_size)]
+        self.publics = pairwise(publics[:20])
         self.main_report_new = None
-        if self.publics:
-            self.main_report_new = self.publics[0]
+        if publics:
+            self.main_report_new = publics[0]
 
     def render(self):
         pt = ViewPageTemplateFile('ireport_templates/ireport_view.pt')

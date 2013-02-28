@@ -1,0 +1,43 @@
+<tal:report
+     tal:condition="context/has_media">
+
+  <img id="loading" src="++resource++openmultimedia.reporter/loading.gif" />
+  <div id="main-report-media">
+    <div class="padding">
+    <tal:video condition="not:context/is_image">
+      <script type="text/javascript" src=""
+          tal:define="video_url context/get_video_widget_url"
+          tal:condition="video_url"
+          tal:attributes="src string:${video_url};"
+          tal:content="nothing">
+          Item Title
+      </script>
+      </tal:video>
+      <tal:image condition="context/is_image">
+        <img tal:replace="structure context/@@images/image_file/mini" />
+      </tal:image>
+      </div>
+  </div>
+  <div id="main-report-data">
+    <a id="main-report-title"
+       tal:content="context/pretty_title_or_id"
+       tal:attributes="href context/absolute_url"></a>
+    <div id="main-report-description"
+         tal:content="context/report"></div>
+  </div>
+  <div style="clear: both"></div>
+
+  <tal:below>
+    <div id="ireport-date" tal:content="context/get_formated_date"/>
+    <div id="ireport-user-data">
+      <span tal:content="context/name"></span> - <span tal:content="context/country"></span>
+    </div>
+    <div id="main-report-comments">
+      <tal:comments>
+        <a tal:attributes="href context/absolute_url">
+          <img src="++resource++openmultimedia.reporter/btn_comentarios.jpg" />
+        </a>
+      </tal:comments>
+    </div>
+  </tal:below>
+</tal:report>

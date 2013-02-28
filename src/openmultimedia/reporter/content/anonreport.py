@@ -142,6 +142,9 @@ class AnonReport(Item):
         state = status["review_state"]
         return state
 
+    def get_formated_date(self):
+        return self.date.strftime("%d-%m-%Y")
+
     def get_date(self):
         date_utility = getUtility(IPrettyDate)
         return date_utility.date(self.date)
@@ -191,9 +194,9 @@ class AnonReport(Item):
         if data:
             filename = os.path.basename(url)
             if HAVE_BLOBS:  # pragma: no cover
-                setattr(self, field, namedfile.NamedBlobImage(data.read(), filename=filename))
+                setattr(self, field, namedfile.NamedBlobImage(data.read(), filename=unicode(filename)))
             else:  # pragma: no cover
-                setattr(self, field, namedfile.NamedImage(data.read(), filename=filename))
+                setattr(self, field, namedfile.NamedImage(data.read(), filename=unicode(filename)))
 
         else:
             setattr(self, field, data)
@@ -311,6 +314,18 @@ class View(dexterity.DisplayForm):
         if portal_state.anonymous():
             self.request.set('disable_border', 1)
 
+        return pt(self)
+
+class AjaxReport(View):
+    grok.context(IAnonReport)
+    grok.require('zope2.View')
+    grok.name("ajax-report")
+
+    def update(self):
+        self.report = self.context
+
+    def render(self):
+        pt = ViewPageTemplateFile('ianonreport_templates/ianonreport_ajax_view.pt')
         return pt(self)
 
 
