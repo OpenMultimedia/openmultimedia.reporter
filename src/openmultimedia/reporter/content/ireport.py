@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import math
-from itertools import izip
 
 from five import grok
 
@@ -40,11 +39,12 @@ class IIReport(form.Schema):
                                      required=False)
 
 
+def chunks(l, n):
+    """ Yield successive n-sized chunks from l.
+    """
+    for i in xrange(0, len(l), n):
+        yield l[i: i + n]
 
-def pairwise(iterable):
-    "s -> (s0,s1), (s2,s3), (s4, s5), ..."
-    a = iter(iterable)
-    return izip(a, a)
 
 class View(dexterity.DisplayForm):
     grok.context(IIReport)
@@ -68,7 +68,7 @@ class View(dexterity.DisplayForm):
                 if self.actual > 0:
                     self.actual -= 1
 
-        self.publics = pairwise(publics[:20])
+        self.publics = chunks(publics[:20], 2)
         self.main_report_new = None
         if publics:
             self.main_report_new = publics[0]

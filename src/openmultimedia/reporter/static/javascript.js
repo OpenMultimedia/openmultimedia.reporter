@@ -18,6 +18,7 @@ $(document).ready(function() {
         subtype: 'ajax',
         filter: '#content>*',
         formselector: 'form',
+        noform: 'close',
         config: {onLoad: function() {
             $.getScript(portal_url+"/++resource++openmultimedia.reporter/omupload.js", function(){
                 // XXX: Eventually, we might have several widgets
@@ -65,6 +66,7 @@ $(document).ready(function() {
             subtype: 'ajax',
             filter: '#content>*',
             formselector: 'form',
+            noform: 'close',
             config: {onLoad: function() {
                 $.getScript(portal_url+"/++resource++openmultimedia.reporter/omupload.js", function(){
                     // XXX: Eventually, we might have several widgets

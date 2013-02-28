@@ -316,6 +316,7 @@ class View(dexterity.DisplayForm):
 
         return pt(self)
 
+
 class AjaxReport(View):
     grok.context(IAnonReport)
     grok.require('zope2.View')
