@@ -38,7 +38,7 @@ Agregamos 30 reportes
     >>> browser.open(section_url)
 
     >>> for index in range(10,40):
-    ...     browser.getLink('Add new report').click()
+    ...     browser.getLink(id='add-new-report').click()
     ...     browser.getControl('Title').value = "title-%s"%index
     ...     browser.getControl('Name').value = "Frapell"
     ...     browser.getControl('Country').value = ["AR"]
@@ -95,7 +95,7 @@ Hacemos click en 'next' y deberiamos ver los siguientes 10 items:
     10
     >>> reports.count(False)
     20
-    
+
 Hacemos click en 'prev' y deberiamos ver los primeros 20 items:
 
     >>> browser.getLink(id='report-arrow-prev-link').click()
@@ -106,4 +106,3 @@ Hacemos click en 'prev' y deberiamos ver los primeros 20 items:
     20
     >>> reports.count(False)
     10
-    

@@ -38,11 +38,11 @@ para que falle. La pestaña "Settings" no debe ser visible
     >>> browser.open(portalURL + '/logout')
     >>> browser.open(section_url)
 
-    >>> browser.getLink('Add new report').click()
-    
+    >>> browser.getLink(id='add-new-report').click()
+
     >>> "Settings" in browser.contents
     False
-    
+
     >>> browser.getControl('Title').value = "My Valid Report"
     >>> browser.getControl('Name').value = "Frapell"
     >>> browser.getControl('Country').value = ["AR"]
@@ -54,7 +54,7 @@ para que falle. La pestaña "Settings" no debe ser visible
 
     >>> "There were some errors" in browser.contents
     True
-    
+
 El archivo se envia, pero el tipo de archivo no es populado
 
     >>> browser.getControl(name="form.widgets.file_id").value = "anonreport-valid-id"
@@ -65,7 +65,7 @@ El archivo se envia, pero el tipo de archivo no es populado
     True
 
 El tipo de archivo fue populado correctamente, pero al pedir que se cree la
-estructura remota, el servidor devuelve una respuesta erronea    
+estructura remota, el servidor devuelve una respuesta erronea
 
 
     >>> browser.getControl(name="form.widgets.file_id").value = "anonreport-invalid-id"
@@ -147,15 +147,15 @@ Volvemos a ingresar al sitio para editar el reporte:
 
     >>> browser.getLink('Contents').click()
     >>> browser.getLink('My Valid Report').click()
-    
+
 Un usuario autenticado debe poder ver la barra verde
 
     >>> 'View' in browser.contents
     True
-    
+
 Seguimos, podemos ver la pestaña de configuracion existente
 
-    >>> browser.getLink('Edit').click()    
+    >>> browser.getLink('Edit').click()
     >>> "Settings" in browser.contents
     True
 
@@ -200,7 +200,7 @@ Vamos a cambiar los valores y guardar para ver los cambios reflejados
     True
 
 Todo esta bien, entonces, publicamos el reporte, y deberia quedar visible en
-la seccion principal, tanto para el administrador como para anonimos, y 
+la seccion principal, tanto para el administrador como para anonimos, y
 deberiamos tambien como anonimos, poder acceder al reporte
 
     >>> browser.getLink("Publish").click()
@@ -212,7 +212,7 @@ deberiamos tambien como anonimos, poder acceder al reporte
     >>> 'View' in browser.contents
     True
 
-    >>> browser.open(portalURL + '/logout')    
+    >>> browser.open(portalURL + '/logout')
     >>> browser.open(section_url)
 
     >>> "Una nota de periodismo ciudadano" in browser.contents

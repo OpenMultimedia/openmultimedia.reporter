@@ -33,12 +33,12 @@ Vamos al home y agregamos una seccion "I report", para poder agregar reportes
     >>> browser.getLink('Publish').click()
 
 Ahora salimos, y vamos a cargar un reporte anonimo, con algun valor faltante
-para que falle 
+para que falle
 
     >>> browser.open(portalURL + '/logout')
     >>> browser.open(section_url)
 
-    >>> browser.getLink('Add new report').click()
+    >>> browser.getLink(id='add-new-report').click()
     >>> browser.getControl('Title').value = "My Valid Report"
     >>> browser.getControl('Name').value = "Frapell"
     >>> browser.getControl('Country').value = ["AR"]
@@ -52,7 +52,7 @@ para que falle
     True
 
 El tipo de archivo fue populado correctamente, pero al pedir que se cree la
-estructura remota, el servidor devuelve una respuesta erronea    
+estructura remota, el servidor devuelve una respuesta erronea
 
 
     >>> browser.getControl(name="form.widgets.file_id").value = "videoreport-invalid-id"
@@ -176,7 +176,7 @@ Vamos a cambiar los valores y guardar para ver los cambios reflejados
     True
 
 Todo esta bien, entonces, publicamos el reporte, y deberia quedar visible en
-la seccion principal, tanto para el administrador como para anonimos, y 
+la seccion principal, tanto para el administrador como para anonimos, y
 deberiamos tambien como anonimos, poder acceder al reporte
 
     >>> browser.getLink("Publish").click()
@@ -184,9 +184,9 @@ deberiamos tambien como anonimos, poder acceder al reporte
     >>> "My edited report" in browser.contents
     True
 
-    >>> browser.open(portalURL + '/logout')    
+    >>> browser.open(portalURL + '/logout')
     >>> browser.open(section_url)
-    
+
     >>> "My edited report" in browser.contents
     True
     >>> browser.getLink('My edited report').click()

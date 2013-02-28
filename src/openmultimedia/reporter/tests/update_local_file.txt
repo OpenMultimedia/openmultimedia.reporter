@@ -25,16 +25,16 @@ Functional test que prueba el correcto funcionamiento de la vista update-local-f
 Vamos al home y agregamos una seccion "I report", para poder agregar reportes
 
     >>> browser.getLink('Home').click()
-    
+
     >>> "Update local file" in browser.contents
     False
-    
+
     >>> browser.getLink('I report section').click()
     >>> browser.getControl('Title').value = 'Soy reportero'
     >>> browser.getControl('Save').click()
     >>> section_url = portalURL + '/soy-reportero'
     >>> browser.getLink('Publish').click()
-    
+
     >>> "Update local file" in browser.contents
     False
 
@@ -43,7 +43,7 @@ Ahora salimos, y vamos a cargar un reporte anonimo
     >>> browser.open(portalURL + '/logout')
     >>> browser.open(section_url)
 
-    >>> browser.getLink('Add new report').click()
+    >>> browser.getLink(id='add-new-report').click()
     >>> browser.getControl('Title').value = "My Valid Report"
     >>> browser.getControl('Name').value = "Frapell"
     >>> browser.getControl('Country').value = ["AR"]
@@ -78,18 +78,18 @@ Volvemos a ingresar al sitio
     >>> browser.getControl(name='submit').click()
 
     >>> anon_report = portal['soy-reportero']['my-valid-report']
-    
+
 Vemos que en este punto tenemos guardada una imagen, la borramos y llamamos a la vista.
 Deberiamos nuevamente tener una imagen
 
     >>> anon_report.image_preview
     <plone.namedfile.file.NamedBlobImage object at 0x...>
-    
+
     >>> anon_report.image_preview = None
     >>> anon_report.image_preview
 
     >>> browser.open("%s/@@update-local-file" % anon_report.absolute_url())
-    
+
     >>> anon_report.image_preview
     <plone.namedfile.file.NamedBlobImage object at 0x...>
 

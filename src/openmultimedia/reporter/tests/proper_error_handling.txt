@@ -50,7 +50,7 @@ una imagen remota inexistente
     >>> browser.open(portalURL + '/logout')
     >>> browser.open(section_url)
 
-    >>> browser.getLink('Add new report').click()
+    >>> browser.getLink(id='add-new-report').click()
     >>> browser.getControl('Title').value = "My Valid Report"
     >>> browser.getControl('Name').value = "Frapell"
     >>> browser.getControl('Country').value = ["AR"]

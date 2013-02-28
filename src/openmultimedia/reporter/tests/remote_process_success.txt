@@ -1,4 +1,4 @@
-Functional test que simula que el proceso de renderizado de video remoto finalizo 
+Functional test que simula que el proceso de renderizado de video remoto finalizo
 exitosamente y Plone es notificado:
 
     >>> import os
@@ -31,13 +31,13 @@ Vamos al home y agregamos una seccion "I report", para poder agregar reportes
     >>> section_url = portalURL + '/soy-reportero'
     >>> browser.getLink('Publish').click()
 
-Ahora salimos, y vamos a cargar un reporte anonimo, le vamos a asignar un id del archivo, 
-y vamos a guardar para que se cree la estructura remota. 
+Ahora salimos, y vamos a cargar un reporte anonimo, le vamos a asignar un id del archivo,
+y vamos a guardar para que se cree la estructura remota.
 
     >>> browser.open(portalURL + '/logout')
     >>> browser.open(section_url)
 
-    >>> browser.getLink('Add new report').click()
+    >>> browser.getLink(id='add-new-report').click()
     >>> browser.getControl('Title').value = "My Valid Report"
     >>> browser.getControl('Name').value = "Frapell"
     >>> browser.getControl('Country').value = ["AR"]
@@ -50,7 +50,7 @@ y vamos a guardar para que se cree la estructura remota.
 
     >>> "Item created" in browser.contents
     True
-    
+
     >>> browser.url == section_url
     True
 
@@ -65,7 +65,7 @@ Ingresamos al sitio y vemos que el reporte no es visible:
     True
 
     >>> browser.open(section_url)
-    
+
     >>> browser.getLink('Contents').click()
     >>> "My Valid Report" in browser.contents
     False
@@ -95,7 +95,7 @@ Volvemos a ingresar y vemos que ahora reporte es visible:
     True
 
     >>> browser.open(section_url)
-    
+
     >>> browser.getLink('Contents').click()
     >>> "My Valid Report" in browser.contents
     True

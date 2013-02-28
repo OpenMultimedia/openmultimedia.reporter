@@ -43,7 +43,7 @@ se ve, y lo permitido acceder por los permisos
     ...       'Reporte publicado']
 
     >>> for title in titles:
-    ...     browser.getLink('Add new report').click()
+    ...     browser.getLink(id='add-new-report').click()
     ...     browser.getControl('Title').value = title
     ...     browser.getControl('Name').value = "Frapell"
     ...     browser.getControl('Country').value = ["AR"]
@@ -94,7 +94,7 @@ las llamadas a los callback url correctos, excepto en el reporte privado
     True
 
     >>> browser.open(section_url)
-    
+
     >>> browser.getLink('Contents').click()
     >>> 'Reporte privado' in browser.contents
     False

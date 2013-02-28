@@ -38,7 +38,7 @@ Agregamos 10 reportes
     >>> browser.open(section_url)
 
     >>> for index in range(10):
-    ...     browser.getLink('Add new report').click()
+    ...     browser.getLink(id='add-new-report').click()
     ...     browser.getControl('Title').value = "title-%s"%index
     ...     browser.getControl('Name').value = "Frapell"
     ...     browser.getControl('Country').value = ["AR"]
@@ -92,7 +92,7 @@ y 'reverse', funciona como debe...:
     5
     >>> reports.count(False)
     5
-    
+
 Hacemos click en 'next' y deberiamos ver los siguientes 5 items:
 
     >>> browser.getLink(id='report-arrow-next-link').click()
@@ -103,7 +103,7 @@ Hacemos click en 'next' y deberiamos ver los siguientes 5 items:
     5
     >>> reports.count(False)
     5
-    
+
 Hacemos click en 'prev' y deberiamos ver los siguientes 5 items:
 
     >>> browser.getLink(id='report-arrow-prev-link').click()
@@ -114,4 +114,3 @@ Hacemos click en 'prev' y deberiamos ver los siguientes 5 items:
     5
     >>> reports.count(False)
     5
-    
