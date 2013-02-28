@@ -81,28 +81,6 @@ que aparecen:
     >>> reports = ['title-%s' % index in browser.contents for index in range(10,40)]
 
     >>> reports.count(True)
-    20
+    15
     >>> reports.count(False)
-    10
-
-Hacemos click en 'next' y deberiamos ver los siguientes 10 items:
-
-    >>> browser.getLink(id='report-arrow-next-link').click()
-
-    >>> reports = ['title-%s' % index in browser.contents for index in range(10,40)]
-
-    >>> reports.count(True)
-    10
-    >>> reports.count(False)
-    20
-
-Hacemos click en 'prev' y deberiamos ver los primeros 20 items:
-
-    >>> browser.getLink(id='report-arrow-prev-link').click()
-
-    >>> reports = ['title-%s' % index in browser.contents for index in range(10,40)]
-
-    >>> reports.count(True)
-    20
-    >>> reports.count(False)
-    10
+    15
