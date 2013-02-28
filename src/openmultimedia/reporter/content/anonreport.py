@@ -10,6 +10,8 @@ from zope.interface import Invalid
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 
+from zope.schema.interfaces import IVocabularyFactory
+
 from z3c.form import button
 from z3c.form.interfaces import ActionExecutionError
 
@@ -239,6 +241,11 @@ class AnonReport(Item):
             tag = scales.tag('image_preview', scale="mini")
 
         return tag
+
+    def get_country(self):
+        factory = getUtility(IVocabularyFactory, 'openmultimedia.reporter.countries')
+        vocab = factory(self)
+        return vocab.getTermByToken(self.country).title
 
 
 class Add(dexterity.AddForm):
