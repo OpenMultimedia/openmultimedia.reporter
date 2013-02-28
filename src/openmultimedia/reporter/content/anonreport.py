@@ -230,6 +230,16 @@ class AnonReport(Item):
 
         return tag
 
+    def render_preview_image_mini(self):
+        if not self.image_preview:
+            scales = getMultiAdapter((self.aq_parent, self.REQUEST), name="images")
+            tag = scales.tag('default_preview', scale="mini")
+        else:
+            scales = getMultiAdapter((self, self.REQUEST), name="images")
+            tag = scales.tag('image_preview', scale="mini")
+
+        return tag
+
 
 class Add(dexterity.AddForm):
     """ Default edit for Ideas

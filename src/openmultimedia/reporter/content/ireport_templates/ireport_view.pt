@@ -24,7 +24,7 @@
 <metal:main fill-slot="main">
   <tal:main-macro metal:define-macro="main">
   <div id="content-reports">
-    <div class="add-report-button">
+    <div class="report-button-pending" tal:condition="view/can_edit">
     <a href="#" tal:attributes="href string:${context/absolute_url}/listado-report"
                             tal:condition="view/can_edit"
                             class="report-link edit-report"
@@ -116,6 +116,7 @@
             </a>
           </div>
           <div style="clear:both"></div>
+          <div class="list-report-seeall" ><a href="listado-report-published">Ver todos</a></div>
         </div>
       </div>
     </div>

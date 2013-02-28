@@ -330,3 +330,60 @@ td.report-item-list-title {
     border: 0;
     box-shadow: none;
 }
+
+.list-published-img {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.list-published-text {
+    padding: 5px;
+}
+
+.list-published-table {
+    width: 100%;
+}
+
+.list-published-table td {
+    border-bottom: 1px solid #000000;
+    border-top: 1px solid #000000;
+}
+
+#content .list-report-seeall a,
+#content .list-report-seeall a:visited,
+#content .list-report-seeall a:link {
+    color: #990000;
+    font-size: 15px;
+    font-weight: bold;
+    border-bottom: 0px !important;
+}
+
+.list-report-seeall {
+    margin-right: 30px;
+    margin-top: 30px;
+    text-align: right;
+}
+
+#content .list-published-text.report-title a:visited,
+#content .list-published-text.report-title a:link {
+    font-weight: bold;
+    color: #990000;
+    font-size: 12px;
+    border-bottom: 0px !important;
+}
+
+#content .report-button-pending a:visited,
+#content .report-button-pending a:link {
+    font-weight: bold;
+    color: #990000;
+    font-size: 20px;
+    border-bottom: 0px !important;
+}
+
+.report-button-pending {
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    padding: 5px;
+}

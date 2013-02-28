@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import math
-
 from five import grok
 
 from zope.component import getMultiAdapter
@@ -50,24 +48,10 @@ class View(dexterity.DisplayForm):
     grok.context(IIReport)
     grok.require('zope2.View')
 
-    batch_size = 5
-
     def update(self):
         self.actual = 0
         self.total = 0
         publics = self.get_published_reports()
-        self.total = int(math.ceil(len(publics) / self.batch_size)) - 1
-        if 'action' in self.request.keys():
-            action = self.request['action']
-            if action == 'next':
-                self.actual = int(self.request['actual'])
-                if len(publics[(self.actual + 1) * int(self.batch_size):(self.actual + 2) * int(self.batch_size)]) > 0:
-                    self.actual += 1
-            elif action == 'prev':
-                self.actual = int(self.request['actual'])
-                if self.actual > 0:
-                    self.actual -= 1
-
         self.publics = chunks(publics[:20], 2)
         self.main_report_new = None
         if publics:
@@ -113,30 +97,18 @@ class View(dexterity.DisplayForm):
         reports = self._get_catalog_results('published')
         return reports
 
+    def get_batch(self):
+        #cannot put it on top of file grok error :S
+        from Products.CMFPlone import Batch
+        return Batch
+
 
 class ListadoReportView(View):
     grok.require('cmf.ModifyPortalContent')
     grok.name('listado-report')
 
-    batch_size = 20
-
     def update(self):
-        self.actual = 0
-        self.total = 0
-        publics = self.get_non_published_reports()
-        self.total = int(math.ceil(len(publics) / self.batch_size)) - 1
-
-        if 'action' in self.request.keys():
-            action = self.request['action']
-            if action == 'next':
-                self.actual = int(self.request['actual'])
-                if len(publics[(self.actual + 1) * int(self.batch_size):(self.actual + 2) * int(self.batch_size)]) > 0:
-                    self.actual += 1
-            elif action == 'prev':
-                self.actual = int(self.request['actual'])
-                if self.actual > 0:
-                    self.actual -= 1
-        self.publics = publics[self.actual * int(self.batch_size):(self.actual + 1) * int(self.batch_size)]
+        self.publics = self.get_non_published_reports()
 
     def render(self):
         pt = ViewPageTemplateFile('ireport_templates/listadoreport_view.pt')
@@ -156,3 +128,12 @@ class ListadoReportView(View):
                    'sort_order': sort_order}
         reports = pc.searchResults(filters)
         return reports
+
+
+class ListadoReportPublishedView(View):
+    grok.require('zope2.View')
+    grok.name('listado-report-published')
+
+    def render(self):
+        pt = ViewPageTemplateFile('ireport_templates/listado_published.pt')
+        return pt(self)

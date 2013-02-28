@@ -1,0 +1,102 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="openmultimedia.reporter">
+
+<metal:styleslot fill-slot="style_slot" >
+
+        <link rel="stylesheet" type="text/css" media="screen" href=""
+              tal:attributes="href string:${context/absolute_url}/++resource++openmultimedia.reporter/styles.css" />
+</metal:styleslot>
+
+<metal:javascriptslot fill-slot="javascript_head_slot" >
+
+        <script type="text/javascript" src="++resource++openmultimedia.reporter/javascript.js">
+        </script>
+
+</metal:javascriptslot>
+
+<body>
+
+<metal:main fill-slot="main">
+  <tal:main-macro metal:define-macro="main">
+  <div id="content-reports">
+    <div class="report-button-pending" tal:condition="view/can_edit">
+    <a href="#" tal:attributes="href string:${context/absolute_url}/listado-report"
+                            tal:condition="view/can_edit"
+                            class="report-link edit-report"
+                            i18n:translate="">Non Published Reports</a>
+    </div>
+
+    <div class="ireport-banner">
+        <img src="++resource++openmultimedia.reporter/soy_reportero.jpg" />
+    </div>
+    <div class="published-reports-list" tal:define="items view/get_published_reports">
+      <tal:batch define="Batch view/get_batch;
+                         b_start python:request.get('b_start', 0);
+                         per_page python:request.get('per_page', 10);
+                         batch python:isinstance(items, Batch) and items or Batch(items, per_page, int(b_start), orphan=0);">
+        <table class="list-published-table">
+          <tal:brain repeat="brain batch">
+          <tr tal:define="report brain/getObject">
+            <td >
+              <div class="list-published-img" >
+                <a tal:content="structure report/render_preview_image_mini"
+                    tal:attributes="href report/absolute_url"/>
+              </div>
+            </td>
+            <td class="list-published-text report-title" >
+              <a tal:attributes="href report/absolute_url" tal:content="report/title" />
+            </td>
+            <td class="list-published-text" tal:content="report/name"/>
+            <td class="list-published-text" tal:content="report/country"/>
+            <td class="list-published-text" tal:content="report/get_formated_date" />
+          </tr>
+        </tal:brain>
+        </table>
+        <div metal:use-macro="context/batch_macros/macros/navigation" />
+      </tal:batch>
+    </div>
+  </div>
+
+  <div class="new-report">
+    <div class="new-report-left requisitos">
+      <div>
+        <img src="++resource++openmultimedia.reporter/logo_soy.jpg"/>
+      </div>
+      <div class="add-report-button">
+      <div id="new-report-name">
+        Nombre
+      <input id="add-report-name" name="form.widgets.name" class="text-widget required textline-field" value="" type="text" />
+      </div>
+      <a href="#" id="add-new-report"
+         tal:attributes="href string:${context/absolute_url}/++add++openmultimedia.reporter.anonreport;
+         data-href string:${context/absolute_url}/++add++openmultimedia.reporter.anonreport;"
+         tal:condition="view/can_add_reports"
+         i18n:translate=""><img src="++resource++openmultimedia.reporter/cargar_archivo.jpg" /></a>
+      </div>
+      Te invitamos a ser parte de nuestra sección Soy Reportero suscribiéndote en nuestro sitio en internet, o enviado tus fotos y videos a nuestra cuenta en twitter @teleSURtv usando el hashtag #SoyReportero. Empieza a contarnos la historia de nuestros pueblos, informaciones que pueden hacer noticia, solo por teleSUR.
+    </div>
+      <p></p>
+      <div class="new-report-right requisitos">
+        <img src="++resource++openmultimedia.reporter/imagen_contrasena3.jpg"/>
+        <p></p>
+      </div>
+      <div style="clear:both;"></div>
+      <div class="nuevo" align="center" style="margin-top:15px; margin-bottom:15px;">
+      <a target="_blank"  href="http://reportero.telesurtv.net/condiciones_uso.php">
+        <img width="142"
+             height="31"
+             border="0"
+             src="++resource++openmultimedia.reporter/btn_condiciones_uso.jpg"/>
+      </a>
+      </div>
+    </div>
+  </tal:main-macro>
+</metal:main>
+
+</body>
+</html>
