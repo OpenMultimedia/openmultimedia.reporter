@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openmultimedia.reporter\n"
-"POT-Creation-Date: 2013-03-01 19:37+0000\n"
+"POT-Creation-Date: 2013-03-01 20:06+0000\n"
 "PO-Revision-Date: 2012-07-04 17:08-0300\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -33,6 +33,10 @@ msgstr "Una lista de países"
 msgid "An informative report addable by anybody"
 msgstr "Reporte informativo agregable por cuaquiera"
 
+#: openmultimedia/reporter/content/anonreport.py:270
+msgid "Cancel"
+msgstr "Cancelar"
+
 #: openmultimedia/reporter/vocabularies.py:17
 msgid "Countries"
 msgstr "Países"
@@ -51,7 +55,7 @@ msgstr "Fecha"
 msgid "Default preview"
 msgstr "Imagen previa por defecto"
 
-#: openmultimedia/reporter/content/anonreport.py:280
+#: openmultimedia/reporter/content/anonreport.py:286
 msgid "Error creating the report, please try again"
 msgstr "Error creando el reporte, porfavor pruebe de nuevo"
 
@@ -76,7 +80,7 @@ msgstr "Sección Soy Reportero"
 msgid "Image notify"
 msgstr "Notificar imagen"
 
-#: openmultimedia/reporter/content/anonreport.py:321
+#: openmultimedia/reporter/content/anonreport.py:327
 msgid "Item created"
 msgstr "Reporte Creado"
 
@@ -111,7 +115,7 @@ msgstr "Busqueda:"
 msgid "Security key"
 msgstr "Llave de seguridad"
 
-#: openmultimedia/reporter/content/anonreport.py:270
+#: openmultimedia/reporter/content/anonreport.py:276
 msgid "Send"
 msgstr "Enviar"
 

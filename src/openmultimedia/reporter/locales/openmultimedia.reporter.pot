@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openmultimedia.reporter\n"
-"POT-Creation-Date: 2013-03-01 19:37+0000\n"
+"POT-Creation-Date: 2013-03-01 20:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,6 +33,10 @@ msgstr ""
 msgid "An informative report addable by anybody"
 msgstr ""
 
+#: openmultimedia/reporter/content/anonreport.py:270
+msgid "Cancel"
+msgstr ""
+
 #: openmultimedia/reporter/vocabularies.py:17
 msgid "Countries"
 msgstr ""
@@ -51,7 +55,7 @@ msgstr ""
 msgid "Default preview"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:280
+#: openmultimedia/reporter/content/anonreport.py:286
 msgid "Error creating the report, please try again"
 msgstr ""
 
@@ -76,7 +80,7 @@ msgstr ""
 msgid "Image notify"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:321
+#: openmultimedia/reporter/content/anonreport.py:327
 msgid "Item created"
 msgstr ""
 
@@ -111,7 +115,7 @@ msgstr ""
 msgid "Security key"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:270
+#: openmultimedia/reporter/content/anonreport.py:276
 msgid "Send"
 msgstr ""
 
