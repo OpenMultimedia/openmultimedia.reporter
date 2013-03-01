@@ -209,7 +209,7 @@ deberiamos tambien como anonimos, poder acceder al reporte
     True
     >>> "Frapell" in browser.contents
     True
-    >>> "ARGENTINA" in browser.contents
+    >>> "Argentina" in browser.contents
     True
 
     >>> browser.getLink('My edited report').click()
@@ -223,7 +223,7 @@ deberiamos tambien como anonimos, poder acceder al reporte
     True
     >>> "Frapell" in browser.contents
     True
-    >>> "ARGENTINA" in browser.contents
+    >>> "Argentina" in browser.contents
     True
 
     >>> "My edited report" in browser.contents
@@ -244,5 +244,5 @@ Y dentro de un reporte tampoco
     True
     >>> "Frapell" in browser.contents
     True
-    >>> "ARGENTINA" in browser.contents
+    >>> "Argentina" in browser.contents
     True
