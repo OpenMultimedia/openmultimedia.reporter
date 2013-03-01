@@ -245,7 +245,12 @@ class AnonReport(Item):
     def get_country(self):
         factory = getUtility(IVocabularyFactory, 'openmultimedia.reporter.countries')
         vocab = factory(self)
-        return vocab.getTermByToken(self.country).title
+        result = ""
+        try:
+            result = vocab.getTermByToken(self.country).title
+        except LookupError:
+            result = self.country
+        return result
 
 
 class Add(dexterity.AddForm):
