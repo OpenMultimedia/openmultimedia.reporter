@@ -245,6 +245,7 @@ class AnonReport(Item):
     def get_country(self):
         factory = getUtility(IVocabularyFactory, 'openmultimedia.reporter.countries')
         vocab = factory(self)
+
         result = ""
         try:
             result = vocab.getTermByToken(self.country).title
