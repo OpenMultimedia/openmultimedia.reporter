@@ -272,7 +272,7 @@ class Add(dexterity.AddForm):
         # We don't really need to do anything, maybe send
         # something to the remote server if a file was uploaded?
         return
-        
+
     @button.buttonAndHandler(_('Send'), name='send')
     def handleSave(self, action):
         data, errors = self.extractData()
