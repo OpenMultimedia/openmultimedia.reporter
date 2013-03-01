@@ -6,6 +6,7 @@ $(document).ready(function() {
         filter: '#content>*',
         formselector: 'form',
         noform: 'close',
+        closeselector: '#form-buttons-cancel',
         config: {onLoad: function() {
             $.getScript(portal_url+"/++resource++openmultimedia.reporter/omupload.js", function(){
                 // XXX: Eventually, we might have several widgets

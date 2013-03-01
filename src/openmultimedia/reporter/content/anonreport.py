@@ -267,6 +267,12 @@ class Add(dexterity.AddForm):
         # Make the report field of size 15
         self.widgets['report'].rows = 10
 
+    @button.buttonAndHandler(_('Cancel'), name='cancel')
+    def handleCancel(self, action):
+        # We don't really need to do anything, maybe send
+        # something to the remote server if a file was uploaded?
+        return
+        
     @button.buttonAndHandler(_('Send'), name='send')
     def handleSave(self, action):
         data, errors = self.extractData()
