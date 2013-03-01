@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <object name="openmultimedia.reporter.anonreport" meta_type="Dexterity FTI"
    i18n:domain="openmultimedia.reporter" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
- <property name="title" i18n:translate="">Anonymous report</property>
+ <property name="title" i18n:translate="">Report</property>
  <property name="description" i18n:translate="">An informative report addable by anybody</property>
  <property name="icon_expr">string:${portal_url}/document_icon.png</property>
  <property name="factory">openmultimedia.reporter.anonreport</property>
