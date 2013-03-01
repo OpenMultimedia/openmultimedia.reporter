@@ -30,7 +30,7 @@
   <tal:below>
     <div id="ireport-date" tal:content="context/get_formated_date"/>
     <div id="ireport-user-data">
-      <span tal:content="context/name"></span> - <span tal:content="context/country"></span>
+      <span tal:content="context/name"></span> - <span tal:content="context/get_country"></span>
     </div>
     <div id="main-report-comments">
       <tal:comments>

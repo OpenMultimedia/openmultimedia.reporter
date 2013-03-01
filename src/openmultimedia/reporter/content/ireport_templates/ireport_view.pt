@@ -69,7 +69,7 @@
           <tal:below>
             <div id="ireport-date" tal:content="new_report/get_formated_date"/>
             <div id="ireport-user-data">
-              <span tal:content="new_report/name"></span> - <span tal:content="new_report/country"></span>
+              <span tal:content="new_report/name"></span> - <span tal:content="new_report/get_country"></span>
             </div>
             <div id="main-report-comments">
               <tal:comments>
@@ -114,7 +114,7 @@
                   <div class="report-item-thumb"
                       tal:content="structure report/render_preview_image" />
                   <div id="report-item-date" tal:content="report/get_formated_date"/>
-                  <div class="user-data country" tal:content="report/country" />
+                  <div class="user-data country" tal:content="report/get_country" />
                   <div class="user-data" tal:content="report/name" />
               </div>
             </tal:pair>

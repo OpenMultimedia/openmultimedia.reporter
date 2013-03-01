@@ -65,7 +65,7 @@
                                 <span tal:content="report/name"/>
                             </td>
                             <td class="report-item-list-country">
-                                <span tal:content="report/country"/>
+                                <span tal:content="report/get_country"/>
                             </td>
                             <td class="report-item-list-date">
                                 <span tal:content="report/date"/>
