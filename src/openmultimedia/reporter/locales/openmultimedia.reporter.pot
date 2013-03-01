@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openmultimedia.reporter\n"
-"POT-Creation-Date: 2013-02-28 20:30+0000\n"
+"POT-Creation-Date: 2013-03-01 15:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,11 +19,6 @@ msgstr ""
 
 #: openmultimedia/reporter/vocabularies.py:43
 msgid "(no value)"
-msgstr ""
-
-#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:135
-#: openmultimedia/reporter/content/ireport_templates/listado_published.pt:75
-msgid "<img src="++resource++openmultimedia.reporter/cargar_archivo.jpg" />"
 msgstr ""
 
 #: openmultimedia/reporter/profiles/default/types/openmultimedia.reporter.ireport.xml
@@ -56,7 +51,7 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: openmultimedia/reporter/content/ireport.py:33
+#: openmultimedia/reporter/content/ireport.py:31
 msgid "Default preview"
 msgstr ""
 
@@ -94,6 +89,11 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
+#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:146
+#: openmultimedia/reporter/content/ireport_templates/listado_published.pt:91
+msgid "Nombre"
+msgstr ""
+
 #: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:28
 #: openmultimedia/reporter/content/ireport_templates/listado_published.pt:28
 msgid "Non Published Reports"
@@ -101,6 +101,10 @@ msgstr ""
 
 #: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:115
 msgid "Please enable JavaScript to view the ${disqus-link}"
+msgstr ""
+
+#: openmultimedia/reporter/content/ireport_templates/listado_published.pt:53
+msgid "Searched Word:"
 msgstr ""
 
 #: openmultimedia/reporter/interfaces.py:30
@@ -127,8 +131,12 @@ msgstr ""
 msgid "Upload url"
 msgstr ""
 
-#: openmultimedia/reporter/content/ireport.py:34
+#: openmultimedia/reporter/content/ireport.py:32
 msgid "Use this image if there's no preview."
+msgstr ""
+
+#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:133
+msgid "Ver todos"
 msgstr ""
 
 #: openmultimedia/reporter/interfaces.py:25

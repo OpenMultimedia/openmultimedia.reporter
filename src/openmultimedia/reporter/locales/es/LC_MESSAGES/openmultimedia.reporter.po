@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openmultimedia.reporter\n"
-"POT-Creation-Date: 2013-02-28 20:30+0000\n"
+"POT-Creation-Date: 2013-03-01 15:08+0000\n"
 "PO-Revision-Date: 2012-07-04 17:08-0300\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -20,11 +20,6 @@ msgstr ""
 #: openmultimedia/reporter/vocabularies.py:43
 msgid "(no value)"
 msgstr "(sin valor)"
-
-#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:135
-#: openmultimedia/reporter/content/ireport_templates/listado_published.pt:75
-msgid "<img src="++resource++openmultimedia.reporter/cargar_archivo.jpg" />"
-msgstr ""
 
 #: openmultimedia/reporter/profiles/default/types/openmultimedia.reporter.ireport.xml
 msgid "A container for reports"
@@ -56,7 +51,7 @@ msgstr "País"
 msgid "Date"
 msgstr "Fecha"
 
-#: openmultimedia/reporter/content/ireport.py:33
+#: openmultimedia/reporter/content/ireport.py:31
 msgid "Default preview"
 msgstr "Imagen previa por defecto"
 
@@ -94,6 +89,11 @@ msgstr "Reporte Creado"
 msgid "Name"
 msgstr "Nombre"
 
+#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:146
+#: openmultimedia/reporter/content/ireport_templates/listado_published.pt:91
+msgid "Nombre"
+msgstr ""
+
 #: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:28
 #: openmultimedia/reporter/content/ireport_templates/listado_published.pt:28
 msgid "Non Published Reports"
@@ -102,6 +102,10 @@ msgstr "Reportes no publicados"
 #: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:115
 msgid "Please enable JavaScript to view the ${disqus-link}"
 msgstr "Por favor active Javascript para ver ${disqus-link}"
+
+#: openmultimedia/reporter/content/ireport_templates/listado_published.pt:53
+msgid "Searched Word:"
+msgstr "Busqueda:"
 
 #: openmultimedia/reporter/interfaces.py:30
 msgid "Security key"
@@ -127,9 +131,13 @@ msgstr "LLave para la subida de archivos"
 msgid "Upload url"
 msgstr "Url para la subida de archivos"
 
-#: openmultimedia/reporter/content/ireport.py:34
+#: openmultimedia/reporter/content/ireport.py:32
 msgid "Use this image if there's no preview."
 msgstr "Usar esta imagen si no se tiene una imagen previa del reporte."
+
+#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:133
+msgid "Ver todos"
+msgstr ""
 
 #: openmultimedia/reporter/interfaces.py:25
 msgid "Video notify"

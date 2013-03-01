@@ -387,3 +387,34 @@ td.report-item-list-title {
     border-top: 1px solid;
     padding: 5px;
 }
+
+.search-report {
+    background: url("++resource++openmultimedia.reporter/buscar.jpg") no-repeat scroll 0 0 transparent;
+}
+
+.search-report-search {
+    height: 15px;
+    margin-left: 10px;
+}
+
+.from-search-report {
+    float: right;
+}
+
+.btn-mas-report {
+    float: left;
+}
+
+.report-search-list {
+    border: 1px solid;
+    padding: 10px;
+}
+
+.report-search-list .from-search-report {
+    float: none;
+    margin-top: 10px;
+}
+
+.report-searched-word {
+    font-weight: bold;
+}

@@ -17,6 +17,7 @@ from openmultimedia.reporter.config import PROJECTNAME
 from openmultimedia.reporter.content.anonreport import IAnonReport
 from openmultimedia.reporter.interfaces import IUpload
 
+
 logger = logging.getLogger(PROJECTNAME)
 
 

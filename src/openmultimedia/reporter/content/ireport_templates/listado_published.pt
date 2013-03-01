@@ -34,7 +34,26 @@
     <div class="ireport-banner">
         <img src="++resource++openmultimedia.reporter/soy_reportero.jpg" />
     </div>
-    <div class="published-reports-list" tal:define="items view/get_published_reports">
+    <div class="published-reports-list" tal:define="items view/publics">
+
+    <div class="report-search-list">
+      <form name="formbuscar"  class="from-search-report" method="get"  action="listado-report-published" enctype="multipart/form-data" style=""  >
+      <table cellpadding="0" cellspacing="0" width="200" height="25">
+      <tr>
+         <td width="25" class="search-report">
+            <input name="search-report" type="text"  tal:attributes="value python:view.search if view.search else ''" class="search-report-search"  align="texttop"/>    </td>
+         <td width="25" background="">
+            <input type="image" src="++resource++openmultimedia.reporter/boton_buscar.jpg" align="top" name="boton"  border="0" />
+         </td>
+      </tr>
+      </table>
+    </form>
+      <div style="clear:both" />
+      <div tal:condition="view/search">
+        <span i18n:translate="" class="report-searched-word">Searched Word: </span>
+        <span tal:content="view/search" />
+      </div>
+    </div>
       <tal:batch define="Batch view/get_batch;
                          b_start python:request.get('b_start', 0);
                          per_page python:request.get('per_page', 10);
@@ -69,16 +88,18 @@
       </div>
       <div class="add-report-button">
       <div id="new-report-name">
-        Nombre
+        <span i18n:translate="">Nombre</span>
       <input id="add-report-name" name="form.widgets.name" class="text-widget required textline-field" value="" type="text" />
       </div>
       <a href="#" id="add-new-report"
          tal:attributes="href string:${context/absolute_url}/++add++openmultimedia.reporter.anonreport;
          data-href string:${context/absolute_url}/++add++openmultimedia.reporter.anonreport;"
-         tal:condition="view/can_add_reports"
-         i18n:translate=""><img src="++resource++openmultimedia.reporter/cargar_archivo.jpg" /></a>
+         tal:condition="view/can_add_reports">
+         <img src="++resource++openmultimedia.reporter/cargar_archivo.jpg" /></a>
       </div>
+      <span i18n:translate="">
       Te invitamos a ser parte de nuestra sección Soy Reportero suscribiéndote en nuestro sitio en internet, o enviado tus fotos y videos a nuestra cuenta en twitter @teleSURtv usando el hashtag #SoyReportero. Empieza a contarnos la historia de nuestros pueblos, informaciones que pueden hacer noticia, solo por teleSUR.
+      </span>
     </div>
       <p></p>
       <div class="new-report-right requisitos">

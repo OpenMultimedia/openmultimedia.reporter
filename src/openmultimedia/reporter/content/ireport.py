@@ -73,7 +73,7 @@ class View(dexterity.DisplayForm):
     def can_edit(self):
         return checkPermission('cmf.ModifyPortalContent', self.context)
 
-    def _get_catalog_results(self, state=None):
+    def _get_catalog_results(self, state=None, title=None):
         pc = getToolByName(self.context, 'portal_catalog')
 
         ct = "openmultimedia.reporter.anonreport"
@@ -85,6 +85,8 @@ class View(dexterity.DisplayForm):
                  'sort_on': sort_on,
                  'sort_order': sort_order,
                  'path': path}
+        if title:
+            query['Title'] = title
 
         if state:
             query['review_state'] = state
@@ -95,6 +97,10 @@ class View(dexterity.DisplayForm):
 
     def get_published_reports(self):
         reports = self._get_catalog_results('published')
+        return reports
+
+    def get_published_reports_search(self, title):
+        reports = self._get_catalog_results('published', title)
         return reports
 
     def get_batch(self):
@@ -133,6 +139,10 @@ class ListadoReportView(View):
 class ListadoReportPublishedView(View):
     grok.require('zope2.View')
     grok.name('listado-report-published')
+
+    def update(self):
+        self.search = self.request.get('search-report', None)
+        self.publics = self.get_published_reports_search(self.search)
 
     def render(self):
         pt = ViewPageTemplateFile('ireport_templates/listado_published.pt')
