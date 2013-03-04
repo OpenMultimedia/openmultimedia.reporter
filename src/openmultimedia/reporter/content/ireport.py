@@ -113,8 +113,9 @@ class ListadoReportView(View):
     grok.require('cmf.ModifyPortalContent')
     grok.name('listado-report')
 
-    def update(self):
-        self.publics = self.get_non_published_reports()
+    def get_reports(self, wf_state):
+        reports = self._get_catalog_results(wf_state)
+        return reports
 
     def render(self):
         pt = ViewPageTemplateFile('ireport_templates/listadoreport_view.pt')

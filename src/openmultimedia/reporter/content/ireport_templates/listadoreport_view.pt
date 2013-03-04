@@ -28,56 +28,73 @@
         <div class="ireport-banner">
             <img src="++resource++openmultimedia.reporter/soy_reportero.jpg" />
         </div>
+        <div tal:define="requested_wf_state request/wf_state|string:pending">
+            <a href="listado-report?wf_state=private"
+               tal:condition="python:requested_wf_state != 'private'"
+               i18n:translate="">
+               Private reports
+            </a>
+            <a href="listado-report?wf_state=pending"
+               tal:condition="python:requested_wf_state != 'pending'"
+               i18n:translate="">
+               Pending review reports
+            </a>
+            <a href="listado-report?wf_state=published"
+               tal:condition="python:requested_wf_state != 'published'"
+               i18n:translate="">
+               Published reports
+            </a>
 
-        <div class="reports-list">
-          <tal:batch define="items view/publics;
-                         Batch view/get_batch;
-                         b_start python:request.get('b_start', 0);
-                         per_page python:request.get('per_page', 15);
-                         batch python:isinstance(items, Batch) and items or Batch(items, per_page, int(b_start), orphan=0);">
-            <table class="listing">
-                <thead>
-                    <tr>
-                        <th class="nosort">&nbsp;<tal:title i18n:translate=""
-                          >Title</tal:title>&nbsp;</th>
-                        <th class="nosort">&nbsp;<tal:title i18n:translate=""
-                          >Name</tal:title>&nbsp;</th>
-                        <th class="nosort">&nbsp;<tal:title i18n:translate=""
-                          >Country</tal:title>&nbsp;</th>
-                        <th class="nosort">&nbsp;<tal:title i18n:translate=""
-                          >Date</tal:title>&nbsp;</th>
-                        <th class="nosort">&nbsp;<tal:title i18n:translate=""
-                          >State</tal:title>&nbsp;</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tal:reports repeat="brain batch">
-                        <tr tal:define="report brain/getObject;
-                                        oddrow repeat/brain/odd;
-                                        state report/get_status"
-                            tal:attributes="class python:'report-item-list '+ 'even' if oddrow else 'odd'">
-                            <td class="report-item-list-title">
-                                <a href="#" tal:attributes="href report/absolute_url;
-                                class python:'view-report state-'+state"
-                                            tal:content="report/Title"/>
-                            </td>
-                            <td class="report-item-list-name">
-                                <span tal:content="report/name"/>
-                            </td>
-                            <td class="report-item-list-country">
-                                <span tal:content="report/get_country"/>
-                            </td>
-                            <td class="report-item-list-date">
-                                <span tal:content="report/date"/>
-                            </td>
-                            <td tal:content="state" i18n:domain="plone" i18n:translate=""></td>
+            <div class="reports-list">
+            <tal:batch define="items python:view.get_reports(requested_wf_state);
+                            Batch view/get_batch;
+                            b_start python:request.get('b_start', 0);
+                            per_page python:request.get('per_page', 15);
+                            batch python:isinstance(items, Batch) and items or Batch(items, per_page, int(b_start), orphan=0);">
+                <table class="listing">
+                    <thead>
+                        <tr>
+                            <th class="nosort">&nbsp;<tal:title i18n:translate=""
+                            >Title</tal:title>&nbsp;</th>
+                            <th class="nosort">&nbsp;<tal:title i18n:translate=""
+                            >Name</tal:title>&nbsp;</th>
+                            <th class="nosort">&nbsp;<tal:title i18n:translate=""
+                            >Country</tal:title>&nbsp;</th>
+                            <th class="nosort">&nbsp;<tal:title i18n:translate=""
+                            >Date</tal:title>&nbsp;</th>
+                            <th class="nosort">&nbsp;<tal:title i18n:translate=""
+                            >State</tal:title>&nbsp;</th>
                         </tr>
-                    </tal:reports>
-                    </tbody>
-            </table>
-            <div metal:use-macro="context/batch_macros/macros/navigation" />
-            </tal:batch>
-        </div>
+                    </thead>
+                    <tbody>
+                        <tal:reports repeat="brain batch">
+                            <tr tal:define="report brain/getObject;
+                                            oddrow repeat/brain/odd;
+                                            state report/get_status"
+                                tal:attributes="class python:'report-item-list '+ 'even' if oddrow else 'odd'">
+                                <td class="report-item-list-title">
+                                    <a href="#" tal:attributes="href report/absolute_url;
+                                    class python:'view-report state-'+state"
+                                                tal:content="report/Title"/>
+                                </td>
+                                <td class="report-item-list-name">
+                                    <span tal:content="report/name"/>
+                                </td>
+                                <td class="report-item-list-country">
+                                    <span tal:content="report/get_country"/>
+                                </td>
+                                <td class="report-item-list-date">
+                                    <span tal:content="report/date"/>
+                                </td>
+                                <td tal:content="state" i18n:domain="plone" i18n:translate=""></td>
+                            </tr>
+                        </tal:reports>
+                        </tbody>
+                </table>
+                <div metal:use-macro="context/batch_macros/macros/navigation" />
+                </tal:batch>
+                </div>
+            </div>
         </div>
     </tal:main-macro>
 </metal:main>
