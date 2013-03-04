@@ -16,6 +16,7 @@ from z3c.form import button
 from z3c.form.interfaces import ActionExecutionError
 
 from five import grok
+from plone.indexer.decorator import indexer
 
 from z3c.form.interfaces import IEditForm, IDisplayForm
 
@@ -363,3 +364,10 @@ class AjaxReport(View):
 def fetch_content_on_submit(report, event):
     if event.action == "submit":
         report.update_local_file()
+
+
+@indexer(IAnonReport)
+def searchableIndexer(context):
+    return "%s %s %s %s" % (context.title, context.report, context.name,
+                            context.get_country())
+grok.global_adapter(searchableIndexer, name="SearchableText")

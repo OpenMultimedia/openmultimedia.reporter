@@ -73,7 +73,7 @@ class View(dexterity.DisplayForm):
     def can_edit(self):
         return checkPermission('cmf.ModifyPortalContent', self.context)
 
-    def _get_catalog_results(self, state=None, title=None):
+    def _get_catalog_results(self, state=None, search=None):
         pc = getToolByName(self.context, 'portal_catalog')
 
         ct = "openmultimedia.reporter.anonreport"
@@ -85,8 +85,8 @@ class View(dexterity.DisplayForm):
                  'sort_on': sort_on,
                  'sort_order': sort_order,
                  'path': path}
-        if title:
-            query['Title'] = title
+        if search:
+            query['SearchableText'] = search
 
         if state:
             query['review_state'] = state
@@ -141,6 +141,9 @@ class ListadoReportPublishedView(View):
     grok.name('listado-report-published')
 
     def update(self):
+        portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        if portal_state.anonymous():
+            self.request.set('disable_border', 1)
         self.search = self.request.get('search-report', None)
         self.publics = self.get_published_reports_search(self.search)
 
