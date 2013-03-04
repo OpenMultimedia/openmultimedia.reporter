@@ -162,7 +162,7 @@ Vamos a mover de estados los que quedan:
 
     >>> browser.getLink("Reporte rechazado").click()
     >>> browser.getLink('Publish').click()
-    >>> browser.getLink('Reject').click()
+    >>> browser.getLink('Retract').click()
     >>> browser.open(section_url)
     >>> browser.getLink("Non Published Reports").click()
 
