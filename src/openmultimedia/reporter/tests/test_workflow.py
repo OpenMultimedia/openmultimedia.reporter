@@ -78,18 +78,6 @@ class WorkflowTest(unittest.TestCase):
         self.assertNotEqual(checkPermission('View', report), 1)
         self._loginAsManager()
 
-        self.wt.doActionFor(report, 'reject')
-
-        logout()
-        self.assertNotEqual(checkPermission('View', report), 1)
-        self._loginAsManager()
-
-        self.wt.doActionFor(report, 'submit')
-
-        logout()
-        self.assertNotEqual(checkPermission('View', report), 1)
-        self._loginAsManager()
-
         self.wt.doActionFor(report, 'publish')
 
         logout()

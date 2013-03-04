@@ -162,6 +162,7 @@ Todos los reportes, excepto el privado, son visibles:
 Vamos a mover de estados los que quedan:
 
     >>> browser.getLink("Reporte rechazado").click()
+    >>> browser.getLink('Publish').click()
     >>> browser.getLink('Reject').click()
     >>> browser.open(section_url)
     >>> browser.getLink('Contents').click()
