@@ -100,7 +100,7 @@ sistema remoto
 
     >>> browser.open(section_url)
 
-    >>> browser.getLink('Contents').click()
+    >>> browser.getLink("Non Published Reports").click()
 
     >>> "My Valid Report" in browser.contents
     False

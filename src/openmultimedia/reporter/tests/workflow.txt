@@ -95,7 +95,6 @@ las llamadas a los callback url correctos, excepto en el reporte privado
 
     >>> browser.open(section_url)
 
-    >>> browser.getLink('Contents').click()
     >>> 'Reporte privado' in browser.contents
     False
     >>> 'Reporte pendiente' in browser.contents
@@ -146,7 +145,7 @@ Volvemos a ingresar al sitio para mover a los estados a cada reporte:
 
     >>> browser.open(section_url)
 
-    >>> browser.getLink('Contents').click()
+    >>> browser.getLink("Non Published Reports").click()
 
 Todos los reportes, excepto el privado, son visibles:
 
@@ -165,7 +164,7 @@ Vamos a mover de estados los que quedan:
     >>> browser.getLink('Publish').click()
     >>> browser.getLink('Reject').click()
     >>> browser.open(section_url)
-    >>> browser.getLink('Contents').click()
+    >>> browser.getLink("Non Published Reports").click()
 
     >>> browser.getLink("Reporte publicado").click()
     >>> browser.getLink('Publish').click()
@@ -174,15 +173,13 @@ Volvemos a la seccion y chequeamos que todos los reportes sigan siendo visibles
 excepto el reporte privado
 
     >>> browser.open(section_url)
-    >>> browser.getLink('Contents').click()
+    >>> browser.getLink("Non Published Reports").click()
 
     >>> 'Reporte privado' in browser.contents
     False
     >>> 'Reporte pendiente' in browser.contents
     True
     >>> 'Reporte rechazado' in browser.contents
-    True
-    >>> 'Reporte publicado' in browser.contents
     True
 
 Salimos nuevamente, y chequeamos que solo vemos el reporte publicado:

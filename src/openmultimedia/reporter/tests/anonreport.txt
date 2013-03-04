@@ -114,10 +114,18 @@ sistema remoto
 
     >>> browser.open(section_url)
 
-    >>> browser.getLink('Contents').click()
+    >>> browser.getLink("Non Published Reports").click()
 
     >>> "My Valid Report" in browser.contents
     False
+
+Asimismo, el reporte es visible si pedimos el listado de reportes privados
+
+    >>> browser.getLink("Private reports").click()
+
+    >>> "My Valid Report" in browser.contents
+    True
+    >>> browser.getLink("My Valid Report").click()
 
     >>> browser.open(portalURL + '/logout')
 
