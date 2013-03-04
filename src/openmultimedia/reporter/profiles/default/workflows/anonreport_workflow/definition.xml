@@ -9,10 +9,7 @@
  <permission>openmultimedia.reporter: Can add an Anonymous Report</permission>
  <state state_id="pending" title="Pending review">
   <description>Waiting to be reviewed, not editable by the owner.</description>
-  <exit-transition transition_id="make_private"/>
   <exit-transition transition_id="publish"/>
-  <exit-transition transition_id="reject"/>
-  <exit-transition transition_id="retract"/>
   <permission-map name="Access contents information" acquired="False">
    <permission-role>Contributor</permission-role>
    <permission-role>Editor</permission-role>
@@ -105,43 +102,6 @@ It will "wait" in this state until the media is ready in the remote system</desc
   <permission-map name="openmultimedia.reporter: Can add an Anonymous Report" acquired="False">
   </permission-map>
  </state>
- <state state_id="rejected" title="Rejected">
-  <description>A multimedia content that was rejected is not visible by anybody, except editors and reviewers</description>
-  <exit-transition transition_id="submit"/>
-  <permission-map name="Access contents information" acquired="False">
-   <permission-role>Contributor</permission-role>
-   <permission-role>Editor</permission-role>
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
-   <permission-role>Site Administrator</permission-role>
-  </permission-map>
-  <permission-map name="Change portal events" acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
-   <permission-role>Site Administrator</permission-role>
-  </permission-map>
-  <permission-map name="Delete objects" acquired="True">
-  </permission-map>
-  <permission-map name="Modify portal content" acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
-   <permission-role>Site Administrator</permission-role>
-  </permission-map>
-  <permission-map name="Review portal content" acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
-   <permission-role>Site Administrator</permission-role>
-  </permission-map>
-  <permission-map name="View" acquired="False">
-   <permission-role>Contributor</permission-role>
-   <permission-role>Editor</permission-role>
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
-   <permission-role>Site Administrator</permission-role>
-  </permission-map>
-  <permission-map name="openmultimedia.reporter: Can add an Anonymous Report" acquired="False">
-  </permission-map>
- </state>
  <transition transition_id="publish" title="Reviewer publishes content" new_state="published" trigger="USER" before_script="" after_script="">
   <description>Publishing the item makes it visible to other users.</description>
   <action url="%(content_url)s/content_status_modify?workflow_action=publish" category="workflow" icon="">Publish</action>
@@ -149,7 +109,7 @@ It will "wait" in this state until the media is ready in the remote system</desc
    <guard-permission>Review portal content</guard-permission>
   </guard>
  </transition>
- <transition transition_id="reject" title="Reviewer rejects the media content" new_state="rejected" trigger="USER" before_script="" after_script="">
+ <transition transition_id="reject" title="Reviewer rejects the media content" new_state="pending" trigger="USER" before_script="" after_script="">
   <description>The media content was rejected and will not be visible to anyone except reviewers and editors</description>
   <action url="%(content_url)s/content_status_modify?workflow_action=reject" category="workflow" icon="">Reject</action>
   <guard>
