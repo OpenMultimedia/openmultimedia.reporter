@@ -59,7 +59,7 @@
             <tal:batch define="items python:view.get_reports(requested_wf_state);
                             Batch view/get_batch;
                             b_start python:request.get('b_start', 0);
-                            per_page python:request.get('per_page', 3);
+                            per_page python:request.get('per_page', 15);
                             batch python:isinstance(items, Batch) and items or Batch(items, per_page, int(b_start), orphan=0);">
                 <table class="listing">
                     <thead>
