@@ -140,7 +140,7 @@ class ListadoReportView(View):
     def js_update(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(IReporterSettings)
-        seconds = 3
+        seconds = 10
         if settings.seconds:
             seconds = settings.seconds
 
