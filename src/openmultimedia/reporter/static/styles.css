@@ -250,8 +250,8 @@ td.report-item-list-title {
 }
 
 .new-report-right img {
-    float: left;
-    margin-right: 10px;
+    float: right;
+    margin-right: 55px;
 }
 
 .new-report-right p {
@@ -336,6 +336,8 @@ td.report-item-list-title {
     height: 100px;
     overflow: hidden;
     text-align: center;
+    position: relative;
+    background-color: #EEEEEE;
 }
 
 .list-published-text {
@@ -399,10 +401,14 @@ td.report-item-list-title {
 
 .from-search-report {
     float: right;
+    margin-top: 20px;
 }
 
 .btn-mas-report {
     float: left;
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: bold;
 }
 
 .report-search-list {
@@ -445,4 +451,10 @@ td.report-item-list-title {
     top: 3px;
     width: 22px;
     display: none;
+}
+
+.list-published-img-container {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
 }

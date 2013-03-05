@@ -63,8 +63,10 @@
           <tr tal:define="report brain/getObject">
             <td >
               <div class="list-published-img" >
+                <div class="list-published-img-container">
                 <a tal:content="structure report/render_preview_image_mini"
                     tal:attributes="href report/absolute_url"/>
+                </div>
               </div>
             </td>
             <td class="list-published-text report-title" >
@@ -95,7 +97,7 @@
          tal:attributes="href string:${context/absolute_url}/++add++openmultimedia.reporter.anonreport;
          data-href string:${context/absolute_url}/++add++openmultimedia.reporter.anonreport;"
          tal:condition="view/can_add_reports">
-         <img src="++resource++openmultimedia.reporter/cargar_archivo.jpg" /></a>
+         <img src="++resource++openmultimedia.reporter/cargar_archivo.png" /></a>
       </div>
       <span i18n:translate="">
       Te invitamos a ser parte de nuestra sección Soy Reportero suscribiéndote en nuestro sitio en internet, o enviado tus fotos y videos a nuestra cuenta en twitter @teleSURtv usando el hashtag #SoyReportero. Empieza a contarnos la historia de nuestros pueblos, informaciones que pueden hacer noticia, solo por teleSUR.
@@ -112,7 +114,7 @@
         <img width="142"
              height="31"
              border="0"
-             src="++resource++openmultimedia.reporter/btn_condiciones_uso.jpg"/>
+             src="++resource++openmultimedia.reporter/btn_condiciones_uso.png"/>
       </a>
       </div>
     </div>
