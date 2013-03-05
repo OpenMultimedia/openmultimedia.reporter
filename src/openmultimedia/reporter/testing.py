@@ -116,6 +116,20 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):  # pragma: no co
             self.wfile.write(json.dumps(response))
             self.wfile.close()
 
+        elif path == '/imagen/remove-remote-valid-slug':
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/octet-stream')
+            response = {"slug": "remove-remote-valid-slug",
+                        "publicado": True,
+                        "archivo_url": "http://localhost:15555/clips/video.mp4",
+                        "thumbnail_grande": "http://localhost:15555/imagen.png",
+                        "thumbnail_pequeno": "http://localhost:15555/imagen.png"}
+
+            self.end_headers()
+
+            self.wfile.write(json.dumps(response))
+            self.wfile.close()
+
         elif path == '/clip/None':
             self.send_response(200)
             self.send_header('Content-Type', 'application/octet-stream')
@@ -345,6 +359,15 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):  # pragma: no co
                     self.wfile.write('{"slug": "workflow-valid-slug"}')
                     self.wfile.close()
 
+                elif content['archivo'].value == 'remove-remote-valid-id':
+                    self.send_response(200)
+
+                    self.send_header('Content-Type', 'application/octet-stream')
+                    self.end_headers()
+
+                    self.wfile.write('{"slug": "remove-remote-valid-slug"}')
+                    self.wfile.close()
+
                 elif content['archivo'].value == 'error-handling-non-existing-image':
                     self.send_response(200)
 
@@ -424,6 +447,17 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):  # pragma: no co
 
         return
 
+    def do_DELETE(self):
+        if 'remove-remote-valid-slug' in self.path:
+            self.send_response(204)
+    
+        if 'invalid-response' in self.path:
+            self.send_response(404)
+
+        if 'valid-response' in self.path:
+            self.send_response(204)
+
+        return
 
 class LoggingMsgHandler(logging.Handler):
     """A logs handler that will just store them in an

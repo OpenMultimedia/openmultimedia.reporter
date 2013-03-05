@@ -67,4 +67,10 @@ def test_suite():
                                      optionflags=doctest.ELLIPSIS),
                 layer=FUNCTIONAL_TESTING),
     ])
+    suite.addTests([
+        layered(doctest.DocFileSuite('tests/remove_remote.txt',
+                                     package='openmultimedia.reporter',
+                                     optionflags=doctest.ELLIPSIS),
+                layer=FUNCTIONAL_TESTING),
+    ])
     return suite

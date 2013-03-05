@@ -1,0 +1,117 @@
+This functional test will test that the remote system will get notified
+when the local object gets removed
+
+    >>> import os
+
+    >>> app = layer['app']
+    >>> portal = layer['portal']
+    >>> request = layer['request']
+
+    >>> from DateTime import DateTime as now
+
+    >>> import hashlib
+
+    >>> from plone.testing.z2 import Browser
+    >>> browser = Browser(app)
+    >>> portalURL = portal.absolute_url()
+
+    >>> from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+We go to the home and add an "I report" section
+
+    >>> browser.getLink('Home').click()
+    >>> browser.getLink('I report section').click()
+    >>> browser.getControl('Title').value = 'Soy reportero'
+    >>> browser.getControl('Save').click()
+    >>> section_url = portalURL + '/soy-reportero'
+    >>> browser.getLink('Publish').click()
+
+We add 3 reports, one for each workflow state
+
+    >>> browser.open(portalURL + '/logout')
+    >>> browser.open(section_url)
+
+    >>> titles = ['private', 'pending', 'published']
+
+    >>> for title in titles:
+    ...     browser.getLink(id='add-new-report').click()
+    ...     browser.getControl('Title').value = title
+    ...     browser.getControl('Name').value = "Frapell"
+    ...     browser.getControl('Country').value = ["AR"]
+    ...     browser.getControl(name="form.widgets.file_id").value = "remove-remote-valid-id"
+    ...     browser.getControl(name="form.widgets.file_type").value = "image"
+    ...     browser.getControl(name="form.widgets.date-day").value = "1"
+    ...     browser.getControl(name="form.widgets.date-month").value = ['1']
+    ...     browser.getControl(name="form.widgets.date-year").value = "2012"
+    ...     browser.getControl("Send").click()
+
+Lets generate the callback urls and call them:
+
+    >>> m = hashlib.md5()
+    >>> secret = "security_key"
+    >>> id = "pending"
+    >>> file_id = "remove-remote-valid-id"
+    >>> m.update(secret+file_id)
+    >>> digest = m.hexdigest()
+    >>> callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
+    >>> browser.open(callback_url)
+
+    >>> m = hashlib.md5()
+    >>> id = "published"
+    >>> file_id = "remove-remote-valid-id"
+    >>> m.update(secret+file_id)
+    >>> digest = m.hexdigest()
+    >>> callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
+    >>> browser.open(callback_url)
+
+We login again and move each report to their proper state:
+
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+    >>> browser.open(section_url)
+    >>> browser.getLink("Non Published Reports").click()
+
+    >>> browser.getLink("published").click()
+    >>> browser.getLink('Publish').click()
+
+Now, we request the items to be removed
+
+    >>> browser.open(section_url)
+    >>> browser.getLink("Non Published Reports").click()
+    >>> browser.getLink("Private reports").click()
+    >>> browser.getLink("private").click()
+    >>> browser.getLink("Delete").click()
+    >>> browser.getControl("Cancel").click()
+
+    >>> browser.getLink("Delete").click()
+    >>> browser.getControl("Delete").click()
+
+    >>> browser.open(section_url)
+    >>> browser.getLink("Non Published Reports").click()
+    >>> browser.getLink("pending").click()
+    >>> browser.getLink("Delete").click()
+    >>> browser.getControl("Cancel").click()
+
+    >>> browser.getLink("Delete").click()
+    >>> browser.getControl("Delete").click()
+    
+    >>> browser.open(section_url)
+    >>> browser.getLink("published").click()
+    >>> browser.getLink("Delete").click()
+    >>> browser.getControl("Cancel").click()
+
+    >>> browser.getLink("Delete").click()
+    >>> browser.getControl("Delete").click()

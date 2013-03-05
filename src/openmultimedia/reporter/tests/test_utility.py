@@ -175,6 +175,26 @@ class InstallTest(unittest.TestCase):
             self.assertEqual(response['status'], '200')
             self.assertEqual(content, {})
 
+    def test_delete_structure(self):
+        file_types = ["image", "video"]
+
+        registry = getUtility(IRegistry)
+        records = registry.forInterface(IAPISettings)
+
+        for file_type in file_types:
+            slug = "valid-response"
+
+            response, content = self.utility.delete_structure(slug, file_type)
+
+            self.assertEqual(response['status'], '204')
+            self.assertEqual(content, '')
+
+            slug = "invalid-response"
+
+            response, content = self.utility.delete_structure(slug, file_type)
+
+            self.assertEqual(response['status'], '404')
+
 
 def test_suite():
     return unittest.defaultTestLoader.loadTestsFromName(__name__)
