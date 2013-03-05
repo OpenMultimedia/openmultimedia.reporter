@@ -234,3 +234,61 @@ class Upload(object):
                 logger.info("Content is not yet published in remote server.")
 
         return response, content_json
+
+    def delete_structure(self, slug, file_type):
+        logger.info("delete_structure")
+
+        video_api = getUtility(IVideoAPI)
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(IReporterSettings)
+
+        multimedia_url = video_api.get_multimedia_url()
+
+        if not multimedia_url.endswith("/"):
+            multimedia_url += "/"
+
+        image_notify = settings.image_notify
+
+        if not image_notify.endswith("/"):
+            image_notify += "/"
+
+        video_notify = settings.video_notify
+
+        if not video_notify.endswith("/"):
+            video_notify += "/"
+
+        security_key = settings.security_key
+        key = settings.key
+
+        if file_type == "image":
+            url = "%s%s%s" % (multimedia_url, image_notify, slug)
+        else:
+            url = "%s%s%s" % (multimedia_url, video_notify, slug)
+
+        http = httplib2.Http()
+        body = {}
+
+        sign_key = self.sign_request(body, key, security_key)
+        body['signature'] = sign_key
+        headers = {'Accept': 'application/json'}
+        body_url = urlencode(body)
+        url = url + '?' + body_url
+        try:
+            logger.info("Making a request to: %s with headers: %s and body: %s"
+                        % (url, headers, body))
+            response, content = http.request(url, 'DELETE', headers=headers,
+                                             body=urlencode(body))
+
+            #XXX: Esto va a causar mucho log, remover una vez que sepamos que
+            #     anda todo bien
+            logger.info("Response: %s" % response)
+            logger.info("Content: %s" % content)
+        except:
+            logger.info("There was an error when contacting the remote server: %s" % sys.exc_info()[0])
+            response = {'status': '400'}
+            content = None
+
+        if response['status'] != '204':
+            logger.info("Invalid response: %s" % response)
+            
+        return response, content
