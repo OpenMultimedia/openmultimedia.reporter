@@ -2,12 +2,12 @@
 
 from five import grok
 
-from zope.component import getMultiAdapter
+from zope.component import getMultiAdapter, getUtility
 
 from zope.security import checkPermission
 
 from plone.directives import dexterity, form
-
+from plone.registry.interfaces import IRegistry
 from plone.namedfile.interfaces import HAVE_BLOBS
 
 if HAVE_BLOBS:  # pragma: no cover
@@ -19,6 +19,7 @@ from Products.CMFCore.utils import getToolByName
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
+from openmultimedia.reporter.interfaces import IReporterSettings
 from openmultimedia.reporter import _
 
 
@@ -135,6 +136,21 @@ class ListadoReportView(View):
                    'sort_order': sort_order}
         reports = pc.searchResults(filters)
         return reports
+
+    def js_update(self):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(IReporterSettings)
+        seconds = 3
+        if settings.seconds:
+            seconds = settings.seconds
+
+        js = """
+            $(document).ready(function() {
+                setInterval(intervalSetUpdate, %s000);
+            });
+        """ % seconds
+
+        return js
 
 
 class ListadoReportPublishedView(View):

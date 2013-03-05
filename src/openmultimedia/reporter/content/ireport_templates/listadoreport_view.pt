@@ -17,6 +17,8 @@
 
         <script type="text/javascript" src="++resource++openmultimedia.reporter/javascript.js">
         </script>
+        <script type="text/javascript" src="++resource++openmultimedia.reporter/content.js">
+        </script>
 
 </metal:javascriptslot>
 
@@ -24,32 +26,40 @@
 
 <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
+      <script type="text/javascript" tal:content="view/js_update">
+        </script>
       <div class="soy-reporter-list-view">
         <div class="ireport-banner">
             <img src="++resource++openmultimedia.reporter/soy_reportero.jpg" />
         </div>
         <div tal:define="requested_wf_state request/wf_state|string:pending">
-            <a href="listado-report?wf_state=private"
-               tal:condition="python:requested_wf_state != 'private'"
+          <div class="report-list-selector">
+            <a href="listado-report?wf_state=private" class="reporter-filter-state"
+                id="private-list"
+               tal:attributes="class python:'reporter-filter-state reporter-tab-hidden' if requested_wf_state == 'private' else 'reporter-filter-state'"
                i18n:translate="">
                Private reports
             </a>
-            <a href="listado-report?wf_state=pending"
-               tal:condition="python:requested_wf_state != 'pending'"
+            <a href="listado-report?wf_state=pending" class="reporter-filter-state"
+              id="pending-list"
+              tal:attributes="class python:'reporter-filter-state reporter-tab-hidden' if requested_wf_state == 'pending' else 'reporter-filter-state'"
                i18n:translate="">
                Pending review reports
             </a>
-            <a href="listado-report?wf_state=published"
-               tal:condition="python:requested_wf_state != 'published'"
+            <a href="listado-report?wf_state=published" class="reporter-filter-state"
+              id="published-list"
+              tal:attributes="class python:'reporter-filter-state reporter-tab-hidden' if requested_wf_state == 'published' else 'reporter-filter-state'"
                i18n:translate="">
                Published reports
             </a>
+            <img id="loading-small" src="++resource++openmultimedia.reporter/loading_small.gif" />
+          </div>
 
             <div class="reports-list">
             <tal:batch define="items python:view.get_reports(requested_wf_state);
                             Batch view/get_batch;
                             b_start python:request.get('b_start', 0);
-                            per_page python:request.get('per_page', 15);
+                            per_page python:request.get('per_page', 3);
                             batch python:isinstance(items, Batch) and items or Batch(items, per_page, int(b_start), orphan=0);">
                 <table class="listing">
                     <thead>

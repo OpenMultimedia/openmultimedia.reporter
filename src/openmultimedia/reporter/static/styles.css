@@ -418,3 +418,31 @@ td.report-item-list-title {
 .report-searched-word {
     font-weight: bold;
 }
+
+#content a.reporter-tab-hidden:link,
+#content a.reporter-tab-hidden:visited {
+    background-color: #E7E7E7;
+    font-weight: bold;
+    color: #000000 !important;
+}
+
+#content a.reporter-filter-state:link,
+#content a.reporter-filter-state:visited {
+    padding: 5px 5px 3px;
+
+    border-bottom: 0 !important;
+    border-top: 0 !important;
+    color: #666666;
+    display: inline-block;
+}
+
+.report-list-selector {
+    border: 1px solid #E7E7E7;
+}
+
+#loading-small {
+    position: relative;
+    top: 3px;
+    width: 22px;
+    display: none;
+}

@@ -36,6 +36,11 @@ class IReporterSettings(Interface):
         default=u'telesursoyreporteroploneweb',
         required=True)
 
+    seconds = schema.Int(
+        title=_(u'Number of seconds to wait to update the content lists'),
+        required=False,
+    )
+
 
 class IUpload(Interface):
     """

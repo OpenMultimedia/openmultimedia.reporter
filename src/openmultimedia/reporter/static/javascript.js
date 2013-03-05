@@ -1,6 +1,5 @@
 
 $(document).ready(function() {
-
     $('.add-report-button a').prepOverlay({
         subtype: 'ajax',
         filter: '#content>*',
