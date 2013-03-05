@@ -10,6 +10,8 @@ from zope.interface import Invalid
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 
+from zope.lifecycleevent import IObjectRemovedEvent
+
 from zope.schema.interfaces import IVocabularyFactory
 
 from z3c.form import button
@@ -364,6 +366,33 @@ class AjaxReport(View):
 def fetch_content_on_submit(report, event):
     if event.action == "submit":
         report.update_local_file()
+
+
+@grok.subscribe(IAnonReport, IObjectRemovedEvent)
+def remove_remote_content(report, event):
+    # XXX: This event gets fired once when calling the delete page, then again
+    #      when hitting "Delete" or "Cancel" and finally once more if "Delete"
+    #      was pressed. So we only want to run this when the object was
+    #      indeed removed from its parent container
+    request = report.REQUEST
+    if 'form.submitted' not in request.form and 'form.submitted' not in request:
+        # Happens the first call
+        return
+
+    if 'form.submitted' in request.form and 'form.submitted' in request:
+        # Happens the second call
+        return
+    
+    if 'form.button.Cancel' in report.REQUEST.form:
+        # Happens if the Cancel button was pressed in the confirmation dialog
+        return
+
+    if 'form.submitted' not in request.form and 'form.submitted' in request:
+        # Happens after the third call, we can now be sure the object
+        # no longer exists, and we can call the remote server to inform it
+        upload_utility = getUtility(IUpload)
+        response, content = upload_utility.delete_structure(
+            report.file_slug, report.file_type)
 
 
 @indexer(IAnonReport)
