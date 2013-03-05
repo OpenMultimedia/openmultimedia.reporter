@@ -382,7 +382,7 @@ def remove_remote_content(report, event):
     if 'form.submitted' in request.form and 'form.submitted' in request:
         # Happens the second call
         return
-    
+
     if 'form.button.Cancel' in report.REQUEST.form:
         # Happens if the Cancel button was pressed in the confirmation dialog
         return

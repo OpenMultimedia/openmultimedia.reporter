@@ -290,5 +290,5 @@ class Upload(object):
 
         if response['status'] != '204':
             logger.info("Invalid response: %s" % response)
-            
+
         return response, content

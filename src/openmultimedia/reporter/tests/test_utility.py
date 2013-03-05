@@ -178,9 +178,6 @@ class InstallTest(unittest.TestCase):
     def test_delete_structure(self):
         file_types = ["image", "video"]
 
-        registry = getUtility(IRegistry)
-        records = registry.forInterface(IAPISettings)
-
         for file_type in file_types:
             slug = "valid-response"
 
