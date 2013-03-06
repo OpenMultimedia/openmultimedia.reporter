@@ -45,6 +45,7 @@ class IIReport(form.Schema):
         required=False
     )
 
+
 def chunks(l, n):
     """ Yield successive n-sized chunks from l.
     """
