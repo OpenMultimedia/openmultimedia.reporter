@@ -163,7 +163,7 @@
       </div>
       <div style="clear:both;"></div>
       <div class="nuevo" align="center" style="margin-top:15px; margin-bottom:15px;">
-      <a target="_blank"  href="http://reportero.telesurtv.net/condiciones_uso.php">
+      <a href="disclaimer-view" class="disclaimer-btn">
         <img width="142"
              height="31"
              border="0"

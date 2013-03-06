@@ -1,5 +1,10 @@
 
-$(document).ready(function() {
+$(document).ready(function() {    
+    
+    $('.disclaimer-btn').prepOverlay({
+        subtype: 'iframe'
+        });
+
     $('.add-report-button a').prepOverlay({
         subtype: 'ajax',
         filter: '#content>*',

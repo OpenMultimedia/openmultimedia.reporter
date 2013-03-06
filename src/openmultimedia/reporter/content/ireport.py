@@ -6,6 +6,8 @@ from zope.component import getMultiAdapter, getUtility
 
 from zope.security import checkPermission
 
+from plone.app.textfield import RichText
+
 from plone.directives import dexterity, form
 from plone.registry.interfaces import IRegistry
 from plone.namedfile.interfaces import HAVE_BLOBS
@@ -37,6 +39,11 @@ class IIReport(form.Schema):
                                      description=_(u"Use this image if there's no preview."),
                                      required=False)
 
+    disclaimer = RichText(
+        title=_(u'Disclaimer'),
+        description=_(u'help_disclaimer', default=u'Enter disclaimer here.'),
+        required=False
+    )
 
 def chunks(l, n):
     """ Yield successive n-sized chunks from l.
@@ -166,4 +173,14 @@ class ListadoReportPublishedView(View):
 
     def render(self):
         pt = ViewPageTemplateFile('ireport_templates/listado_published.pt')
+        return pt(self)
+
+
+class DisclaimerView(dexterity.DisplayForm):
+    grok.context(IIReport)
+    grok.require('zope2.View')
+    grok.name('disclaimer-view')
+
+    def render(self):
+        pt = ViewPageTemplateFile('ireport_templates/disclaimer_view.pt')
         return pt(self)
