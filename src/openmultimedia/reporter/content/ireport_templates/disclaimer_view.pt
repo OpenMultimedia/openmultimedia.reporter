@@ -3,7 +3,10 @@
 
 
 <body>
-    <tal:disclaimer condition="context/disclaimer"
+	<div class="report-disclaimer" style="font-family: Arial,Helvetica,sans-serif;
+    font-size: 13px;">
+    	<tal:disclaimer condition="context/disclaimer"
                     replace="structure context/disclaimer/output" />
+    </div>
 </body>
 </html>
