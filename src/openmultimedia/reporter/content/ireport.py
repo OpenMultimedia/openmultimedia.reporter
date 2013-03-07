@@ -66,7 +66,8 @@ class View(dexterity.DisplayForm):
         else:
             redirect_to = '/listado-report'
 
-        return self.request.response.redirect(self.context.absolute_url()+redirect_to)
+        return self.request.response.redirect(self.context.absolute_url() + redirect_to)
+
 
 class IReportView(dexterity.DisplayForm):
     grok.context(IIReport)
