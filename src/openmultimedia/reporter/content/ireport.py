@@ -6,6 +6,8 @@ from zope.component import getMultiAdapter, getUtility
 
 from zope.security import checkPermission
 
+from plone.app.layout.globals.interfaces import IViewView
+
 from plone.app.textfield import RichText
 
 from plone.directives import dexterity, form
@@ -56,6 +58,21 @@ def chunks(l, n):
 class View(dexterity.DisplayForm):
     grok.context(IIReport)
     grok.require('zope2.View')
+
+    def render(self):
+        portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        if portal_state.anonymous():
+            redirect_to = '/i-report'
+        else:
+            redirect_to = '/listado-report'
+
+        return self.request.response.redirect(self.context.absolute_url()+redirect_to)
+
+class IReportView(dexterity.DisplayForm):
+    grok.context(IIReport)
+    grok.require('zope2.View')
+    grok.name('i-report')
+    grok.implements(IViewView)
 
     def update(self):
         self.actual = 0
@@ -118,7 +135,7 @@ class View(dexterity.DisplayForm):
         return Batch
 
 
-class ListadoReportView(View):
+class ListadoReportView(IReportView):
     grok.require('cmf.ModifyPortalContent')
     grok.name('listado-report')
 
@@ -161,7 +178,7 @@ class ListadoReportView(View):
         return js
 
 
-class ListadoReportPublishedView(View):
+class ListadoReportPublishedView(IReportView):
     grok.require('zope2.View')
     grok.name('listado-report-published')
 
