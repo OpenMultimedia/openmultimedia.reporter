@@ -1,0 +1,50 @@
+This functional test will check that when the i report section is accessed by an
+anonymous, then it will get redirected, and when accesed by an admin it gets
+also redirected:
+
+    >>> import os
+
+    >>> app = layer['app']
+    >>> portal = layer['portal']
+    >>> request = layer['request']
+
+    >>> from DateTime import DateTime
+
+    >>> import hashlib
+
+    >>> from plone.testing.z2 import Browser
+    >>> browser = Browser(app)
+    >>> portalURL = portal.absolute_url()
+
+    >>> from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+We create the "I report" section
+
+    >>> browser.getLink('Home').click()
+    >>> browser.getLink('I report section').click()
+    >>> browser.getControl('Title').value = 'I Report'
+    >>> browser.getControl('Save').click()
+    >>> section_url = portalURL + '/i-report'
+    >>> browser.getLink('Publish').click()
+
+Now access the section with an admin
+
+    >>> browser.open(section_url)
+    >>> should_be = section_url + '/listado-report'
+    >>> browser.url == should_be
+    True
+    
+Now access the section with an anonymous
+
+    >>> browser.open(portalURL + '/logout')
+    >>> browser.open(section_url)
+    >>> should_be = section_url + '/i-report'
+    >>> browser.url == should_be
+    True
