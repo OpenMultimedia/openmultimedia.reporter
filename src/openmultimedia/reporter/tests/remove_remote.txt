@@ -82,7 +82,6 @@ We login again and move each report to their proper state:
     True
 
     >>> browser.open(section_url)
-    >>> browser.getLink("Non Published Reports").click()
 
     >>> browser.getLink("published").click()
     >>> browser.getLink('Publish').click()
@@ -90,7 +89,6 @@ We login again and move each report to their proper state:
 Now, we request the items to be removed
 
     >>> browser.open(section_url)
-    >>> browser.getLink("Non Published Reports").click()
     >>> browser.getLink("Private reports").click()
     >>> browser.getLink("private").click()
     >>> browser.getLink("Delete").click()
@@ -100,7 +98,6 @@ Now, we request the items to be removed
     >>> browser.getControl("Delete").click()
 
     >>> browser.open(section_url)
-    >>> browser.getLink("Non Published Reports").click()
     >>> browser.getLink("pending").click()
     >>> browser.getLink("Delete").click()
     >>> browser.getControl("Cancel").click()
@@ -109,6 +106,7 @@ Now, we request the items to be removed
     >>> browser.getControl("Delete").click()
     
     >>> browser.open(section_url)
+    >>> browser.getLink("Published reports").click()
     >>> browser.getLink("published").click()
     >>> browser.getLink("Delete").click()
     >>> browser.getControl("Cancel").click()

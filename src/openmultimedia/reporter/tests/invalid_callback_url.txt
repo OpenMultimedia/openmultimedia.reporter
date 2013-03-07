@@ -51,9 +51,6 @@ y vamos a guardar para que se cree la estructura remota.
     >>> "Item created" in browser.contents
     True
 
-    >>> browser.url == section_url
-    True
-
     >>> id = "my-valid-report"
 
 Ingresamos al sitio y vemos que el reporte no es visible:
@@ -68,7 +65,6 @@ Ingresamos al sitio y vemos que el reporte no es visible:
 
     >>> browser.open(section_url)
 
-    >>> browser.getLink("Non Published Reports").click()
     >>> "My Valid Report" in browser.contents
     False
 
@@ -90,7 +86,6 @@ Vemos que el objeto sigue sin ser visible
 
     >>> browser.open(section_url)
 
-    >>> browser.getLink("Non Published Reports").click()
     >>> "My Valid Report" in browser.contents
     False
 
@@ -112,7 +107,6 @@ Vemos que el objeto sigue sin ser visible
 
     >>> browser.open(section_url)
 
-    >>> browser.getLink("Non Published Reports").click()
     >>> "My Valid Report" in browser.contents
     False
 
@@ -134,7 +128,6 @@ Vemos que el objeto sigue sin ser visible
 
     >>> browser.open(section_url)
 
-    >>> browser.getLink("Non Published Reports").click()
     >>> "My Valid Report" in browser.contents
     False
 
@@ -162,7 +155,6 @@ Vemos que el objeto sigue sin ser visible
 
     >>> browser.open(section_url)
 
-    >>> browser.getLink("Non Published Reports").click()
     >>> "My Valid Report" in browser.contents
     False
 
@@ -190,7 +182,6 @@ Vemos que el objeto sigue sin ser visible
 
     >>> browser.open(section_url)
 
-    >>> browser.getLink("Non Published Reports").click()
     >>> "My Valid Report" in browser.contents
     False
 
@@ -218,6 +209,5 @@ Volvemos a ingresar y vemos que ahora reporte es visible:
 
     >>> browser.open(section_url)
 
-    >>> browser.getLink("Non Published Reports").click()
     >>> "My Valid Report" in browser.contents
     True

@@ -145,8 +145,6 @@ Volvemos a ingresar al sitio para mover a los estados a cada reporte:
 
     >>> browser.open(section_url)
 
-    >>> browser.getLink("Non Published Reports").click()
-
 Todos los reportes, excepto el privado, son visibles:
 
     >>> 'Reporte privado' in browser.contents
@@ -164,7 +162,6 @@ Vamos a mover de estados los que quedan:
     >>> browser.getLink('Publish').click()
     >>> browser.getLink('Retract').click()
     >>> browser.open(section_url)
-    >>> browser.getLink("Non Published Reports").click()
 
     >>> browser.getLink("Reporte publicado").click()
     >>> browser.getLink('Publish').click()
@@ -173,7 +170,6 @@ Volvemos a la seccion y chequeamos que todos los reportes sigan siendo visibles
 excepto el reporte privado
 
     >>> browser.open(section_url)
-    >>> browser.getLink("Non Published Reports").click()
 
     >>> 'Reporte privado' in browser.contents
     False

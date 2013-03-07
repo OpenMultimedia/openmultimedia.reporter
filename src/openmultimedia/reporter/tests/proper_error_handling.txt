@@ -64,9 +64,6 @@ una imagen remota inexistente
     >>> "Item created" in browser.contents
     True
 
-    >>> browser.url == section_url
-    True
-
 llamamos primero al callback url, para eso los generamos
 
     >>> sh.clearMsgs()

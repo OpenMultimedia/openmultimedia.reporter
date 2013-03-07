@@ -52,9 +52,6 @@ Now let's logout, and create an anonymous report, we'll assign a file id, and we
     >>> "Item created" in browser.contents
     True
 
-    >>> browser.url == section_url
-    True
-
 To see the report, we need to call the callback url with type=success:
 
     >>> import hashlib
@@ -78,13 +75,13 @@ Login again and publish the report:
     True
 
     >>> browser.open(section_url)
-    >>> browser.getLink("Non Published Reports").click()
     >>> browser.getLink("My Valid Report").click()
     >>> browser.getLink("Publish").click()
 
 We open the "I report" section and we see that the thumbnail shown is
 the one used when we created the section.
 
+    >>> browser.open(portalURL + '/logout')
     >>> browser.open(section_url)
     >>> "plone/i-report/@@images" in browser.contents
     True

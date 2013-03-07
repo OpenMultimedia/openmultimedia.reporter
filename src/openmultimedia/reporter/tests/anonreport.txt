@@ -93,9 +93,6 @@ El reporte se crea satisfactoriamente y somos redirigidos al contenedor de repor
     >>> "Item created" in browser.contents
     True
 
-    >>> browser.url == section_url
-    True
-
 Vemos que el reporte no queda visible
 
     >>> "My Valid Report" in browser.contents
@@ -113,8 +110,6 @@ sistema remoto
     True
 
     >>> browser.open(section_url)
-
-    >>> browser.getLink("Non Published Reports").click()
 
     >>> "My Valid Report" in browser.contents
     False
@@ -213,7 +208,9 @@ deberiamos tambien como anonimos, poder acceder al reporte
 
     >>> browser.getLink("Publish").click()
     >>> browser.open(section_url)
-    >>> "Una nota de periodismo ciudadano" in browser.contents
+    >>> browser.getLink("Published reports").click()
+    
+    >>> "My edited report" in browser.contents
     True
     >>> "Frapell" in browser.contents
     True
