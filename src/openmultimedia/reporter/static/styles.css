@@ -69,7 +69,7 @@ REPORT VIEW (PUBLIC)
     position:relative;
     min-height: 65px;
     border: 1px solid #5C2F39;
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 0px;
     box-shadow: 5px 4px 7px -2px;
     margin-bottom: 10px;
     padding: 10px 0 10px 10px;
@@ -89,13 +89,14 @@ REPORT VIEW (PUBLIC)
 #report-reports {
     width: 810px;
     position: relative;
-    left: 10px;
+    left: 0px;
     height: 300px;
     overflow: hidden;
 }
 
 #report-arrow-left-list a,
 #report-arrow-left a {
+    display: inline-block;
     padding: 15px;
     position: relative;
     top: 140px;
@@ -104,6 +105,7 @@ REPORT VIEW (PUBLIC)
 
 #report-arrow-right-list a,
 #report-arrow-right a {
+    display: inline-block;
     padding: 15px;
     position: relative;
     top: 140px;
