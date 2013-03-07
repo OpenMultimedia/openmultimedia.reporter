@@ -231,26 +231,28 @@ class AnonReport(Item):
         logger.info("Got %s" % url)
         return url
 
+    def _get_image_scale(self, scale):
+        if not self.image_preview:
+            scales = getMultiAdapter((self.aq_parent, self.REQUEST), name="images")
+            image = 'default_preview'
+        else:
+            scales = getMultiAdapter((self, self.REQUEST), name="images")
+            image = 'image_preview'
+
+        try:
+            tag = scales.tag(image, scale=scale)
+        except:
+            tag = ""
+
+        return tag
+
+
     def render_preview_image(self):
-        if not self.image_preview:
-            scales = getMultiAdapter((self.aq_parent, self.REQUEST), name="images")
-            tag = scales.tag('default_preview', scale="preview")
-        else:
-            scales = getMultiAdapter((self, self.REQUEST), name="images")
-            tag = scales.tag('image_preview', scale="preview")
-
-        return tag
-
+        return self._get_image_scale("preview")
+    
     def render_preview_image_mini(self):
-        if not self.image_preview:
-            scales = getMultiAdapter((self.aq_parent, self.REQUEST), name="images")
-            tag = scales.tag('default_preview', scale="mini")
-        else:
-            scales = getMultiAdapter((self, self.REQUEST), name="images")
-            tag = scales.tag('image_preview', scale="mini")
-
-        return tag
-
+        return self._get_image_scale("mini")
+    
     def get_country(self):
         factory = getUtility(IVocabularyFactory, 'openmultimedia.reporter.countries')
         vocab = factory(self)
