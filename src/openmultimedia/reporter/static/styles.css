@@ -206,6 +206,11 @@ REPORT VIEW (PUBLIC)
 REPORTS LIST
 */
 
+.reports-list table {
+    width: 100%;
+}
+
+
 .reports-list td {
     padding: 3px 10px;
 }
@@ -457,4 +462,22 @@ td.report-item-list-title {
     bottom: 0;
     position: absolute;
     width: 100%;
+}
+
+
+.no-reports {
+    color: red;
+    padding: 5px;
+}
+
+td.pending {
+    color: #FFA500;
+}
+
+td.private {
+    color: Red;
+}
+
+td.published {
+    color: #436976;
 }

@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openmultimedia.reporter\n"
-"POT-Creation-Date: 2013-03-06 17:09+0000\n"
+"POT-Creation-Date: 2013-03-07 17:53+0000\n"
 "PO-Revision-Date: 2013-03-06 14:10-0300\n"
 "Last-Translator: Franco Pellegrini <frapell@ravvit.net>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -42,12 +42,12 @@ msgid "Countries"
 msgstr "Países"
 
 #: openmultimedia/reporter/content/anonreport.py:87
-#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:71
+#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:70
 msgid "Country"
 msgstr "País"
 
 #: openmultimedia/reporter/content/anonreport.py:107
-#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:73
+#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:74
 msgid "Date"
 msgstr "Fecha"
 
@@ -80,6 +80,10 @@ msgstr "Configuraciones de Soy Reportero"
 msgid "I report section"
 msgstr "Sección Soy Reportero"
 
+#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:107
+msgid "Image"
+msgstr "Imagen"
+
 #: openmultimedia/reporter/interfaces.py:20
 msgid "Image notify"
 msgstr "Notificar imagen"
@@ -89,7 +93,7 @@ msgid "Item created"
 msgstr "Reporte Creado"
 
 #: openmultimedia/reporter/content/anonreport.py:79
-#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:69
+#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:68
 msgid "Name"
 msgstr "Nombre"
 
@@ -105,9 +109,9 @@ msgstr "Reportes no publicados"
 
 #: openmultimedia/reporter/interfaces.py:40
 msgid "Number of seconds to wait to update the content lists"
-msgstr ""
+msgstr "Cantidad de segundos a esperar para que se actualicen las listas de contenido"
 
-#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:43
+#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:40
 msgid "Pending review reports"
 msgstr "Reportes pendiente de revisión"
 
@@ -115,11 +119,11 @@ msgstr "Reportes pendiente de revisión"
 msgid "Please enable JavaScript to view the ${disqus-link}"
 msgstr "Por favor active Javascript para ver ${disqus-link}"
 
-#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:37
+#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:34
 msgid "Private reports"
 msgstr "Reportes privados"
 
-#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:49
+#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:46
 msgid "Published reports"
 msgstr "Reportes publicados"
 
@@ -139,13 +143,25 @@ msgstr "Llave de seguridad"
 msgid "Send"
 msgstr "Enviar"
 
-#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:75
+#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:76
 msgid "State"
 msgstr "Estado"
 
-#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:67
+#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:125
+msgid "There are no reports."
+msgstr "No hay reportes en el listado."
+
+#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:64
+msgid "Thumb"
+msgstr "Miniatura"
+
+#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:66
 msgid "Title"
 msgstr "Titulo"
+
+#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:72
+msgid "Type"
+msgstr "Tipo"
 
 #: openmultimedia/reporter/interfaces.py:35
 msgid "Upload key"
@@ -161,6 +177,10 @@ msgstr "Usar esta imagen si no se tiene una imagen previa del reporte."
 
 #: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:133
 msgid "Ver todos"
+msgstr ""
+
+#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:111
+msgid "Video"
 msgstr ""
 
 #: openmultimedia/reporter/interfaces.py:25
@@ -209,5 +229,4 @@ msgstr "Título"
 #: openmultimedia/reporter/content/anonreport.py:98
 msgid "upload video or image"
 msgstr "Cargar imagen o video"
-
 

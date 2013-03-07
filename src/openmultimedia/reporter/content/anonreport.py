@@ -150,6 +150,12 @@ class AnonReport(Item):
     def get_formated_date(self):
         return self.date.strftime("%d-%m-%Y")
 
+    def get_formated_date_time(self):
+        date = ""
+        if self.date:
+            date =  self.date.strftime("%d/%m/%Y %H:%M:%S")
+        return date
+
     def get_date(self):
         date_utility = getUtility(IPrettyDate)
         return date_utility.date(self.date)

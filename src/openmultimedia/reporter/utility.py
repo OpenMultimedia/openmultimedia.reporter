@@ -271,7 +271,7 @@ class Upload(object):
         sign_key = self.sign_request(body, key, security_key)
         body['signature'] = sign_key
         headers = {'Accept': 'application/json'}
-        body_url = urlencode(body)
+
         try:
             logger.info("Making a request to: %s with headers: %s and body: %s"
                         % (url, headers, body))
