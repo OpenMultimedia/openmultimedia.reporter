@@ -2,7 +2,12 @@
 
 from five import grok
 
+from z3c.caching.interfaces import IPurgePaths
+
 from zope.component import getMultiAdapter, getUtility
+from zope.component import adapts
+
+from zope.interface import implements
 
 from zope.security import checkPermission
 
@@ -203,3 +208,26 @@ class DisclaimerView(dexterity.DisplayForm):
     def render(self):
         pt = ViewPageTemplateFile('ireport_templates/disclaimer_view.pt')
         return pt(self)
+
+
+class IReportViewPurgePaths(grok.Adapter):
+    """Purge all relevant urls for I Report sections
+    """
+
+    grok.provides(IPurgePaths)
+    grok.context(IIReport)
+
+    def __init__(self, context):
+        self.context = context
+
+    def getRelativePaths(self):
+        views = ['/view', 
+                 '/listado-report-published',
+                 '/listado-report',
+                 '/i-report']
+                 
+        base_url = self.context.absolute_url_path()
+        return ["%s%s" % (base_url, view) for view in views]
+
+    def getAbsolutePaths(self):
+        return []
