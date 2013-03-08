@@ -512,6 +512,10 @@ class Fixture(PloneSandboxLayer):
 
     def setUpZope(self, app, configurationContext):
         # Load ZCML
+        import plone.app.caching
+        self.loadZCML(package=plone.app.caching)
+        import plone.cachepurging
+        self.loadZCML(package=plone.cachepurging)
         import openmultimedia.reporter
         self.loadZCML(package=openmultimedia.reporter)
 

@@ -1,0 +1,117 @@
+This tests that the correct URL gets purged when the report gets published:
+
+    >>> import hashlib
+
+    >>> app = layer['app']
+    >>> portal = layer['portal']
+    >>> request = layer['request']
+
+    >>> from plone.testing.z2 import Browser
+    >>> browser = Browser(app)
+    >>> portalURL = portal.absolute_url()
+
+    >>> from plone.cachepurging.interfaces import IPurger
+    >>> from zope.interface import implements
+    >>> class TestPurger(object):
+    ...     implements(IPurger)
+    ...
+    ...     def __init__(self):
+    ...         self.to_purge = []
+    ...
+    ...     def purgeAsync(self, url):
+    ...         self.to_purge.append(url)
+    
+    >>> from zope.component import getGlobalSiteManager
+    >>> gsm = getGlobalSiteManager()
+
+    >>> test_purger = TestPurger()
+    >>> gsm.registerUtility(test_purger)
+
+    >>> from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+    
+We create the "I report" section
+
+    >>> browser.getLink('Home').click()
+    >>> browser.getLink('I report section').click()
+    >>> browser.getControl('Title').value = 'I Report'
+    >>> browser.getControl('Save').click()
+    >>> section_url = portalURL + '/i-report'
+    >>> browser.getLink('Publish').click()
+    
+Now, we add an anonymous report
+
+
+    >>> browser.open(portalURL + '/logout')
+    >>> browser.open(section_url)
+
+    >>> browser.getLink(id='add-new-report').click()
+
+    >>> "Settings" in browser.contents
+    False
+
+    >>> browser.getControl('Title').value = "My Valid Report"
+    >>> browser.getControl('Name').value = "Frapell"
+    >>> browser.getControl('Country').value = ["AR"]
+    >>> browser.getControl(name="form.widgets.file_id").value = "anonreport-valid-id"
+    >>> browser.getControl(name="form.widgets.file_type").value = "image"
+    >>> browser.getControl(name="form.widgets.date-day").value = "1"
+    >>> browser.getControl(name="form.widgets.date-month").value = ['1']
+    >>> browser.getControl(name="form.widgets.date-year").value = "2012"
+    >>> browser.getControl("Send").click()
+
+Callback
+
+    >>> m = hashlib.md5()
+    >>> secret = "security_key"
+    >>> id = "my-valid-report"
+    >>> file_id = "anonreport-valid-id"
+    >>> m.update(secret+file_id)
+    >>> digest = m.hexdigest()
+    >>> callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
+    >>> browser.open(callback_url)
+    
+Login again and publish
+
+    >>> browser.open(portalURL + '/login_form')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+
+    >>> 'You are now logged in' in browser.contents
+    True
+
+    >>> browser.open(section_url)
+
+    >>> browser.getLink('Contents').click()
+    >>> browser.getLink('My Valid Report').click()
+    
+    >>> from zope.component import queryUtility
+    >>> from plone.cachepurging.interfaces import IPurger
+    >>> purger = queryUtility(IPurger)
+
+    >>> len(purger.to_purge)
+    0
+
+    >>> browser.getLink("Publish").click()
+
+Now, let's see that valid URLs are wating to be purged
+It should be 6 because it includes the default object with and without the trailing /
+
+    >>> len(purger.to_purge)
+    6
+    
+    >>> 'http://localhost:1234/plone/i-report/view' in purger.to_purge
+    True
+    >>> 'http://localhost:1234/plone/i-report/listado-report-published' in purger.to_purge
+    True
+    >>> 'http://localhost:1234/plone/i-report/listado-report' in purger.to_purge
+    True
+    >>> 'http://localhost:1234/plone/i-report/i-report' in purger.to_purge
+    True

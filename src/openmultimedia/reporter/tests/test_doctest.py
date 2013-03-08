@@ -79,4 +79,10 @@ def test_suite():
                                      optionflags=doctest.ELLIPSIS),
                 layer=FUNCTIONAL_TESTING),
     ])
+    suite.addTests([
+        layered(doctest.DocFileSuite('tests/cache_purges_valid_urls.txt',
+                                     package='openmultimedia.reporter',
+                                     optionflags=doctest.ELLIPSIS),
+                layer=FUNCTIONAL_TESTING),
+    ])
     return suite
