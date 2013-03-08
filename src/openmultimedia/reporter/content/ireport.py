@@ -5,9 +5,6 @@ from five import grok
 from z3c.caching.interfaces import IPurgePaths
 
 from zope.component import getMultiAdapter, getUtility
-from zope.component import adapts
-
-from zope.interface import implements
 
 from zope.security import checkPermission
 
@@ -221,11 +218,11 @@ class IReportViewPurgePaths(grok.Adapter):
         self.context = context
 
     def getRelativePaths(self):
-        views = ['/view', 
+        views = ['/view',
                  '/listado-report-published',
                  '/listado-report',
                  '/i-report']
-                 
+
         base_url = self.context.absolute_url_path()
         return ["%s%s" % (base_url, view) for view in views]
 
