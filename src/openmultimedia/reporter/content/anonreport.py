@@ -5,6 +5,7 @@ import os
 import urllib2
 
 from zope import schema
+from zope.event import notify
 from zope.interface import implements
 from zope.interface import Invalid
 from zope.component import getMultiAdapter
@@ -13,6 +14,8 @@ from zope.component import getUtility
 from zope.lifecycleevent import IObjectRemovedEvent
 
 from zope.schema.interfaces import IVocabularyFactory
+
+from z3c.caching.purge import Purge
 
 from z3c.form import button
 from z3c.form.interfaces import ActionExecutionError
@@ -373,6 +376,12 @@ class AjaxReport(View):
 def fetch_content_on_submit(report, event):
     if event.action == "submit":
         report.update_local_file()
+
+
+@grok.subscribe(IAnonReport, IActionSucceededEvent)
+def purge_cache_on_publish(report, event):
+    if event.action == "publish":
+        notify(Purge(report.aq_parent))
 
 
 @grok.subscribe(IAnonReport, IObjectRemovedEvent)
