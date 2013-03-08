@@ -55,7 +55,8 @@ setup(name='openmultimedia.reporter',
         'openmultimedia.api',
         ],
       extras_require={
-        'test': ['plone.app.testing'],
+        'test': ['plone.app.testing',
+                 'plone.app.caching',],
         },
       entry_points="""
       [z3c.autoinclude.plugin]
