@@ -1,6 +1,13 @@
 
-$(document).ready(function() {    
-    
+$(document).ready(function() {
+
+    $("#search-ireport-button").click(function(e) {
+        e.preventDefault();
+        var search = $(".search-report-search").val();
+        document.location.href ='listado-report-published?search-report=' + search;
+        return false;
+        });
+
     $('.disclaimer-btn').prepOverlay({
         subtype: 'iframe'
         });

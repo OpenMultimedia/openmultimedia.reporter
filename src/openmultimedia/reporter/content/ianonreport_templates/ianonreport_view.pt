@@ -24,7 +24,7 @@
 
   <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
-      <tal:report condition="context/has_media">
+      <tal:report >
         <div id="content-reports">
           <div class="ireport-banner">
             <img src="++resource++openmultimedia.reporter/soy_reportero.jpg" />
@@ -34,7 +34,7 @@
 
             <div id="main-report-media">
     <div class="padding">
-    <tal:video condition="not:context/is_image">
+    <tal:video condition="python: not context.is_image() and context.has_media()">
       <script type="text/javascript" src=""
           tal:define="video_url context/get_video_widget_url"
           tal:condition="video_url"
@@ -43,7 +43,7 @@
           Item Title
       </script>
       </tal:video>
-      <tal:image condition="context/is_image">
+      <tal:image condition="python: context.is_image() and context.has_media()">
         <img tal:replace="structure context/@@images/image_file/preview" />
       </tal:image>
       </div>

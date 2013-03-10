@@ -37,17 +37,17 @@
     <div class="published-reports-list" tal:define="items view/publics">
 
     <div class="report-search-list">
-      <form name="formbuscar"  class="from-search-report" method="get"  action="listado-report-published" enctype="multipart/form-data" style=""  >
+    <div  class="from-search-report report-formbuscar"  >
       <table cellpadding="0" cellspacing="0" width="200" height="25">
       <tr>
          <td width="25" class="search-report">
-            <input name="search-report" type="text"  tal:attributes="value python:view.search if view.search else ''" class="search-report-search"  align="texttop"/>    </td>
+            <input name="search-report" type="text"  value="" class="search-report-search"  align="texttop"/>    </td>
          <td width="25" background="">
-            <input type="image" src="++resource++openmultimedia.reporter/boton_buscar.jpg" align="top" name="boton"  border="0" />
+            <input type="image" id="search-ireport-button" src="++resource++openmultimedia.reporter/boton_buscar.jpg" align="top" name="boton"  border="0" />
          </td>
       </tr>
       </table>
-    </form>
+    </div>
       <div style="clear:both" />
       <div tal:condition="view/search">
         <span i18n:translate="" class="report-searched-word">Searched Word: </span>
