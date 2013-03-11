@@ -53,7 +53,7 @@
               </script>
               </tal:video>
               <tal:image condition="new_report/is_image">
-                <img tal:replace="structure new_report/@@images/image_file/preview" />
+                <img tal:replace="structure new_report/render_preview_image" />
               </tal:image>
               </div>
           </div>

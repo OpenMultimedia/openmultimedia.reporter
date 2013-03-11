@@ -44,7 +44,7 @@
       </script>
       </tal:video>
       <tal:image condition="python: context.is_image() and context.has_media()">
-        <img tal:replace="structure context/@@images/image_file/preview" />
+        <img tal:replace="structure context/render_preview_image" />
       </tal:image>
       </div>
   </div>
