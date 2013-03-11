@@ -66,7 +66,7 @@ Now, we add an anonymous report
     >>> browser.getControl(name="form.widgets.date-year").value = "2012"
     >>> browser.getControl("Send").click()
 
-Callback
+Callback shouldn't generate cache purging
 
     >>> m = hashlib.md5()
     >>> secret = "security_key"
@@ -76,6 +76,13 @@ Callback
     >>> digest = m.hexdigest()
     >>> callback_url = "%s/%s/@@processed_result?key=%s&type=success" % (section_url, id, digest)
     >>> browser.open(callback_url)
+    
+    >>> from zope.component import queryUtility
+    >>> from plone.cachepurging.interfaces import IPurger
+    >>> purger = queryUtility(IPurger)
+    
+    >>> len(purger.to_purge)
+    0
     
 Login again and publish
 
@@ -91,10 +98,6 @@ Login again and publish
 
     >>> browser.getLink('Contents').click()
     >>> browser.getLink('My Valid Report').click()
-    
-    >>> from zope.component import queryUtility
-    >>> from plone.cachepurging.interfaces import IPurger
-    >>> purger = queryUtility(IPurger)
 
     >>> len(purger.to_purge)
     0
@@ -115,3 +118,47 @@ It should be 6 because it includes the default object with and without the trail
     True
     >>> 'http://localhost:1234/plone/i-report/i-report' in purger.to_purge
     True
+
+Retract the report and see again the same URL's to be purged
+It should be 6 because it includes the default object with and without the trailing /
+
+    >>> purger.to_purge = []
+    >>> len(purger.to_purge)
+    0
+    
+    >>> browser.getLink("Retract").click()
+
+    >>> len(purger.to_purge)
+    6
+    
+    >>> 'http://localhost:1234/plone/i-report/view' in purger.to_purge
+    True
+    >>> 'http://localhost:1234/plone/i-report/listado-report-published' in purger.to_purge
+    True
+    >>> 'http://localhost:1234/plone/i-report/listado-report' in purger.to_purge
+    True
+    >>> 'http://localhost:1234/plone/i-report/i-report' in purger.to_purge
+    True
+
+Finally, remove the report and see again the same URL's to be purged
+It should be 6 because it includes the default object with and without the trailing /
+
+    >>> purger.to_purge = []
+    >>> len(purger.to_purge)
+    0
+    
+    >>> browser.getLink("Delete").click()
+    >>> browser.getControl("Delete").click()
+
+    >>> len(purger.to_purge)
+    6
+    
+    >>> 'http://localhost:1234/plone/i-report/view' in purger.to_purge
+    True
+    >>> 'http://localhost:1234/plone/i-report/listado-report-published' in purger.to_purge
+    True
+    >>> 'http://localhost:1234/plone/i-report/listado-report' in purger.to_purge
+    True
+    >>> 'http://localhost:1234/plone/i-report/i-report' in purger.to_purge
+    True
+    
