@@ -380,7 +380,7 @@ def fetch_content_on_submit(report, event):
 
 @grok.subscribe(IAnonReport, IActionSucceededEvent)
 def purge_cache_on_publish(report, event):
-    if event.action == "publish":
+    if event.action == "publish" or event.action == "retract":
         notify(Purge(report.aq_parent))
 
 
@@ -409,6 +409,7 @@ def remove_remote_content(report, event):
         upload_utility = getUtility(IUpload)
         response, content = upload_utility.delete_structure(
             report.file_slug, report.file_type)
+        notify(Purge(report.aq_parent))
 
 
 @indexer(IAnonReport)
