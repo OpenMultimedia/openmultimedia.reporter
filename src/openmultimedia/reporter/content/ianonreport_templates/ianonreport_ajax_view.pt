@@ -5,13 +5,9 @@
   <div id="main-report-media">
     <div class="padding">
     <tal:video condition="not:context/is_image">
-      <script type="text/javascript" src=""
-          tal:define="video_url context/get_video_widget_url"
-          tal:condition="video_url"
-          tal:attributes="src string:${video_url};"
-          tal:content="nothing">
-          Item Title
-      </script>
+      <iframe height="300" frameborder="0" width="400"
+        tal:attributes="src python: 'http://widgets.tlsur.net/widgets/player/?live_button=si&slug=' + context.file_slug">
+      </iframe>
       </tal:video>
       <tal:image condition="context/is_image">
         <img tal:replace="structure context/render_preview_image" />
