@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openmultimedia.reporter\n"
-"POT-Creation-Date: 2013-03-07 17:53+0000\n"
-"PO-Revision-Date: 2013-03-06 14:10-0300\n"
+"POT-Creation-Date: 2013-03-13 21:16+0000\n"
+"PO-Revision-Date: 2013-03-13 18:17-0300\n"
 "Last-Translator: Franco Pellegrini <frapell@ravvit.net>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgstr "Una lista de países"
 msgid "An informative report addable by anybody"
 msgstr "Reporte informativo agregable por cuaquiera"
 
-#: openmultimedia/reporter/content/anonreport.py:273
+#: openmultimedia/reporter/content/anonreport.py:283
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -41,31 +41,41 @@ msgstr "Cancelar"
 msgid "Countries"
 msgstr "Países"
 
-#: openmultimedia/reporter/content/anonreport.py:87
+#: openmultimedia/reporter/content/anonreport.py:90
 #: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:70
 msgid "Country"
 msgstr "País"
 
-#: openmultimedia/reporter/content/anonreport.py:107
+#: openmultimedia/reporter/content/anonreport.py:110
 #: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:74
 msgid "Date"
 msgstr "Fecha"
 
-#: openmultimedia/reporter/content/ireport.py:34
+#: openmultimedia/reporter/content/ireport.py:38
 msgid "Default preview"
 msgstr "Imagen previa por defecto"
 
-#: openmultimedia/reporter/content/ireport.py:43
+#: openmultimedia/reporter/content/ireport.py:47
 msgid "Disclaimer"
 msgstr "Condiciones de uso"
 
-#: openmultimedia/reporter/content/anonreport.py:289
+#: openmultimedia/reporter/content/anonreport.py:299
 msgid "Error creating the report, please try again"
 msgstr "Error creando el reporte, porfavor pruebe de nuevo"
 
-#: openmultimedia/reporter/content/anonreport.py:97
+#: openmultimedia/reporter/browser.py:139
+msgid "Error uploading file, please try again or use a diferent file"
+msgstr ""
+"Error cargando el archivo, por favor pruebe de nuevo o use un archivo "
+"diferente"
+
+#: openmultimedia/reporter/content/anonreport.py:100
 msgid "File"
 msgstr "Archivo"
+
+#: openmultimedia/reporter/browser.py:141
+msgid "File uploaded correctly"
+msgstr "Archivo cargado correctamente"
 
 #: openmultimedia/reporter/controlpanel.py:12
 msgid "Here you can modify the settings for openmultimedia.reporter."
@@ -88,11 +98,11 @@ msgstr "Imagen"
 msgid "Image notify"
 msgstr "Notificar imagen"
 
-#: openmultimedia/reporter/content/anonreport.py:330
+#: openmultimedia/reporter/content/anonreport.py:340
 msgid "Item created"
 msgstr "Reporte Creado"
 
-#: openmultimedia/reporter/content/anonreport.py:79
+#: openmultimedia/reporter/content/anonreport.py:82
 #: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:68
 msgid "Name"
 msgstr "Nombre"
@@ -109,7 +119,8 @@ msgstr "Reportes no publicados"
 
 #: openmultimedia/reporter/interfaces.py:40
 msgid "Number of seconds to wait to update the content lists"
-msgstr "Cantidad de segundos a esperar para que se actualicen las listas de contenido"
+msgstr ""
+"Cantidad de segundos a esperar para que se actualicen las listas de contenido"
 
 #: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:40
 msgid "Pending review reports"
@@ -139,7 +150,7 @@ msgstr "Busqueda:"
 msgid "Security key"
 msgstr "Llave de seguridad"
 
-#: openmultimedia/reporter/content/anonreport.py:279
+#: openmultimedia/reporter/content/anonreport.py:289
 msgid "Send"
 msgstr "Enviar"
 
@@ -147,7 +158,7 @@ msgstr "Enviar"
 msgid "State"
 msgstr "Estado"
 
-#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:125
+#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:126
 msgid "There are no reports."
 msgstr "No hay reportes en el listado."
 
@@ -171,7 +182,7 @@ msgstr "LLave para la subida de archivos"
 msgid "Upload url"
 msgstr "Url para la subida de archivos"
 
-#: openmultimedia/reporter/content/ireport.py:35
+#: openmultimedia/reporter/content/ireport.py:39
 msgid "Use this image if there's no preview."
 msgstr "Usar esta imagen si no se tiene una imagen previa del reporte."
 
@@ -187,46 +198,51 @@ msgstr ""
 msgid "Video notify"
 msgstr "Notificar video"
 
+#: openmultimedia/reporter/browser.py:143
+msgid "Your file was already uploaded, no need to do it again."
+msgstr "Su archivo ya fue cargado, no necesita hacerlo de nuevo."
+
 #: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:122
 msgid "blog comments powered by ${disqus}"
 msgstr "comentarios de blog provistos por ${disqus}"
 
 #. Default: "Choose your country."
-#: openmultimedia/reporter/content/anonreport.py:88
+#: openmultimedia/reporter/content/anonreport.py:91
 msgid "help_country"
 msgstr "Ingrese su país."
 
 #. Default: "Enter here the date in which this photo or video was taken."
-#: openmultimedia/reporter/content/anonreport.py:108
+#: openmultimedia/reporter/content/anonreport.py:111
 msgid "help_date"
 msgstr "Ingrese aquí la fecha en la que fue tomado este video o foto."
 
 #. Default: "Enter disclaimer here."
-#: openmultimedia/reporter/content/ireport.py:44
+#: openmultimedia/reporter/content/ireport.py:48
 msgid "help_disclaimer"
 msgstr "Ingrese aquí las condiciones de uso."
 
 #. Default: "Enter your name."
-#: openmultimedia/reporter/content/anonreport.py:80
+#: openmultimedia/reporter/content/anonreport.py:83
 msgid "help_name"
 msgstr "Ingrese su nombre."
 
 #. Default: "Enter here your report."
-#: openmultimedia/reporter/content/anonreport.py:69
+#: openmultimedia/reporter/content/anonreport.py:72
 msgid "help_report"
 msgstr "Ingrese aquí su reporte."
 
 #. Default: "Report"
-#: openmultimedia/reporter/content/anonreport.py:68
+#: openmultimedia/reporter/content/anonreport.py:71
 msgid "label_report"
 msgstr "Reporte"
 
 #. Default: "Title"
-#: openmultimedia/reporter/content/anonreport.py:63
+#: openmultimedia/reporter/content/anonreport.py:66
 msgid "label_title"
 msgstr "Título"
 
-#: openmultimedia/reporter/content/anonreport.py:98
+#: openmultimedia/reporter/content/anonreport.py:101
 msgid "upload video or image"
 msgstr "Cargar imagen o video"
+
 

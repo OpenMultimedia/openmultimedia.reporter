@@ -17,6 +17,7 @@ from openmultimedia.reporter.config import PROJECTNAME
 from openmultimedia.reporter.content.anonreport import IAnonReport
 from openmultimedia.reporter.interfaces import IUpload
 
+from openmultimedia.reporter import _
 
 logger = logging.getLogger(PROJECTNAME)
 
@@ -135,9 +136,12 @@ class RenderUploadWidgetJS(grok.View):
             url = upload_utility.upload_url()
             # XXX: Workaround for translating the JS strings
             # XXX: We need to get the lang from the request, instead of like this.
-            upload_error = translate(u"Error uploading file, please try again or use a diferent file", domain='openmultimedia.reporter', target_language='es')
-            upload_success = translate(u"File uploaded correctly", domain='openmultimedia.reporter', target_language='es')
-            already_uploaded = translate(u"Your file was already uploaded, no need to do it again.", domain='openmultimedia.reporter', target_language='es')
+            upload_error = _(u"Error uploading file, please try again or use a diferent file")
+            upload_error = translate(upload_error, domain='openmultimedia.reporter', target_language='es')
+            upload_success = _(u"File uploaded correctly")
+            upload_success = translate(upload_success, domain='openmultimedia.reporter', target_language='es')
+            already_uploaded = _(u"Your file was already uploaded, no need to do it again.")
+            already_uploaded = translate(already_uploaded, domain='openmultimedia.reporter', target_language='es')
 
             return self.js_template_input % dict(id=widget_id,
                                                  id_uploader=widget_id + '-uploader',
