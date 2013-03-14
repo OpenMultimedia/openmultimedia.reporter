@@ -32,7 +32,6 @@
    VG : Islas Vírgenes Británicas
    BN : Brunéi
    BG : Bulgaria
-   BU : Myanmar
    MM : Myanmar
    BI : Burundi
    BY : Bielorrusia
