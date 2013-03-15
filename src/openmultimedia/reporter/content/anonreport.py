@@ -153,6 +153,16 @@ class AnonReport(Item):
     def get_formated_date(self):
         return self.date.strftime("%d-%m-%Y")
 
+    def get_formated_date_state(self, state="published"):
+        if state != "published":
+            return self.created().strftime("%d-%m-%Y")
+        return self.effective().strftime("%d-%m-%Y")
+
+    def get_formated_date_time_state(self, state="published"):
+        if state != "published":
+            return self.created().strftime("%d-%m-%Y %H:%M:%S")
+        return self.effective().strftime("%d-%m-%Y %H:%M:%S")
+
     def get_formated_date_time(self):
         date = ""
         if self.date:
@@ -234,14 +244,13 @@ class AnonReport(Item):
         logger.info("Got %s" % url)
         return url
 
-    def _get_image_scale(self, scale):
-        if not self.image_preview:
+    def _get_image_scale(self, scale, field="image_preview"):
+        if not hasattr(self, field):
             scales = getMultiAdapter((self.aq_parent, self.REQUEST), name="images")
             image = 'default_preview'
         else:
             scales = getMultiAdapter((self, self.REQUEST), name="images")
-            image = 'image_preview'
-
+            image = field
         try:
             tag = scales.tag(image, scale=scale)
         except:
@@ -250,7 +259,7 @@ class AnonReport(Item):
         return tag
 
     def render_preview_image(self):
-        return self._get_image_scale("preview")
+        return self._get_image_scale("preview", field="image_file")
 
     def render_preview_image_mini(self):
         return self._get_image_scale("mini")

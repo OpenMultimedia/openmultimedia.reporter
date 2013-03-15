@@ -110,6 +110,9 @@ class IReportView(dexterity.DisplayForm):
         sort_on = 'effective'
         sort_order = 'reverse'
 
+        if state != "published":
+            sort_order = "created"
+
         query = {'portal_type': ct,
                  'sort_on': sort_on,
                  'sort_order': sort_order,
@@ -154,7 +157,7 @@ class ListadoReportView(IReportView):
         pc = getToolByName(self.context, 'portal_catalog')
         ct = "openmultimedia.reporter.anonreport"
         path = '/'.join(self.context.getPhysicalPath())
-        sort_on = 'Date'
+        sort_on = 'created'
         sort_order = 'reverse'
         states = ['pending', 'private', 'rejected']
         filters = {'review_state': {'operator': 'or', 'query': states},

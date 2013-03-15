@@ -67,9 +67,8 @@
           <div style="clear: both"></div>
 
           <tal:below>
-            <div id="ireport-date" tal:content="new_report/get_formated_date"/>
             <div id="ireport-user-data">
-              <span tal:content="new_report/name"></span> - <span tal:content="new_report/get_country"></span>
+              <span tal:content="new_report/name"></span> - <span i18n:translate=""> published date: </span> <span tal:content="new_report/get_formated_date_state"> </span> - <span tal:content="new_report/get_country"></span>
             </div>
             <div id="main-report-comments">
               <tal:comments>
@@ -113,7 +112,7 @@
                   tal:attributes="data-url python: report.absolute_url()">
                   <div class="report-item-thumb"
                       tal:content="structure report/render_preview_image" />
-                  <div id="report-item-date" tal:content="report/get_formated_date"/>
+                  <div id="report-item-date" tal:content="report/get_formated_date_state"/>
                   <div class="user-data country" tal:content="report/get_country" />
                   <div class="user-data" tal:content="report/name" />
               </div>

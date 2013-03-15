@@ -73,6 +73,12 @@
                             >Type</tal:title>&nbsp;</th>
                             <th class="nosort">&nbsp;<tal:title i18n:translate=""
                             >Date</tal:title>&nbsp;</th>
+
+                            <th class="nosort" tal:condition="python:requested_wf_state != 'published'">&nbsp;<tal:title i18n:translate=""
+                            >Creation Date</tal:title>&nbsp;</th>
+                            <th class="nosort" tal:condition="python:requested_wf_state == 'published'">&nbsp;<tal:title i18n:translate=""
+                            >Publication Date</tal:title>&nbsp;</th>
+
                             <th class="nosort">&nbsp;<tal:title i18n:translate=""
                             >State</tal:title>&nbsp;</th>
                         </tr>
@@ -115,6 +121,9 @@
                                 </td>
                                 <td class="report-item-list-date">
                                     <span tal:content="report/get_formated_date_time"/>
+                                </td>
+                                <td class="report-item-list-date">
+                                    <span tal:content="python: report.get_formated_date_time_state(requested_wf_state)"/>
                                 </td>
                                 <td tal:content="state" i18n:domain="plone"
                                     tal:attributes="class state" i18n:translate=""></td>

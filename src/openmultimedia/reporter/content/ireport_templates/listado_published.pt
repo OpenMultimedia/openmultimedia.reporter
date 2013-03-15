@@ -75,6 +75,9 @@
             <td class="list-published-text" tal:content="report/name"/>
             <td class="list-published-text" tal:content="report/get_country"/>
             <td class="list-published-text" tal:content="report/get_formated_date" />
+            <td class="list-published-text"  >
+              <span i18n:translate=""> Published: </span><span tal:content="report/get_formated_date_state"></span>
+            </td>
           </tr>
         </tal:brain>
         </table>

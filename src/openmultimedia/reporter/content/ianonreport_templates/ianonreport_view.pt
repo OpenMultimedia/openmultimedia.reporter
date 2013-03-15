@@ -14,10 +14,8 @@
 </metal:styleslot>
 
 <metal:javascriptslot fill-slot="javascript_head_slot" >
-
         <script type="text/javascript" src="++resource++openmultimedia.reporter/javascript.js">
         </script>
-
 </metal:javascriptslot>
 
 <body>
@@ -58,12 +56,10 @@
   <div style="clear: both"></div>
 
   <tal:below>
-    <div id="ireport-date" tal:content="context/get_formated_date"/>
     <div id="ireport-user-data">
-      <span tal:content="context/name"></span> - <span tal:content="context/get_country"></span>
+      <span tal:content="context/name"></span> - <tal:date tal:condition="python: context.get_status() == 'published'"><span i18n:translate=""> published date: </span> <span tal:content="context/get_formated_date_state"> </span></tal:date><tal:date tal:condition="python: context.get_status() != 'published'"><span i18n:translate=""> creation date: </span> <span tal:content="python:context.get_formated_date_state(state='private')"> </span></tal:date> - <span i18n:translate="">event date: </span> <span tal:content="context/get_formated_date"/> - <span tal:content="context/get_country"></span>
     </div>
   </tal:below>
-
           <!-- discuss         -->
           <tal:discuss tal:condition="context/is_published_ct">
             <script type="text/javascript">
@@ -75,7 +71,6 @@
             'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',resizable'
             win = window.open(mypage,myname,settings)
             }
-
             </script>
 
             <table width="249" border="0">
