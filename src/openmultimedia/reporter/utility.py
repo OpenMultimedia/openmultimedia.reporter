@@ -12,8 +12,6 @@ from zope.component import getUtility
 
 from zope.interface import implements
 
-from plone.i18n.normalizer import idnormalizer
-
 from plone.registry.interfaces import IRegistry
 
 from openmultimedia.api.interfaces import IVideoAPI

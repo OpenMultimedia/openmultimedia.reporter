@@ -52,14 +52,13 @@ class InstallTest(unittest.TestCase):
                                      'titulo': title}
 
         self.assertEqual(normalized_dict, normalized_dict_should_be)
-        
-        data = {'titulo': 'a'*150}
+
+        data = {'titulo': 'a' * 150}
         # Title should be no longer than 120 chars
         normalized_dict = self.utility.normalize_data(data)
-        normalized_dict_should_be = {'titulo': 'a'*120}
+        normalized_dict_should_be = {'titulo': 'a' * 120}
 
         self.assertEqual(normalized_dict, normalized_dict_should_be)
-        
 
     def test_get_security_key(self):
         security_key = self.utility.get_security_key()

@@ -317,7 +317,7 @@ class Add(dexterity.AddForm):
 
         if 'date' in data:
             body['date'] = data['date'].strftime("%Y-%m-%d %H:%M")
-        
+
         if 'file_id' in data and data['file_id']:
             body['archivo'] = data['file_id']
 
@@ -326,7 +326,6 @@ class Add(dexterity.AddForm):
         callback_url = obj.generate_callback_url(self.context)
         body['callback'] = callback_url
 
-        
         upload_utility = getUtility(IUpload)
         response, content = upload_utility.create_structure(body, file_type)
 
