@@ -37,7 +37,7 @@ We create the "I report" section
 Now access the section with an admin
 
     >>> browser.open(section_url)
-    >>> should_be = section_url + '/listado-report'
+    >>> should_be = section_url + '/listado-reportes'
     >>> browser.url == should_be
     True
     
@@ -45,6 +45,6 @@ Now access the section with an anonymous
 
     >>> browser.open(portalURL + '/logout')
     >>> browser.open(section_url)
-    >>> should_be = section_url + '/i-report'
+    >>> should_be = section_url + '/vista'
     >>> browser.url == should_be
     True

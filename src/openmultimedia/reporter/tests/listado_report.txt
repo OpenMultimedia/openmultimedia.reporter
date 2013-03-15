@@ -1,4 +1,4 @@
-Functional test que va a testear el batching en la vista de listado-report:
+Functional test que va a testear el batching en la vista de listado-reportes:
 
     >>> import os
 
@@ -81,7 +81,7 @@ Vamos a la vista de listado
 XXX: Como no podemos probar el orden, simplemente vamos a probar la cantidad de items
 que aparecen:
 
-    >>> browser.open(section_url+'/listado-report')
+    >>> browser.open(section_url+'/listado-reportes')
 
 Reportes privados y publicos no deberian ser visibles aqui, pero si los pendientes de revision
 
