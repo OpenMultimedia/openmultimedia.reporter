@@ -315,8 +315,20 @@ class Add(dexterity.AddForm):
             raise ActionExecutionError(Invalid(_(u"Error creating the "
                                                  "report, please try again")))
 
-        if 'IBasic.title' in data:
-            body['titulo'] = data['IBasic.title'].encode("utf-8", "ignore")
+        if 'title' in data:
+            body['titulo'] = data['title'].encode("utf-8", "ignore")
+
+        if 'report' in data:
+            body['report'] = data['report'].encode("utf-8", "ignore")
+
+        if 'country' in data:
+            body['country'] = obj.get_country()
+
+        if 'date' in data:
+            body['date'] = data['date'].strftime("%Y-%m-%d %H:%M")
+
+        if 'name' in data:
+            body['name'] = data['name'].encode("utf-8", "ignore")
 
         if 'file_id' in data and data['file_id']:
             body['archivo'] = data['file_id']

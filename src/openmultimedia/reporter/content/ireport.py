@@ -64,9 +64,9 @@ class View(dexterity.DisplayForm):
     def render(self):
         portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
         if portal_state.anonymous():
-            redirect_to = '/i-report'
+            redirect_to = '/vista'
         else:
-            redirect_to = '/listado-report'
+            redirect_to = '/listado-reportes'
 
         return self.request.response.redirect(self.context.absolute_url() + redirect_to)
 
@@ -74,7 +74,7 @@ class View(dexterity.DisplayForm):
 class IReportView(dexterity.DisplayForm):
     grok.context(IIReport)
     grok.require('zope2.View')
-    grok.name('i-report')
+    grok.name('vista')
     grok.implements(IViewView)
 
     def update(self):
@@ -143,7 +143,7 @@ class IReportView(dexterity.DisplayForm):
 
 class ListadoReportView(IReportView):
     grok.require('cmf.ModifyPortalContent')
-    grok.name('listado-report')
+    grok.name('listado-reportes')
 
     def get_reports(self, wf_state):
         reports = self._get_catalog_results(wf_state)
@@ -186,7 +186,7 @@ class ListadoReportView(IReportView):
 
 class ListadoReportPublishedView(IReportView):
     grok.require('zope2.View')
-    grok.name('listado-report-published')
+    grok.name('listado-reportes-publicos')
 
     def update(self):
         portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")

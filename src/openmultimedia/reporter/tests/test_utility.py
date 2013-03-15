@@ -41,12 +41,22 @@ class InstallTest(unittest.TestCase):
         self.assertEqual(upload_url, upload_url_should_be)
 
     def test_normalize_data(self):
-        data = {'titulo': '!@Mi Título de prueba $',
-                'descripcion': 'å∫çDescripción'}
+        title = u'!@Mi Título de prueba $'.encode("utf-8", "ignore")
+        report = u'å∫çDescripción'.encode("utf-8", "ignore")
+
+        data = {'titulo': title,
+                'report': report}
 
         normalized_dict = self.utility.normalize_data(data)
-        normalized_dict_should_be = {'descripcion': 'ay-a-assdescripcia3n',
-                                     'titulo': 'mi-tatulo-de-prueba'}
+        normalized_dict_should_be = {'report': report,
+                                     'titulo': title}
+
+        self.assertEqual(normalized_dict, normalized_dict_should_be)
+
+        data = {'titulo': 'a' * 150}
+        # Title should be no longer than 120 chars
+        normalized_dict = self.utility.normalize_data(data)
+        normalized_dict_should_be = {'titulo': 'a' * 120}
 
         self.assertEqual(normalized_dict, normalized_dict_should_be)
 
@@ -65,7 +75,7 @@ class InstallTest(unittest.TestCase):
 
         for file_type in file_types:
             data = {'titulo': 'titulo',
-                    'descripcion': 'descripcion'}
+                    'report': 'descripcion'}
 
             response, content = self.utility.create_structure(data, file_type)
 

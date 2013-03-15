@@ -12,8 +12,6 @@ from zope.component import getUtility
 
 from zope.interface import implements
 
-from plone.i18n.normalizer import idnormalizer
-
 from plone.registry.interfaces import IRegistry
 
 from openmultimedia.api.interfaces import IVideoAPI
@@ -44,11 +42,11 @@ class Upload(object):
         return settings.upload_location
 
     def normalize_data(self, data):
-        DATA_KEYS = ['titulo', 'descripcion']
+        DATA_KEYS = ['titulo']
         result = {}
         for key in data.keys():
             if key in DATA_KEYS:
-                result[key] = idnormalizer.normalize(data[key])
+                result[key] = data[key][:120]
             else:
                 result[key] = data[key]
         return result
