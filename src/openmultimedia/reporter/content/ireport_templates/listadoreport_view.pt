@@ -31,19 +31,19 @@
       <div class="soy-reporter-list-view">
         <div tal:define="requested_wf_state request/wf_state|string:pending">
           <div class="report-list-selector">
-            <a href="listado-report?wf_state=private" class="reporter-filter-state"
+            <a href="listado-reportes?wf_state=private" class="reporter-filter-state"
                 id="private-list"
                tal:attributes="class python:'reporter-filter-state reporter-tab-hidden' if requested_wf_state == 'private' else 'reporter-filter-state'"
                i18n:translate="">
                Private reports
             </a>
-            <a href="listado-report?wf_state=pending" class="reporter-filter-state"
+            <a href="listado-reportes?wf_state=pending" class="reporter-filter-state"
               id="pending-list"
               tal:attributes="class python:'reporter-filter-state reporter-tab-hidden' if requested_wf_state == 'pending' else 'reporter-filter-state'"
                i18n:translate="">
                Pending review reports
             </a>
-            <a href="listado-report?wf_state=published" class="reporter-filter-state"
+            <a href="listado-reportes?wf_state=published" class="reporter-filter-state"
               id="published-list"
               tal:attributes="class python:'reporter-filter-state reporter-tab-hidden' if requested_wf_state == 'published' else 'reporter-filter-state'"
                i18n:translate="">
