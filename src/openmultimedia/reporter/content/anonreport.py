@@ -318,6 +318,9 @@ class Add(dexterity.AddForm):
         if 'date' in data:
             body['date'] = data['date'].strftime("%Y-%m-%d %H:%M")
 
+        if 'name' in data:
+            body['name'] = data['name'].encode("utf-8", "ignore")
+
         if 'file_id' in data and data['file_id']:
             body['archivo'] = data['file_id']
 
