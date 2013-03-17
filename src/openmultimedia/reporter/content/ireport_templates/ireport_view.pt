@@ -44,14 +44,8 @@
           <div id="main-report-media">
             <div class="padding">
             <tal:video condition="not:new_report/is_image">
-              <script type="text/javascript" src=""
-                  tal:define="video_url new_report/get_video_widget_url"
-                  tal:condition="video_url"
-                  tal:attributes="src string:${video_url};"
-                  tal:content="nothing">
-                  Item Title
-              </script>
-              </tal:video>
+              <div id="new-report-video" tal:attributes="data-slug new_report/file_slug"></div>
+            </tal:video>
               <tal:image condition="new_report/is_image">
                 <img tal:replace="structure new_report/render_preview_image" />
               </tal:image>

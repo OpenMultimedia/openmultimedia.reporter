@@ -33,13 +33,7 @@
             <div id="main-report-media">
     <div class="padding">
     <tal:video condition="python: not context.is_image() and context.has_media()">
-      <script type="text/javascript" src=""
-          tal:define="video_url context/get_video_widget_url"
-          tal:condition="video_url"
-          tal:attributes="src string:${video_url};"
-          tal:content="nothing">
-          Item Title
-      </script>
+      <div id="new-report-video" tal:attributes="data-slug context/file_slug"></div>
       </tal:video>
       <tal:image condition="python: context.is_image() and context.has_media()">
         <img tal:replace="structure context/render_preview_image" />
