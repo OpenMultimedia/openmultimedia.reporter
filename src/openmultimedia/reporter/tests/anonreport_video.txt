@@ -184,10 +184,7 @@ deberiamos tambien como anonimos, poder acceder al reporte
     True
     >>> browser.getLink('My edited report').click()
 
-Por ultimo, vemos que se muestra el snip de codigo Javascript en la pagina
-para mostrar el player de video
+Por ultimo, vemos que se muestra el id del div que contendra el video, que se carga via js.
 
-    >>> ("<script type=\"text/javascript\" src=\"http://multimedia."
-    ... "telesurtv.net/player/insertar.js?archivo=clips/video.mp4&"
-    ... "amp;amp;width=400\"></script>") in browser.contents
+    >>> "new-report-video" in browser.contents
     True

@@ -244,7 +244,7 @@ class AnonReport(Item):
         return url
 
     def _get_image_scale(self, scale, field="image_preview"):
-        if not hasattr(self, field):
+        if hasattr(self, field) and not getattr(self, field) or not hasattr(self, field):
             scales = getMultiAdapter((self.aq_parent, self.REQUEST), name="images")
             image = 'default_preview'
         else:
