@@ -358,8 +358,6 @@ class Add(dexterity.AddForm):
         obj.file_slug = slug
         obj.reindexObject()
         self._finishedAdd = True
-        IStatusMessage(self.request).addStatusMessage(_(u"Item created"),
-                                                      "info")
 
         self.request.RESPONSE.redirect(self.context.absolute_url())
 
