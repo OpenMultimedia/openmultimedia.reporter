@@ -105,6 +105,7 @@ class IAnonReport(form.Schema):
     form.omitted('file_slug')
     file_slug = schema.Text(required=False)
 
+    form.omitted(IEditForm, 'date')
     date = schema.Datetime(
         title=_(u'Date'),
         description=_(u'help_date',
