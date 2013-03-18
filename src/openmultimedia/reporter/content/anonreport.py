@@ -42,7 +42,6 @@ from Products.CMFCore.interfaces import IActionSucceededEvent
 from Products.CMFCore.utils import getToolByName
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.statusmessages.interfaces import IStatusMessage
 
 from collective.prettydate.interfaces import IPrettyDate
 
