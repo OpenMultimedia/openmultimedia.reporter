@@ -48,9 +48,6 @@ y vamos a guardar para que se cree la estructura remota.
     >>> browser.getControl(name="form.widgets.date-year").value = "2012"
     >>> browser.getControl("Send").click()
 
-    >>> "Item created" in browser.contents
-    True
-
 Ingresamos al sitio y vemos que el reporte no es visible:
 
     >>> browser.open(portalURL + '/login_form')

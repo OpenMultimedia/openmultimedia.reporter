@@ -61,9 +61,6 @@ una imagen remota inexistente
     >>> browser.getControl(name="form.widgets.date-year").value = "2012"
     >>> browser.getControl("Send").click()
 
-    >>> "Item created" in browser.contents
-    True
-
 llamamos primero al callback url, para eso los generamos
 
     >>> sh.clearMsgs()

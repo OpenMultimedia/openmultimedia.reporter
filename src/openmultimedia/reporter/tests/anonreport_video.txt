@@ -76,9 +76,6 @@ El reporte se crea satisfactoriamente y somos redirigidos al contenedor de repor
     >>> browser.getControl(name="form.widgets.file_id").value = "videoreport-valid-id"
     >>> browser.getControl("Send").click()
 
-    >>> "Item created" in browser.contents
-    True
-
 Vemos que el reporte no queda visible
 
     >>> "My Valid Report" in browser.contents
