@@ -11,7 +11,7 @@ $(document).ready(function() {
     $("#search-ireport-button").click(function(e) {
         e.preventDefault();
         var search = $(".search-report-search").val();
-        document.location.href ='listado-report-published?search-report=' + search;
+        document.location.href ='listado-reportes-publicos?search-report=' + search;
         return false;
         });
 
