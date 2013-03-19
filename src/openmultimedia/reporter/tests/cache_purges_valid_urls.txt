@@ -112,11 +112,11 @@ It should be 6 because it includes the default object with and without the trail
     
     >>> 'http://localhost:1234/plone/i-report/view' in purger.to_purge
     True
-    >>> 'http://localhost:1234/plone/i-report/listado-report-published' in purger.to_purge
+    >>> 'http://localhost:1234/plone/i-report/listado-reportes-publicos' in purger.to_purge
     True
-    >>> 'http://localhost:1234/plone/i-report/listado-report' in purger.to_purge
+    >>> 'http://localhost:1234/plone/i-report/listado-reportes' in purger.to_purge
     True
-    >>> 'http://localhost:1234/plone/i-report/i-report' in purger.to_purge
+    >>> 'http://localhost:1234/plone/i-report/vista' in purger.to_purge
     True
 
 Retract the report and see again the same URL's to be purged
@@ -133,11 +133,11 @@ It should be 6 because it includes the default object with and without the trail
     
     >>> 'http://localhost:1234/plone/i-report/view' in purger.to_purge
     True
-    >>> 'http://localhost:1234/plone/i-report/listado-report-published' in purger.to_purge
+    >>> 'http://localhost:1234/plone/i-report/listado-reportes-publicos' in purger.to_purge
     True
-    >>> 'http://localhost:1234/plone/i-report/listado-report' in purger.to_purge
+    >>> 'http://localhost:1234/plone/i-report/listado-reportes' in purger.to_purge
     True
-    >>> 'http://localhost:1234/plone/i-report/i-report' in purger.to_purge
+    >>> 'http://localhost:1234/plone/i-report/vista' in purger.to_purge
     True
 
 Finally, remove the report and see again the same URL's to be purged
@@ -155,10 +155,10 @@ It should be 6 because it includes the default object with and without the trail
     
     >>> 'http://localhost:1234/plone/i-report/view' in purger.to_purge
     True
-    >>> 'http://localhost:1234/plone/i-report/listado-report-published' in purger.to_purge
+    >>> 'http://localhost:1234/plone/i-report/listado-reportes-publicos' in purger.to_purge
     True
-    >>> 'http://localhost:1234/plone/i-report/listado-report' in purger.to_purge
+    >>> 'http://localhost:1234/plone/i-report/listado-reportes' in purger.to_purge
     True
-    >>> 'http://localhost:1234/plone/i-report/i-report' in purger.to_purge
+    >>> 'http://localhost:1234/plone/i-report/vista' in purger.to_purge
     True
     
