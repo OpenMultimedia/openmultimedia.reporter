@@ -35,7 +35,7 @@
                 id="private-list"
                tal:attributes="class python:'reporter-filter-state reporter-tab-hidden' if requested_wf_state == 'private' else 'reporter-filter-state'"
                i18n:translate="">
-               Private reports
+               Reports in process
             </a>
             <a href="listado-reportes?wf_state=pending" class="reporter-filter-state"
               id="pending-list"

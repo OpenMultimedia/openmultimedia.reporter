@@ -105,7 +105,7 @@
               <div class="report-item" tal:define="report brain/getObject"
                   tal:attributes="data-url python: report.absolute_url()">
                   <div class="report-item-thumb"
-                      tal:content="structure report/render_preview_image" />
+                      tal:content="structure report/render_preview_image_mini" />
                   <div id="report-item-date" tal:content="report/get_formated_date_state"/>
                   <div class="user-data country" tal:content="report/get_country" />
                   <div class="user-data" tal:content="report/name" />

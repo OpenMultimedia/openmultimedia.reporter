@@ -1,4 +1,5 @@
 <tal:report
+     i18n:domain="openmultimedia.reporter"
      tal:condition="context/has_media">
 
   <img id="loading" src="++resource++openmultimedia.reporter/loading.gif" />

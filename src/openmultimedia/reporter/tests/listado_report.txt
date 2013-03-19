@@ -70,12 +70,12 @@ Volvemos a ingresar al sitio y publicamos los ultimos 10:
 
     >>> 'You are now logged in' in browser.contents
     True
-    
+
     >>> for index in range(30,40):
     ...     id = "title-%s"%index
     ...     browser.open("%s/%s" % (section_url, id))
     ...     browser.getLink("Publish").click()
-    
+
 
 Vamos a la vista de listado
 XXX: Como no podemos probar el orden, simplemente vamos a probar la cantidad de items
@@ -105,7 +105,7 @@ Reportes privados y publicos no deberian ser visibles aqui, pero si los pendient
 
 Vemos un listado de los reportes privados
 
-    >>> browser.getLink("Private reports").click()
+    >>> browser.getLink("Reports in process").click()
 
 Reportes pendientes y publicos no deberian ser visibles aqui, pero si los privados
 
@@ -151,7 +151,7 @@ Reportes pendientes y privados no deberian ser visibles aqui, pero si los public
     >>> reports.count(False)
     0
 
-    
+
 Por ultimo, volvemos a pedir el listado de reportes pendientes, deberiamos ver lo mismo que vimos al ingresar a la vista sin pedir ningun reporte puntual
 
     >>> browser.getLink("Pending review reports").click()

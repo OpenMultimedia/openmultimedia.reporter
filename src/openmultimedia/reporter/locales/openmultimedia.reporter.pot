@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openmultimedia.reporter\n"
-"POT-Creation-Date: 2013-03-15 21:32+0000\n"
+"POT-Creation-Date: 2013-03-19 19:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr ""
 msgid "An informative report addable by anybody"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:292
+#: openmultimedia/reporter/content/anonreport.py:291
 msgid "Cancel"
 msgstr ""
 
@@ -41,7 +41,7 @@ msgstr ""
 msgid "Countries"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:90
+#: openmultimedia/reporter/content/anonreport.py:89
 #: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:70
 msgid "Country"
 msgstr ""
@@ -63,7 +63,7 @@ msgstr ""
 msgid "Disclaimer"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:308
+#: openmultimedia/reporter/content/anonreport.py:307
 msgid "Error creating the report, please try again"
 msgstr ""
 
@@ -71,7 +71,7 @@ msgstr ""
 msgid "Error uploading file, please try again or use a diferent file"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:100
+#: openmultimedia/reporter/content/anonreport.py:99
 msgid "File"
 msgstr ""
 
@@ -100,16 +100,12 @@ msgstr ""
 msgid "Image notify"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:349
-msgid "Item created"
-msgstr ""
-
-#: openmultimedia/reporter/content/anonreport.py:82
+#: openmultimedia/reporter/content/anonreport.py:81
 #: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:68
 msgid "Name"
 msgstr ""
 
-#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:145
+#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:139
 #: openmultimedia/reporter/content/ireport_templates/listado_published.pt:96
 msgid "Nombre"
 msgstr ""
@@ -127,12 +123,8 @@ msgstr ""
 msgid "Pending review reports"
 msgstr ""
 
-#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:111
+#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:104
 msgid "Please enable JavaScript to view the ${disqus-link}"
-msgstr ""
-
-#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:34
-msgid "Private reports"
 msgstr ""
 
 #: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:79
@@ -151,6 +143,10 @@ msgstr ""
 msgid "Report"
 msgstr ""
 
+#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:34
+msgid "Reports in process"
+msgstr ""
+
 #: openmultimedia/reporter/content/ireport_templates/listado_published.pt:53
 msgid "Searched Word:"
 msgstr ""
@@ -159,7 +155,7 @@ msgstr ""
 msgid "Security key"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:298
+#: openmultimedia/reporter/content/anonreport.py:297
 msgid "Send"
 msgstr ""
 
@@ -195,7 +191,7 @@ msgstr ""
 msgid "Use this image if there's no preview."
 msgstr ""
 
-#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:132
+#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:126
 msgid "Ver todos"
 msgstr ""
 
@@ -211,20 +207,20 @@ msgstr ""
 msgid "Your file was already uploaded, no need to do it again."
 msgstr ""
 
-#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:118
+#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:111
 msgid "blog comments powered by ${disqus}"
 msgstr ""
 
-#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:61
+#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:54
 msgid "creation date:"
 msgstr ""
 
-#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:61
+#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:54
 msgid "event date:"
 msgstr ""
 
 #. Default: "Choose your country."
-#: openmultimedia/reporter/content/anonreport.py:91
+#: openmultimedia/reporter/content/anonreport.py:90
 msgid "help_country"
 msgstr ""
 
@@ -239,31 +235,32 @@ msgid "help_disclaimer"
 msgstr ""
 
 #. Default: "Enter your name."
-#: openmultimedia/reporter/content/anonreport.py:83
+#: openmultimedia/reporter/content/anonreport.py:82
 msgid "help_name"
 msgstr ""
 
 #. Default: "Enter here your report."
-#: openmultimedia/reporter/content/anonreport.py:72
+#: openmultimedia/reporter/content/anonreport.py:71
 msgid "help_report"
 msgstr ""
 
 #. Default: "Report"
-#: openmultimedia/reporter/content/anonreport.py:71
+#: openmultimedia/reporter/content/anonreport.py:70
 msgid "label_report"
 msgstr ""
 
 #. Default: "Title"
-#: openmultimedia/reporter/content/anonreport.py:66
+#: openmultimedia/reporter/content/anonreport.py:65
 msgid "label_title"
 msgstr ""
 
-#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:61
-#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:71
+#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_ajax_view.pt:27
+#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:54
+#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:65
 msgid "published date:"
 msgstr ""
 
-#: openmultimedia/reporter/content/anonreport.py:101
+#: openmultimedia/reporter/content/anonreport.py:100
 msgid "upload video or image"
 msgstr ""
 

@@ -227,7 +227,6 @@ class AnonReport(Item):
 
     def has_media(self):
         has_media = False
-
         if self.is_image():
             has_media = self.image_file is not None
         else:

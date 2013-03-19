@@ -113,7 +113,7 @@ sistema remoto
 
 Asimismo, el reporte es visible si pedimos el listado de reportes privados
 
-    >>> browser.getLink("Private reports").click()
+    >>> browser.getLink("Reports in process").click()
 
     >>> "My Valid Report" in browser.contents
     True
@@ -203,7 +203,7 @@ deberiamos tambien como anonimos, poder acceder al reporte
     >>> browser.getLink("Publish").click()
     >>> browser.open(section_url)
     >>> browser.getLink("Published reports").click()
-    
+
     >>> "My edited report" in browser.contents
     True
     >>> "Frapell" in browser.contents

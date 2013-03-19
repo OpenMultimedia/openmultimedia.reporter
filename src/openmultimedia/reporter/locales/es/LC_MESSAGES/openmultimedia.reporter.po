@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openmultimedia.reporter\n"
-"POT-Creation-Date: 2013-03-15 21:32+0000\n"
+"POT-Creation-Date: 2013-03-19 19:35+0000\n"
 "PO-Revision-Date: 2013-03-13 18:17-0300\n"
 "Last-Translator: Franco Pellegrini <frapell@ravvit.net>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -33,7 +33,7 @@ msgstr "Una lista de países"
 msgid "An informative report addable by anybody"
 msgstr "Reporte informativo agregable por cuaquiera"
 
-#: openmultimedia/reporter/content/anonreport.py:292
+#: openmultimedia/reporter/content/anonreport.py:291
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -41,7 +41,7 @@ msgstr "Cancelar"
 msgid "Countries"
 msgstr "Países"
 
-#: openmultimedia/reporter/content/anonreport.py:90
+#: openmultimedia/reporter/content/anonreport.py:89
 #: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:70
 msgid "Country"
 msgstr "País"
@@ -63,7 +63,7 @@ msgstr "Imagen previa por defecto"
 msgid "Disclaimer"
 msgstr "Condiciones de uso"
 
-#: openmultimedia/reporter/content/anonreport.py:308
+#: openmultimedia/reporter/content/anonreport.py:307
 msgid "Error creating the report, please try again"
 msgstr "Error creando el reporte, porfavor pruebe de nuevo"
 
@@ -71,7 +71,7 @@ msgstr "Error creando el reporte, porfavor pruebe de nuevo"
 msgid "Error uploading file, please try again or use a diferent file"
 msgstr "Error cargando el archivo, por favor pruebe de nuevo o use un archivo diferente"
 
-#: openmultimedia/reporter/content/anonreport.py:100
+#: openmultimedia/reporter/content/anonreport.py:99
 msgid "File"
 msgstr "Archivo"
 
@@ -100,16 +100,12 @@ msgstr "Imagen"
 msgid "Image notify"
 msgstr "Notificar imagen"
 
-#: openmultimedia/reporter/content/anonreport.py:349
-msgid "Item created"
-msgstr "Reporte Creado"
-
-#: openmultimedia/reporter/content/anonreport.py:82
+#: openmultimedia/reporter/content/anonreport.py:81
 #: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:68
 msgid "Name"
 msgstr "Nombre"
 
-#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:145
+#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:139
 #: openmultimedia/reporter/content/ireport_templates/listado_published.pt:96
 msgid "Nombre"
 msgstr ""
@@ -127,13 +123,9 @@ msgstr "Cantidad de segundos a esperar para que se actualicen las listas de cont
 msgid "Pending review reports"
 msgstr "Reportes pendiente de revisión"
 
-#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:111
+#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:104
 msgid "Please enable JavaScript to view the ${disqus-link}"
 msgstr ""
-
-#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:34
-msgid "Private reports"
-msgstr "Reportes privados"
 
 #: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:79
 msgid "Publication Date"
@@ -151,6 +143,10 @@ msgstr "publicación: "
 msgid "Report"
 msgstr "Reporte"
 
+#: openmultimedia/reporter/content/ireport_templates/listadoreport_view.pt:34
+msgid "Reports in process"
+msgstr "Reportes en progreso"
+
 #: openmultimedia/reporter/content/ireport_templates/listado_published.pt:53
 msgid "Searched Word:"
 msgstr "Busqueda:"
@@ -159,7 +155,7 @@ msgstr "Busqueda:"
 msgid "Security key"
 msgstr "Llave de seguridad"
 
-#: openmultimedia/reporter/content/anonreport.py:298
+#: openmultimedia/reporter/content/anonreport.py:297
 msgid "Send"
 msgstr "Enviar"
 
@@ -195,7 +191,7 @@ msgstr "Url para la subida de archivos"
 msgid "Use this image if there's no preview."
 msgstr "Usar esta imagen si no se tiene una imagen previa del reporte."
 
-#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:132
+#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:126
 msgid "Ver todos"
 msgstr ""
 
@@ -211,20 +207,20 @@ msgstr "Notificar video"
 msgid "Your file was already uploaded, no need to do it again."
 msgstr "Su archivo ya fue cargado, no necesita hacerlo de nuevo."
 
-#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:118
+#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:111
 msgid "blog comments powered by ${disqus}"
 msgstr ""
 
-#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:61
+#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:54
 msgid "creation date:"
 msgstr "Creación"
 
-#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:61
+#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:54
 msgid "event date:"
 msgstr "Acontecimiento: "
 
 #. Default: "Choose your country."
-#: openmultimedia/reporter/content/anonreport.py:91
+#: openmultimedia/reporter/content/anonreport.py:90
 msgid "help_country"
 msgstr "Ingrese su país."
 
@@ -239,31 +235,32 @@ msgid "help_disclaimer"
 msgstr "Ingrese aquí las condiciones de uso."
 
 #. Default: "Enter your name."
-#: openmultimedia/reporter/content/anonreport.py:83
+#: openmultimedia/reporter/content/anonreport.py:82
 msgid "help_name"
 msgstr "Ingrese su nombre."
 
 #. Default: "Enter here your report."
-#: openmultimedia/reporter/content/anonreport.py:72
+#: openmultimedia/reporter/content/anonreport.py:71
 msgid "help_report"
 msgstr "Ingrese aquí su reporte."
 
 #. Default: "Report"
-#: openmultimedia/reporter/content/anonreport.py:71
+#: openmultimedia/reporter/content/anonreport.py:70
 msgid "label_report"
 msgstr "Reporte"
 
 #. Default: "Title"
-#: openmultimedia/reporter/content/anonreport.py:66
+#: openmultimedia/reporter/content/anonreport.py:65
 msgid "label_title"
 msgstr "Título"
 
-#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:61
-#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:71
+#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_ajax_view.pt:27
+#: openmultimedia/reporter/content/ianonreport_templates/ianonreport_view.pt:54
+#: openmultimedia/reporter/content/ireport_templates/ireport_view.pt:65
 msgid "published date:"
 msgstr "Publicación: "
 
-#: openmultimedia/reporter/content/anonreport.py:101
+#: openmultimedia/reporter/content/anonreport.py:100
 msgid "upload video or image"
 msgstr "Cargar imagen o video"
 
