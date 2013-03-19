@@ -222,9 +222,9 @@ class IReportViewPurgePaths(grok.Adapter):
 
     def getRelativePaths(self):
         views = ['/view',
-                 '/listado-report-published',
-                 '/listado-report',
-                 '/i-report']
+                 '/listado-reportes-publicos',
+                 '/listado-reportes',
+                 '/vista']
 
         base_url = self.context.absolute_url_path()
         return ["%s%s" % (base_url, view) for view in views]
