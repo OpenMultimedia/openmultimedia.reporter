@@ -65,7 +65,7 @@ msgstr "Condiciones de uso"
 
 #: openmultimedia/reporter/content/anonreport.py:307
 msgid "Error creating the report, please try again"
-msgstr "Error creando el reporte, porfavor pruebe de nuevo"
+msgstr "Error creando el reporte, por favor pruebe de nuevo"
 
 #: openmultimedia/reporter/browser.py:139
 msgid "Error uploading file, please try again or use a diferent file"
