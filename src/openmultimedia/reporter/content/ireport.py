@@ -111,7 +111,7 @@ class IReportView(dexterity.DisplayForm):
         sort_order = 'reverse'
 
         if state != "published":
-            sort_order = "created"
+            sort_on = "created"
 
         query = {'portal_type': ct,
                  'sort_on': sort_on,
