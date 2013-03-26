@@ -275,9 +275,9 @@ class AnonReport(Item):
         return result
 
     def get_country_code(self):
-	result = ""
-	if self.country:
-            result = self.country
+        result = ""
+        if self.country:
+                result = self.country
         return result
 
 
@@ -327,7 +327,7 @@ class Add(dexterity.AddForm):
             body['report'] = data['report'].encode("utf-8", "ignore")
 
         if 'country' in data:
-            
+
             body['country'] = obj.get_country_code()
 
         if 'date' in data:
