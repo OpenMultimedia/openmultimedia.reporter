@@ -25,7 +25,7 @@
   <tal:main-macro metal:define-macro="main">
   <div id="content-reports">
     <div class="report-button-pending" tal:condition="view/can_edit">
-    <a href="#" tal:attributes="href string:${context/absolute_url}/listado-report"
+    <a href="#" tal:attributes="href string:${context/absolute_url}/listado-reportes"
                             tal:condition="view/can_edit"
                             class="report-link edit-report"
                             i18n:translate="">Non Published Reports</a>
