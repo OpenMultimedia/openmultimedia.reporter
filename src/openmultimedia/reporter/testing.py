@@ -448,13 +448,13 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):  # pragma: no co
         return
 
     def do_DELETE(self):
-        if 'remove-remote-valid-slug' in self.path:
+        if '/remove-remote-valid-slug/' in self.path:
             self.send_response(204)
     
-        if 'invalid-response' in self.path:
+        if '/invalid-response/' in self.path:
             self.send_response(404)
 
-        if 'valid-response' in self.path:
+        if '/valid-response/' in self.path:
             self.send_response(204)
 
         return
