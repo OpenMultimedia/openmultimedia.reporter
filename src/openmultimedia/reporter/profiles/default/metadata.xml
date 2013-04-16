@@ -3,6 +3,7 @@
   <version>1</version>
   <dependencies>
     <dependency>profile-plone.app.dexterity:default</dependency>
+    <dependency>profile-collective.gavisits:default</dependency>
     <dependency>profile-openmultimedia.api:default</dependency>
   </dependencies>
 </metadata>

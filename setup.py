@@ -53,6 +53,7 @@ setup(name='openmultimedia.reporter',
           'plone.namedfile[blobs]',
           'Plone>=4.1',
           'setuptools',
+          'collective.gavisits',
           # XXX: we need to stay at the 1.8 version of collective.js.jqueryui for Plone 4.1
           #      see https://github.com/collective/collective.js.jqueryui/issues/15
           'collective.js.jqueryui<1.9',
