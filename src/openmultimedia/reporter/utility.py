@@ -225,12 +225,6 @@ class Upload(object):
                 logger.info("Invalid response content: %s" % content)
                 content_json = {}
 
-            if 'publicado' in content_json and not content_json['publicado']:
-                self.publish_structure(slug, file_type)
-                logger.info("Content is published in remote server.")
-            else:
-                logger.info("Content is not yet published in remote server.")
-
         return response, content_json
 
     def delete_structure(self, slug, file_type):
