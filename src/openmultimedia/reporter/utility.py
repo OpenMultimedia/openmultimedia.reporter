@@ -137,9 +137,9 @@ class Upload(object):
         key = settings.key
 
         if file_type == "image":
-            url = "%s%s%s" % (multimedia_url, image_notify, slug)
+            url = "%s%s%s/" % (multimedia_url, image_notify, slug)
         else:
-            url = "%s%s%s" % (multimedia_url, video_notify, slug)
+            url = "%s%s%s/" % (multimedia_url, video_notify, slug)
 
         headers = {'Accept': 'application/json'}
 
