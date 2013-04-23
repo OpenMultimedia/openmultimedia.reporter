@@ -137,9 +137,9 @@ class Upload(object):
         key = settings.key
 
         if file_type == "image":
-            url = "%s%s%s" % (multimedia_url, image_notify, slug)
+            url = "%s%s%s/" % (multimedia_url, image_notify, slug)
         else:
-            url = "%s%s%s" % (multimedia_url, video_notify, slug)
+            url = "%s%s%s/" % (multimedia_url, video_notify, slug)
 
         headers = {'Accept': 'application/json'}
 
@@ -224,12 +224,6 @@ class Upload(object):
             except ValueError:
                 logger.info("Invalid response content: %s" % content)
                 content_json = {}
-
-            if 'publicado' in content_json and not content_json['publicado']:
-                self.publish_structure(slug, file_type)
-                logger.info("Content is published in remote server.")
-            else:
-                logger.info("Content is not yet published in remote server.")
 
         return response, content_json
 

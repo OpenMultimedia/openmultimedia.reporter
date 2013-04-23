@@ -39,7 +39,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):  # pragma: no co
             img.close()
 
             self.wfile.close()
-            
+
         elif path == '/not-found.png':
             self.send_response(404)
 
@@ -450,7 +450,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):  # pragma: no co
     def do_DELETE(self):
         if '/remove-remote-valid-slug/' in self.path:
             self.send_response(204)
-    
+
         if '/invalid-response/' in self.path:
             self.send_response(404)
 

@@ -408,6 +408,14 @@ def purge_cache_on_publish(report, event):
         notify(Purge(report.aq_parent))
 
 
+@grok.subscribe(IAnonReport, IActionSucceededEvent)
+def publish_remote_server(report, event):
+    if event.action == "publish":
+        upload_utility = getUtility(IUpload)
+        response, content = upload_utility.publish_structure(
+            report.file_slug, report.file_type)
+
+
 @grok.subscribe(IAnonReport, IObjectRemovedEvent)
 def remove_remote_content(report, event):
     # XXX: This event gets fired once when calling the delete page, then again
