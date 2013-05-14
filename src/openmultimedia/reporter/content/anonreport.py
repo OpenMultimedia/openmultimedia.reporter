@@ -121,6 +121,9 @@ class IAnonReport(form.Schema):
     form.omitted('video_file')
     video_file = schema.Text(required=False)
 
+    form.omitted('image_url')
+    image_url = schema.TextLine(required=False)
+
     form.omitted('image_file')
     if HAVE_BLOBS:  # pragma: no cover
         image_file = NamedBlobImage(required=False)
