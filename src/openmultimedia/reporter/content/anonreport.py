@@ -200,6 +200,8 @@ class AnonReport(Item):
                 logger.info("Saved %s as video file" % self.video_file)
             else:
                 # This is an image
+                if 'archivo_url' in content:
+                    self.image_url = content['archivo_url']
                 self.store_remote_image_locally(content['thumbnail_grande'], 'image_file')
                 logger.info("Saved %s as image file" % self.image_file)
 

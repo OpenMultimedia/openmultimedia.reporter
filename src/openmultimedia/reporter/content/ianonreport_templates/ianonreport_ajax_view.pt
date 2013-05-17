@@ -3,13 +3,17 @@
      tal:condition="context/has_media">
 
   <img id="loading" src="++resource++openmultimedia.reporter/loading.gif" />
-  <div id="main-report-media">
-    <div class="padding">
+  <div id="main-report-media"
+    tal:attributes="data-slug context/file_slug;
+                   data-type context/file_type">
+    <div class="padding" >
     <tal:video condition="not:context/is_image">
       <div id="new-report-video" tal:attributes="data-slug context/file_slug"></div>
       </tal:video>
       <tal:image condition="context/is_image">
-        <img tal:replace="structure context/render_preview_image" />
+        <img  tal:replace="structure context/render_preview_image" />
+        <div id="image-url-view" tal:attributes="data-url context/image_url">
+        </div>
       </tal:image>
       </div>
   </div>
@@ -25,6 +29,7 @@
   <tal:below>
     <div id="ireport-user-data">
       <span tal:content="context/name"></span> - <span i18n:translate=""> published date: </span> <span tal:content="context/get_formated_date_state"> </span> - <span tal:content="context/get_country"></span>
+      - <span id="report-visits"></span>
     </div>
     <div id="main-report-comments">
       <tal:comments>

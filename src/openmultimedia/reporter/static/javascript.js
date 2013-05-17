@@ -46,6 +46,7 @@ $(document).ready(function() {
         //and then the html generated i the iframe is pasted in the real dom
         //we do this because there's some javascript that needs to be executed
         //in order
+
         var url = $(this).attr("data-url");
         // var url = $(this).attr("data-url") + "/ajax-report";
         $(".main-report").children().css("display", "none");
@@ -64,6 +65,30 @@ $(document).ready(function() {
             url: url + "/ajax-report",
             success:function(data) {
                 $(".main-report").html(data);
+                var urlBase = "http://multimedia.tlsur.net/api/";
+                var slug = $("#main-report-media").attr("data-slug");
+                var dataType = $("#main-report-media").attr("data-type");
+                var url = urlBase + "clip/"
+                if(dataType === "image") {
+                    url = urlBase + "imagen/"
+                }
+                url = url + slug + "/?nocache=true&detalle=normal&callback=?";
+                $.getJSON(url, function(json) {
+                    if(json['estadisticas']) {
+                        var vistas = json['estadisticas']['vistas'];
+                        var text = "visto " + vistas + " vez";
+                        if(vistas != 1) {
+                            text = "visto " + vistas + " veces";
+                        }
+                        $("#report-visits").text(text);
+                    }
+                });
+
+                if($("#image-url-view").length) {
+                    var urlImage = $("#image-url-view").attr("data-url") + "?dummy";
+                    $.getScript(urlImage);
+                }
+                //$.getJSON('http://multimedia.tlsur.net/api/imagen/soy-reportero-img-22871757/?detalle=normal&tipo=soy-reportero&callback=?', function(json){console.log(json);})
                 var slug = $("#new-report-video").attr("data-slug");
                 $("#new-report-video").omplayer({
                     slug: slug,
