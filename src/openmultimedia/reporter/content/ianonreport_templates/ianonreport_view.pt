@@ -30,14 +30,44 @@
 
           <div class="main-report">
 
-            <div id="main-report-media">
+            <div id="main-report-media"
+                  tal:attributes="data-slug context/file_slug;
+                                  data-type context/file_type">
     <div class="padding">
     <tal:video condition="python: not context.is_image() and context.has_media()">
       <div id="new-report-video" tal:attributes="data-slug context/file_slug"></div>
       </tal:video>
       <tal:image condition="python: context.is_image() and context.has_media()">
         <img tal:replace="structure context/render_preview_image" />
+        <div id="image-url-view" tal:attributes="data-url context/image_url">
+        </div>
       </tal:image>
+      <script type="text/javascript" tal:condition="context/is_published_ct">
+                  $(document).ready(function() {
+                    var urlBase = "http://multimedia.tlsur.net/api/";
+                    var slug = $("#main-report-media").attr("data-slug");
+                    var dataType = $("#main-report-media").attr("data-type");
+                    var url = urlBase + "clip/"
+                    if(dataType === "image") {
+                        url = urlBase + "imagen/"
+                    }
+                    url = url + slug + "/?detalle=normal&callback=?";
+                    $.getJSON(url, function(json) {
+                        if(json['estadisticas']) {
+                            var vistas = json['estadisticas']['vistas'];
+                            var text = "visto " + vistas + " vez";
+                            if(vistas != 1) {
+                                text = "visto " + vistas + " veces";
+                            }
+                            $("#report-visits").text(text);
+                        }
+                    });
+                    if($("#image-url-view").length) {
+                      var urlImage = $("#image-url-view").attr("data-url") + "?dummy";
+                      $.getScript(urlImage);
+                    }
+                  });
+                </script>
       </div>
   </div>
   <div id="main-report-data">
@@ -52,6 +82,7 @@
   <tal:below>
     <div id="ireport-user-data">
       <span tal:content="context/name"></span> - <tal:date tal:condition="python: context.get_status() == 'published'"><span i18n:translate=""> published date: </span> <span tal:content="context/get_formated_date_state"> </span></tal:date><tal:date tal:condition="python: context.get_status() != 'published'"><span i18n:translate=""> creation date: </span> <span tal:content="python:context.get_formated_date_state(state='private')"> </span></tal:date> - <span i18n:translate="">event date: </span> <span tal:content="context/get_formated_date"/> - <span tal:content="context/get_country"></span>
+      - <span id="report-visits"></span>
     </div>
   </tal:below>
           <!-- discuss         -->

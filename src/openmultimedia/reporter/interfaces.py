@@ -28,12 +28,12 @@ class IReporterSettings(Interface):
 
     security_key = schema.TextLine(
         title=_(u'Security key'),
-        default=u'Tl&MF4s#e-9x6F[m7]42FyO7mt8Ku',
+        default=u'k4}"-^30C$:3l04$(/<5"7*6|Ie"6x',
         required=True)
 
     key = schema.TextLine(
         title=_(u'Upload key'),
-        default=u'telesursoyreporteroploneweb',
+        default=u'telesursoyreporteroplonepruebas',
         required=True)
 
     seconds = schema.Int(

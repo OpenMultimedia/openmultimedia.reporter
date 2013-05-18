@@ -72,7 +72,7 @@ $(document).ready(function() {
                 if(dataType === "image") {
                     url = urlBase + "imagen/"
                 }
-                url = url + slug + "/?nocache=true&detalle=normal&callback=?";
+                url = url + slug + "/?detalle=normal&callback=?";
                 $.getJSON(url, function(json) {
                     if(json['estadisticas']) {
                         var vistas = json['estadisticas']['vistas'];

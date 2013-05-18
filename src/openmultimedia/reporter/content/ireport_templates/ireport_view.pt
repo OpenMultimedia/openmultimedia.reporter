@@ -51,7 +51,8 @@
               <tal:image condition="new_report/is_image">
                 <img tal:replace="structure new_report/render_preview_image" />
                 <div id="image-url-view" tal:attributes="data-url new_report/image_url"/>
-                <script type="text/javascript">
+              </tal:image>
+              <script type="text/javascript">
                   $(document).ready(function() {
                     var urlBase = "http://multimedia.tlsur.net/api/";
                     var slug = $("#main-report-media").attr("data-slug");
@@ -60,7 +61,7 @@
                     if(dataType === "image") {
                         url = urlBase + "imagen/"
                     }
-                    url = url + slug + "/?nocache=true&detalle=normal&callback=?";
+                    url = url + slug + "/?detalle=normal&callback=?";
                     $.getJSON(url, function(json) {
                         if(json['estadisticas']) {
                             var vistas = json['estadisticas']['vistas'];
@@ -77,7 +78,6 @@
                     }
                   });
                 </script>
-              </tal:image>
               </div>
           </div>
           <div id="main-report-data">
